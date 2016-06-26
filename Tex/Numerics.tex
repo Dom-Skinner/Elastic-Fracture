@@ -1,0 +1,136 @@
+%
+%
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{caption}
+\usepackage{amsfonts}
+%\usepackage[margin=3cm]{geometry}
+\usepackage{tikz}
+\newcommand{\bs}{\boldsymbol}                               %
+
+\begin{document}
+
+\title{Numerical methods}
+\author{Dominic Skinner}
+\maketitle
+
+Consider the govering equations
+\begin{equation}\label{eq1}
+\left( \begin{array}{c} p(z) \\ 0 \end{array} \right) =
+ \left( \begin{array}{c} \sigma_y \\ \tau_{xy} \end{array} \right) =
+\int_0^{\infty} \left(
+\begin{array}{cc} K_{11}(x-z) & K_{12}(x-z) \\ K_{21}(x-z) & K_{22}(x-z) \end{array}
+\right)
+ \left( \begin{array}{c} g'(x) \\ h'(x) \end{array} \right) dx
+\end{equation}
+%
+\begin{equation}\label{eq2}
+h^2p'=\lambda
+\end{equation}
+Have the ``input'' parameters as 
+\begin{itemize}
+\item BC's $P$, $M$ (or equivalently $g'$, $h''$ at $x\to\infty$)
+\item $\lambda$ , the speed
+\end{itemize}
+Want to solve for the toughness $K_I$ and $K_{II}$. In this project,
+we have so far focused on $K_I$.
+\begin{figure}[!ht]\centering
+\includegraphics{NumFig3.pdf}
+\end{figure}
+
+\underline{Goal:} 
+Find $\lambda$ such that $K_I(\lambda)=0$, ``Zero toughness solution''.
+Given this we then want to investigate the behaviour for small $K_I\approx 0$.
+To do this, take some given value of $\lambda$ and then solve equations
+\ref{eq1}, \ref{eq2}.
+\subsection*{Discretization of problem}
+The method chosen to discretize the problem is to take a vector $x$ of $n$ 
+points at which we measure $g', h'$ and have a vector $z$ of $n-1$ intermediate 
+points at which $p$ is measured. (The spacing chosen is a tan spacing)
+\begin{figure}[!ht]\centering
+\includegraphics{NumFig2.pdf}
+\end{figure}
+
+The discrete version of 
+$\displaystyle \left( \begin{array}{c} p \\ 0 \end{array} \right) =
+\int \left(
+\begin{array}{cc} K_{11} & K_{12} \\ K_{21} & K_{22} \end{array}
+\right)
+ \left( \begin{array}{c} g' \\ h' \end{array} \right) $
+becomes
+\[ \left( \begin{array}{c} p(z_1) \\ \vdots \\ p(z_{n-1}) \\[4pt] 0 \\ \vdots \\
+0 \end{array} \right) =
+\left( \begin{array}{ccc} B_{1,1} & \cdots & B_{1 , 2n} \\
+\vdots & \ddots & \vdots \\ B_{2(n-1),1} & \cdots & B_{2(n-1) , 2n} 
+\end{array}
+\right)
+ \left( \begin{array}{c} g'(x_1) \\ \vdots \\ g'(x_n) \\[4pt] h'(x_1) \\ \vdots
+\\ h'(x_n) \end{array} \right) \]
+Where the matrix $B$ depends on the choice of spacings for $x, z$ but does
+not depend on the values that $g', h'$ take.
+We can go further and incorporate the boundary conditions into this equation. 
+The discretized versions of the boundary conditions, become\footnote{Or
+something similar depending on the exact scalings} 
+$g'(x_n)=1/2$ and $\frac{h'(x_n)-h'(x_{n-1})}{x_n-x_{n-1}} = 1$. These conditions
+are linear in terms of $g',h'$, and so by adding another two rows onto the matrix
+$B$, get that
+\[ \left( \begin{array}{c} p(z_1) \\ \vdots \\ p(z_{n-1}) \\[4pt] 0 \\ \vdots \\
+0 \\ g'(\infty) \\ h''(\infty) \end{array} \right) =
+\left( \begin{array}{ccc} A_{1,1} & \cdots & A_{1 , 2n} \\
+\vdots & \ddots & \vdots \\ A_{2n,1} & \cdots & A_{2n , 2n} 
+\end{array}
+\right)
+ \left( \begin{array}{c} g'(x_1) \\ \vdots \\ g'(x_n) \\[4pt] h'(x_1) \\ \vdots
+\\ h'(x_n) \end{array} \right) \]
+Where $g'(\infty), h''(\infty)$ are some constants that are the boundary 
+conditions. 
+\\
+
+Now we use the second equation for $p$, namely $p=\int_z^{\infty} 
+\lambda/h^2 dx$. This depends on $h'$ in a very much non linear way.
+It will however provide an expression for the $p(z_i)$ in terms of
+the $h'(x_j)$. Thus, switching to the notation  
+$\bs{h}'=(g',\,h')$ where the first $n$ coords of $\bs{h}'$ are the
+coords of $g'$ and the second $n$ are the coords of $h'$. We have that
+\[ f(\bs{h}') = \left( \begin{array}{c} p(z_1) \\ \vdots \\ p(z_{n-1}) 
+\\[4pt] 0 \\ \vdots \\ 0 \\ g'(\infty) \\ h''(\infty) \end{array} \right) =
+ A  \bs{h}' \]
+Where we now just need to solve for $\bs{h}'$.
+
+\subsection*{Newton's method}
+Suppose $\bs{h}'$ is iterate 1. To get the next iterate you need to solve (to 
+first order)
+\[ f(\bs{h}'+\delta\bs{h}') = A(\bs{h}'+\delta \bs{h}')\]
+\[ f(\bs{h}') + (Df|_{\bs{h}'})(\delta\bs{h}') = A\bs{h}'+A\delta \bs{h}'\]
+Where $Df|_{\bs{h}'}$ is a matrix of partial derivatives. Therefore, get to 
+first order that 
+\[ \delta \bs{h}' =  (A-Df|_{\bs{h}'})^{-1}(f(\bs{h}') - A\bs{h}') \]
+
+Ingredients:
+\begin{itemize}
+\item Matrix $A$ itself (of which the $2(n-1)\times2n$ part is the integral
+      kernel)
+\item The function $f(\bs{h}')$. I.e. given $\bs{h}'$ you need to calculate
+      $\int_z^{\infty}\lambda/h^2 dx$ (Key functions ``hprime\_to\_h'' and
+      ``hprime\_to\_p'').
+\item Need to calculate $Df$ which involves calculating $\displaystyle \frac
+      {\partial} {\partial \bs{h}'} \int_z^{\infty} \frac{\lambda}{h(x)^2}dx$
+
+\end{itemize}
+So we have worked out numerically $K(\lambda)$, now we want to solve 
+$K(\lambda_0)=0$ for $\lambda_0$. We do a ``march''. Sublety in that $K<0$ is 
+unphysical, so a guess of $\lambda>\lambda_0$ where $K(\lambda_0)=0$ does
+not make any physical sense (\& will get bad numerical results). To get 
+around this difficulty, take the next iterate of $\lambda$ as smaller than
+predicted.
+\begin{figure}[!ht]\centering
+\caption{March to find $\lambda_0$}
+\includegraphics{NumFig1.pdf}\label{March}
+\end{figure}
+
+For example in Figure \ref{March}, the obvious choice for $\lambda_4$
+(the light blue circle) is larger than the true value of $\lambda_0$, 
+and therefore the naive extrapolation method won't quite work.
+\end{document}

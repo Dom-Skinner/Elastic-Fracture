@@ -1,0 +1,31 @@
+\documentclass{standalone}
+\usepackage{tikz,color}
+\begin{document}
+\begin{tikzpicture}[scale=1.5]
+
+
+
+\draw [thick] (-4,0) to [out=0,in=180] (-2,0.5)
+to [out=0,in=180] (0,0);
+\draw [thick] (-4,0.1) to [out=0,in=180] (-2,0.6)
+to [out=0,in=180] (0,0.1);
+
+\draw [thick] (-4,0) to  (0,0);
+
+\draw [->] (-2,-0.4) to  (-2,-0.1);
+
+\draw [->] (-1.1,0.1) to  (-0.8,0.1);
+\draw [->] (-2.9,0.1) to  (-3.2,0.1);
+
+\draw (-3.7,0.1) circle [radius=0.4, thin]; 
+
+\draw (1,0) to (1.5,0)
+to [out=0,in=210] (3,0.5);
+\draw (1,0.1) to (1.5,0.1)
+to [out=0,in=210] (3,0.6);
+\draw (1,0) to (2.8,0);
+\draw [->,thin] (3,0.15) to  (2.7,0.15);
+
+
+\end{tikzpicture}
+\end{document}

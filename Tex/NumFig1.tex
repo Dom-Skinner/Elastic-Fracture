@@ -1,0 +1,47 @@
+\documentclass{standalone}
+\usepackage{tikz,color}
+\begin{document}
+\begin{tikzpicture}[scale=2]
+
+\draw [thick, ->] (-0.5,0) to (4.5,0);
+\node at (4.5,0) [right] {\small{$\lambda$}};
+
+\draw [thick, ->] (-0.5,0) to (-0.5,2);
+\node at (-0.5,2) [above] {\small{$K$}};
+
+\draw [purple, thick] (0,1.5) to [out=-40,in=160] (0.8,1.03);
+\draw [purple, thick] (0.8,1.03) to [out=-20,in=150] (1.65,0.77);
+\draw [purple, thick] (1.65,0.77) to [out=-40,in=165] (2.65,0.24);
+\draw [purple, thick] (2.65,0.24) to [out=-15,in=175] (3.8,0);
+
+\node at (0,-0.25) {\small{$\lambda_1$}};
+\node at (0.8,-0.25) {\small{$\lambda_2$}};
+\node at (1.65,-0.25) {\small{$\lambda_3$}};
+\node at (2.65,-0.25) {\small{$\lambda_4$}};
+\node [purple] at (3.8,-0.25) {\small{$\lambda_0$}};
+
+\node at (0,1.5) [above] {\small{$K(\lambda_1)$}};
+\node at (0.9, 1.35) {\small{$K(\lambda_2)$}};
+\node at (1.8, 1.05) {\small{$K(\lambda_3)$}};
+\node at (2.75, 0.55) {\small{$K(\lambda_4)$}};
+
+\draw [blue,dotted, thick] (0,1.5) -- (2.5,0);
+\draw [cyan,dotted, thick] (0.8,1.03) -- (4.1,0);
+
+\fill(0.8,1.03) circle [ radius=0.05];
+\fill(0.0,1.5) circle [ radius=0.05];
+\fill(1.65,0.77) circle [ radius=0.05];
+\fill(2.65,0.24) circle [ radius=0.05];
+
+\fill [blue] (2.5,0) circle [radius=0.05];
+\fill [cyan] (4.1,0) circle [radius=0.05];
+
+
+\draw [thick] (0,-0.05) to (0,0.05);
+\draw [thick] (0.8,-0.05) to (0.8,0.05);
+\draw [thick] (1.65,-0.05) to (1.65,0.05);
+\draw [thick] (2.65,-0.05) to (2.65,0.05);
+\draw [purple, thick] (3.8,-0.05) to (3.8,0.05);
+
+\end{tikzpicture}
+\end{document}
