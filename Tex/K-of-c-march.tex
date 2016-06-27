@@ -1,0 +1,28 @@
+First the program sets up the spacing as $\tan^2$. It also sets the
+initial $\bs{h}'= (\underbrace{1,\dots,1}_{g'} \underbrace{x_1+1, \dots,
+x_n+1}_{h'})$ \textcolor{orange}{(Not sure why this is a reasonable first
+guess, perhaps from the boundary conditions at $\infty$. Seems to have
+no problems converging though.)}
+
+Most of the work is then done by \texttt{fixed\_lambda\_M\_iteration}
+which then solves for $K_I$ and $\bs{h}'$. 
+
+N.B. $\bs{h}'$ is updated via $\displaystyle \bs{h}_i' = \frac{\bs{h}_{i-1}'
+-\bs{h}_{i-2}'}{\lambda_{i-1} - \lambda_{i-2}} \lambda_i + 
+\frac{\lambda_{i-1}\bs{h}_{i-2}'-\lambda_{i-1}\bs{h}_{i-1}'}
+{\lambda_{i-1} - \lambda_{i-2}} $ which is just linear extrapolation.
+In the absence of any better ideas this is the sensible choice.
+
+After iterating for a few values, get near $\lambda_0$. Hear we suspect
+that something like $K^3 \sim \lambda-\lambda_0$ near $\lambda=\lambda_0$,
+$K=0$. So given two prior guesses, extrapolate via 
+$\displaystyle \lambda_i = \frac{K_{i-1}^3\lambda_{i-2} - K_{i-2}^3
+\lambda_{i-1}}{K_{i-1}^3-K_{i-2}^3}$ But as noted earlier, must be careful
+to not extrapolate further than $\lambda_0$. So an idea is to take $(\lambda_i
++ \lambda_{i-1})/2$ as the next guess, i.e. 
+\[\lambda_i = 
+\frac{\lambda_{i-1} - \lambda_{i-2}}{K_{i-1}^3-K_{i-2}^3}\frac{K_{i-1}^3}{2}
++ \frac{K_{i-1}^3\lambda_{i-2} - K_{i-2}^3 
+\lambda_{i-1}}{K_{i-1}^3-K_{i-2}^3} \]
+Then the program just iterates. If it doesn't converge, it simply tries a 
+smaller value of $\lambda$.
