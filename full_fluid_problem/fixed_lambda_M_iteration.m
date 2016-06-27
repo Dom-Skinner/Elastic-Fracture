@@ -47,7 +47,7 @@ K_new = hprime_new(n+1);
 iteration_number = 0;
 K_diff = tol+1; % Just to ensure that it iterates at least once
 
-while abs(K_diff) >= tol
+while abs(K_diff) >= tol && iteration_number<20
     hprime_old = hprime_new;
     K_old = K_new;
     
@@ -64,6 +64,10 @@ while abs(K_diff) >= tol
 end
 
 KI = K_new;
+if iteration_number == 20
+    fprintf('Failure to coverge');
+    KI=-1;
+end
 
 return
 end
