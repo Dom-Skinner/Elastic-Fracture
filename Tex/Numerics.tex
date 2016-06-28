@@ -46,13 +46,81 @@ Given this we then want to investigate the behaviour for small $K_I\approx 0$.
 To do this, take some given value of $\lambda$ and then solve equations
 \ref{eq1}, \ref{eq2}.
 \subsection*{Discretization of problem}
-The method chosen to discretize the problem is to take a vector $x$ of $n$ 
-points at which we measure $g', h'$ and have a vector $z$ of $n-1$ intermediate 
-points at which $p$ is measured. (The spacing chosen is a tan spacing)
+The method chosen to discretize the problem is to take a vector 
+$(x_1, \dots , x_n)$ of $n$ points at which we measure $g', h'$ and have a 
+vector $(z_1, \dots ,z_{n-1})$ of $n-1$ intermediate 
+points at which $p$ is measured. (The spacing chosen is a $\tan^2$ spacing)
 \begin{figure}[!ht]\centering
 \includegraphics{NumFig2.pdf}
 \end{figure}
 
+The ``obvious'' way to interpolate $h'$ in between the $x_i$'s is 
+simple linear interpolation. But both $h',g'$ become singular near 0.
+However, we expect a $x^{-1/2}$ singularity, which allows us to ``remove''
+said singularity. 
+The interpolation used is
+\[ g'(x) = \left\{ \begin{array}{cc} \frac{1}{\sqrt{x}}(a_ix+b_i) &
+i <t \\ a_ix+b_i & i \geq t \end{array} \right. \]
+for $x$ in the spline $x \in [x_i,x_{i+1}]$. Choose $1 < t < n$, typically
+$t=n/2$. Similarly
+\[ h'(x) = \left\{ \begin{array}{cc} \frac{1}{\sqrt{x}}(c_ix+d_i) &
+i <t \\ c_ix+d_i & i \geq t \end{array} \right. \]
+With the same $t$ used. We also define $a_n, b_n, c_n, d_n$ for interpolation
+beyond $x_n$.
+
+The values of $g',h'$ are stored via 
+\[ \bs{\theta} = \left( \begin{array}{c} a_1x_1+b_1 \\ \vdots 
+\\ a_n x_n+b_n \\[4pt] c_1x_1+d_1 \\ \vdots \\ c_n x_n + d_n \end{array} 
+\right) \]
+Once one has $\bs{\theta}$, it is trivial to recover, say $g'(x_i)$, since
+either $g'(x_i) = \bs{\theta}_i$ or $g'(x_i) = \bs{\theta}_i/\sqrt{x_i}$.
+Similarly, given $g'(x_i)$; $\bs{\theta}_i$ can be calculated.
+
+\subsection*{Recovering the a$_{i}$'s}
+Suppose we know $\bs{\theta}$, (and always assume we know the $x_i$).
+Can we recover $a_i, b_i, c_i, d_i$? 
+The answer is yes, once we add in the boundary conditions at $\infty$.
+Further we have that 
+\[ \bs{\gamma} = \left( \begin{array}{c} a_1 \\ \vdots 
+\\ a_n \\[3pt] b_1 \\ \vdots \\ b_n \\[3pt] c_1 \\ \vdots \\ c_n 
+\\[3pt] d_1 \\ \vdots \\ d_n  \end{array} \right)
+= T \bs{\theta} \]
+Where T is a $4n \times n$ interpolation matrix. A quick check reveals
+we have $4n$ unknowns, in $\bs{\gamma}$. Knowing $\theta$ provides $2n$
+equations. Demanding continuity of the interpolated $g',h'$ provides
+another $2(n-1)$ equations, (match at $x_2, \dots, x_n$). Finally boundary
+conditions on the spline at $\infty$ provide another 2 equations.
+
+The continuity conditions are 
+\begin{align*}
+a_1 x_2 + b_1 &= a_2 x_2 + b_2 \\
+& \;\; \vdots \\
+a_{t-2} x_{t-1} + b_{t-2} &= a_{t-1} x_{t-1} + b_{t-1} \\
+(a_{t-1} x_{t} + b_{t-1})/\sqrt{x_t} &= a_{t} x_{t} + b_{t} \\
+a_{t} x_{t+1} + b_{t} &= a_{t+1} x_{t+1} + b_{t+1} \\
+& \;\; \vdots \\
+a_{n-1} x_{n} + b_{n-1} &= a_{n} x_{n} + b_{n} \\
+\end{align*}
+and similar for $c,d$. This means that with the exceptions of
+$i=t-1,n$, have that 
+\[ \frac{\theta_{i+1}-\theta_i}{x_{i+1}-x_i} = a_i \]
+\[ \frac{\theta_{i}\,x_{i+1}-\theta_{i+1}x_i}{x_{i+1}-x_i} = b_i \]
+Same idea with $x_{t-1}$, just have to be a little careful about
+the switch in the continuity condition,
+\[ \frac{\sqrt{x_t}\theta_{t}-\theta_{t-1}}{x_t-x_{t-1}} = a_{t-1} \]
+\[ \frac{\theta_{t-1}\,x_t-\theta_t x_{t-1}\sqrt{x_t}}
+{x_t-x_{t-1}} = b_{t-1} \]
+
+So we are almost done, just missing 4 rows in our matrix. Have the
+$n^{th}$ row as all zeros, i.e. $a_n=0$ due to boundary conditions,
+and so trivially the $2n^{th}$ row is 0 except $T_{2n,n} = 1 $
+Now, B.C. for $h'$ implies $h''(x_n) \approx h''(x_{n-1})$ i.e.
+$c_n=c_{n-1}$ and thus from continuity $d_n=d_{n-1}$. This completes
+our interpolation matrix $T$. (and we still have some extra boundary
+conditions to impose, which we will do later.)
+\\
+\\
+\\
 The discrete version of 
 $\displaystyle \left( \begin{array}{c} p \\ 0 \end{array} \right) =
 \int \left(
