@@ -22,6 +22,7 @@ for i = 1:t-1
 end
 
 %matching the two parts
+
 %to find the gradients
 interpolate_matrix(t,t) = -1/((x(t+1)-x(t))*sqrt(x(t)));
 interpolate_matrix(t,t+1) = 1/(x(t+1)-x(t));

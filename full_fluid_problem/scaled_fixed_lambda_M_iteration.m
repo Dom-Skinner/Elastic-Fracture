@@ -1,16 +1,14 @@
-function [KI, hprime_new,p] = fixed_lambda_M_iteration(n,xmax, lambda, tol, hprime_start)
+function [KI, hprime_new,p] = scaled_fixed_lambda_M_iteration(n,xmax, lambda, tol, hprime_start)
 % Function that iterates, finding K for some given value of lambda,
 % up to some tolerance, tol. ~Dom
 
 % Some typical values previously used
-%lambda = 20, n = 100, tol = 10^(-8), xmax = 10;
-Mload = 1;
-Pload = 0;
+%lambda = 0.02, n = 100, tol = 10^(-8), xmax = 10;
 
 %the data points
-x = tan((0:n-1)*atan(xmax)/(n-1)).^2;
+x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
 
-z = tan((0.5:1:n-1.5)*atan(xmax)/(n-1)).^2;
+z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
 %finds the appropriate elasticity kernel
 [kernel_matrix, interpolate_matrix] = pressure_shear_matrix(x,z);
@@ -37,7 +35,6 @@ conditioning = rcond(A);
 %saves a matrix to convert h' to h
 h_coefficient_matrix = hprime_to_h(x);
 
-
 fprintf('\n n = %d xmax = %d lambda = %6.4g \n', n, xmax, lambda)
 fprintf(' condition number = %6.4e \n', conditioning)
 fprintf('iteration,  K,       dK,          global diff\n');
@@ -51,7 +48,7 @@ while abs(K_diff) >= tol && iteration_number<20
     hprime_old = hprime_new;
     K_old = K_new;
     
-    [p,dp] = hprime_to_p(x,z,hprime_old,lambda,Mload,Pload,h_coefficient_matrix);
+    [p,dp] = scaled_hprime_to_p(x,z,hprime_old,lambda,h_coefficient_matrix);
     hprime_new = hprime_old + (A-dp)\(p-A*hprime_old);
     
     K_new = hprime_new(n+1);

@@ -38,7 +38,7 @@ for j=2:n
             h_coefficient_matrix(3*(j-1)+3,n+i) = x(i+1) - x(i);
         end
     end
-    
+
     if j <= t-1
         h_coefficient_matrix(3*(j-1)+3,j) = -(2/3)*x(j)^(3/2);
         h_coefficient_matrix(3*(j-1)+3,n+j) = -2*x(j)^(1/2);
@@ -46,7 +46,7 @@ for j=2:n
         h_coefficient_matrix(3*(j-1)+3,j) = -(1/2)*x(j)^2;
         h_coefficient_matrix(3*(j-1)+3,n+j) = -x(j);
     end
-end    
+end
 
 h_coefficient_matrix = h_coefficient_matrix*interpolate_matrix;
 

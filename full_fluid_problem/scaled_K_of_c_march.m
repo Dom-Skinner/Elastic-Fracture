@@ -1,15 +1,12 @@
-% Investigates the lambda, K relationship
-% Code designed so that it can be run infinitely.
-
-% sets easy geometric parameters
-n = 400;
+%sets easy geometric parameters
+n = 100;
 t = round(n/2);
 xmax = 20;
 
-x = tan((0:n-1)*atan(xmax)/(n-1)).^2;
+x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
 
 %some values of lambda to try
-lambda=18:2:20;
+lambda = 0:0.01:0.05;
 
 hprime_data = zeros(2*n,length(lambda));
 
@@ -32,7 +29,7 @@ for i=1:length(lambda)
             hprime_data(:,i-1))/(lambda(i-1)-lambda(i-2));
     end
     [KI(i),hprime_new,~] = ...
-        fixed_lambda_M_iteration(n,xmax,lambda(i),tol,hprime_start);
+        scaled_fixed_lambda_M_iteration(n,xmax,lambda(i),tol,hprime_start);
     hprime_data(:,i) = hprime_new;
 end
 % Now we are done checking for the perscribed values of lambda, we will 
@@ -57,6 +54,6 @@ while 1
             (lambda(i-1)-lambda(i-2));
     end    
     [KI(i),hprime_new,~] = ...
-        fixed_lambda_M_iteration(n,xmax,lambda(i),tol,hprime_start);
+        scaled_fixed_lambda_M_iteration(n,xmax,lambda(i),tol,hprime_start);
     hprime_data(:,i) = hprime_new;
 end
