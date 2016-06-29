@@ -7,7 +7,7 @@ t = round(n/2);
 
 %creates a matrix for 4*n coefficients, incl 4 infinity coeffs
 interpolate_matrix = zeros(4*n, 2*n);
-for i = 1:t-1
+for i = 1:t-2
     %to find the gradients
     interpolate_matrix(i,i) = -1/(x(i+1)-x(i));
     interpolate_matrix(i,i+1) = 1/(x(i+1)-x(i));
@@ -24,18 +24,19 @@ end
 %matching the two parts
 
 %to find the gradients
-interpolate_matrix(t,t) = -1/((x(t+1)-x(t))*sqrt(x(t)));
-interpolate_matrix(t,t+1) = 1/(x(t+1)-x(t));
-interpolate_matrix(2*n+t,n+t) = -1/((x(t+1)-x(t))*sqrt(x(t)));
-interpolate_matrix(2*n+t,n+t+1) = 1/(x(t+1)-x(t));
+interpolate_matrix(t-1,t-1) = -1/(x(t)-x(t-1));
+interpolate_matrix(t-1,t) = sqrt(x(t))/(x(t)-x(t-1));
+interpolate_matrix(2*n+t-1,n+t-1) = -1/(x(t)-x(t-1));
+interpolate_matrix(2*n+t-1,n+t) = sqrt(x(t))/(x(t)-x(t-1));
+
 %to find the constant terms
-interpolate_matrix(n+t,t) = x(t+1)/((x(t+1)-x(t))*sqrt(x(t)));
-interpolate_matrix(n+t,t+1) = -x(t)/(x(t+1)-x(t));
-interpolate_matrix(3*n+t,n+t) = x(t+1)/((x(t+1)-x(t))*sqrt(x(t)));
-interpolate_matrix(3*n+t,n+t+1) = -x(t)/(x(t+1)-x(t));
+interpolate_matrix(n+t-1,t-1) = x(t)/(x(t)-x(t-1));
+interpolate_matrix(n+t-1,t) = -x(t-1)*sqrt(x(t))/(x(t)-x(t-1));
+interpolate_matrix(3*n+t-1,n+t-1) = x(t)/(x(t)-x(t-1));
+interpolate_matrix(3*n+t-1,n+t) = -x(t-1)*sqrt(x(t))/(x(t)-x(t-1));
 
 %for the purely linear part
-for i = t+1:n-1
+for i = t:n-1
     %to find the gradients
     interpolate_matrix(i,i) = -1/(x(i+1)-x(i));
     interpolate_matrix(i,i+1) = 1/(x(i+1)-x(i));

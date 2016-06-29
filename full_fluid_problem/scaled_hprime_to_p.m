@@ -37,6 +37,7 @@ dp(1:n-1,n+1:2*n) = lambda*deriv_pressure;
 %p(2*n) = h_doubledash;
 
 %the P condition
+
 p(2*n-1) = 0.5 + 0.5*lambda*adjust;
 p(2*n) = 1 + lambda*adjust;
 
