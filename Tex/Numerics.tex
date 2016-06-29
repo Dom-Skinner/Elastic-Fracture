@@ -116,75 +116,93 @@ $n^{th}$ row as all zeros, i.e. $a_n=0$ due to boundary conditions,
 and so trivially the $2n^{th}$ row is 0 except $T_{2n,n} = 1 $
 Now, B.C. for $h'$ implies $h''(x_n) \approx h''(x_{n-1})$ i.e.
 $c_n=c_{n-1}$ and thus from continuity $d_n=d_{n-1}$. This completes
-our interpolation matrix $T$. (and we still have some extra boundary
-conditions to impose, which we will do later.)
+our interpolation matrix $T$. We still have some extra boundary
+conditions to impose, which we will do later. Naively, these
+are $g'(x_n) = 1/2$, $c_n=1$. These are approximately true, but
+we need to do a bit better. (I will add this into the explanation
+once I understand it$\dots$)  
 \\
-\\
-\\
-The discrete version of 
-$\displaystyle \left( \begin{array}{c} p \\ 0 \end{array} \right) =
-\int \left(
-\begin{array}{cc} K_{11} & K_{12} \\ K_{21} & K_{22} \end{array}
-\right)
- \left( \begin{array}{c} g' \\ h' \end{array} \right) $
-becomes
+\subsubsection*{Analytic expressions}
+Now that we have made the piecewise analytic approximation\footnote{
+I think I have made up some terminology here, piecewise linear isn't
+quite right due to the $x^{-1/2}$ parts, and ``sometimes piecewise linear
+sometimes piecewise $x^{-1/2}\times$(linear function)'' is not ideal 
+either} we can avoid making any more approximations. Recall
+$K_{ij}$ has an analytic expression (even better, it's a rational function). 
+If we take $h',g'$ to be piecewise
+analytic, then the integrand becomes an analytic expression that can
+be exactly integrated. For example,
+
+\begin{align*} 
+p(z) &= \int_0^{\infty} K_{11}(x-z) g'(x) + K_{12}(x-z) h'(x) \; dx \\
+&= \sum_{i=1}^{t-1}\int_0^{\infty} K_{11}(x-z)(a_i x+ b_i)/\sqrt x 
+ + K_{12}(x-z) (c_ix+d_i)/\sqrt x \; dx \\
+&+ \sum_{i=t}^{n}\int_0^{\infty} K_{11}(x-z)(a_i x+ b_i) 
+ + K_{12}(x-z) (c_ix+d_i) \; dx
+\end{align*}
+The right hand side of this equation may look ghastly, (and we haven't
+even expanded the $K_{ij}$'s yet $\dots$) but it is an analytic expression
+in $z$. Further, we can do the integration before knowing any of the
+values of $a,b,c,d$. It is also clear that $p(z)$ is linear in $a,b,c,d$.
+Therefore, once we know the spacing of the $z_i$'s we see that 
 \[ \left( \begin{array}{c} p(z_1) \\ \vdots \\ p(z_{n-1}) \\[4pt] 0 \\ \vdots \\
 0 \end{array} \right) =
 \left( \begin{array}{ccc} B_{1,1} & \cdots & B_{1 , 2n} \\
 \vdots & \ddots & \vdots \\ B_{2(n-1),1} & \cdots & B_{2(n-1) , 2n} 
 \end{array}
-\right)
- \left( \begin{array}{c} g'(x_1) \\ \vdots \\ g'(x_n) \\[4pt] h'(x_1) \\ \vdots
-\\ h'(x_n) \end{array} \right) \]
-Where the matrix $B$ depends on the choice of spacings for $x, z$ but does
-not depend on the values that $g', h'$ take.
+\right) \bs{\gamma} = BT\bs{\theta} \]
+Where the matrix $B$ depends on the choice of spacings ($x, z$), but does
+not depend on $\bs{\gamma}$.
+
 We can go further and incorporate the boundary conditions into this equation. 
-The discretized versions of the boundary conditions, become\footnote{Or
-something similar depending on the exact scalings} 
-$g'(x_n)=1/2$ and $\frac{h'(x_n)-h'(x_{n-1})}{x_n-x_{n-1}} = 1$. These conditions
-are linear in terms of $g',h'$, and so by adding another two rows onto the matrix
-$B$, get that
+The discretized versions of the boundary conditions, become
+$g'(x_n)=1/2$ and $\displaystyle \frac{h'(x_n)-h'(x_{n-1})}{x_n-x_{n-1}} = 1$.
+\footnote{Again, we need to do a bit better than this. For now, this 
+illustrates the point.}
+These conditions are linear in terms of $g',h'$, and so by adding another two 
+rows onto the matrix $BT$, get that
 \[ \left( \begin{array}{c} p(z_1) \\ \vdots \\ p(z_{n-1}) \\[4pt] 0 \\ \vdots \\
 0 \\ g'(\infty) \\ h''(\infty) \end{array} \right) =
 \left( \begin{array}{ccc} A_{1,1} & \cdots & A_{1 , 2n} \\
 \vdots & \ddots & \vdots \\ A_{2n,1} & \cdots & A_{2n , 2n} 
 \end{array}
-\right)
- \left( \begin{array}{c} g'(x_1) \\ \vdots \\ g'(x_n) \\[4pt] h'(x_1) \\ \vdots
-\\ h'(x_n) \end{array} \right) \]
-Where $g'(\infty), h''(\infty)$ are some constants that are the boundary 
-conditions. 
+\right) \bs{\theta}\]
+Where $g'(\infty), h''(\infty)$ are the (constant) boundary conditions. 
 \\
 
 Now we use the second equation for $p$, namely $p=\int_z^{\infty} 
-\lambda/h^2 dx$. This depends on $h'$ in a very much non linear way.
-It will however provide an expression for the $p(z_i)$ in terms of
-the $h'(x_j)$. Thus, switching to the notation  
-$\bs{h}'=(g',\,h')$ where the first $n$ coords of $\bs{h}'$ are the
-coords of $g'$ and the second $n$ are the coords of $h'$. We have that
-\[ f(\bs{h}') = \left( \begin{array}{c} p(z_1) \\ \vdots \\ p(z_{n-1}) 
+\lambda/h^2 dx$. We can integrate our piecewise analytic expression
+for $h'$ to recover $h$, imposing both $h(x_1)=0$ as well as continuity at the
+$x_i$ for $i=2,\dots n$. The result is 
+\[ h(x) = \left\{ \begin{array}{cc} \sqrt{x}(w_ix+e_i)+r_i &
+i <t \\ w_ix^2+e_ix + r_i & i \geq t \end{array} \right. \]
+for some constants $w,e,r$. These constants are related to $\bs{\gamma}$,
+and so $\bs{\theta}$, linearly. Given this piecewise analytic expression
+for $h$, we can find an analytic expression for $p(z)$. Since we know the
+spacings, we have
+\[ f(\bs{\theta}) = \left( \begin{array}{c} p(z_1) \\ \vdots \\ p(z_{n-1}) 
 \\[4pt] 0 \\ \vdots \\ 0 \\ g'(\infty) \\ h''(\infty) \end{array} \right) =
- A  \bs{h}' \]
-Where we now just need to solve for $\bs{h}'$.
+ A  \bs{\theta} \]
+Where we now just need to solve for $\bs{\theta}$.
 
 \subsection*{Newton's method}
-Suppose $\bs{h}'$ is iterate 1. To get the next iterate you need to solve (to 
+Suppose $\bs{\theta}$ is iterate 1. To get the next iterate you need to solve (to 
 first order)
-\[ f(\bs{h}'+\delta\bs{h}') = A(\bs{h}'+\delta \bs{h}')\]
-\[ f(\bs{h}') + (Df|_{\bs{h}'})(\delta\bs{h}') = A\bs{h}'+A\delta \bs{h}'\]
-Where $Df|_{\bs{h}'}$ is a matrix of partial derivatives. Therefore, get to 
+\[ f(\bs{\theta}+\delta\bs{\theta}) = A(\bs{\theta}+\delta \bs{\theta})\]
+\[ f(\bs{\theta}) + (Df|_{\bs{\theta}})(\delta\bs{\theta}) = A\bs{\theta}+A\delta \bs{\theta}\]
+Where $Df|_{\bs{\theta}}$ is a matrix of partial derivatives. Therefore, get to 
 first order that 
-\[ \delta \bs{h}' =  (A-Df|_{\bs{h}'})^{-1}(f(\bs{h}') - A\bs{h}') \]
+\[ \delta \bs{\theta} =  (A-Df|_{\bs{\theta}})^{-1}(f(\bs{\theta}) - A\bs{\theta}) \]
 
 Ingredients:
 \begin{itemize}
 \item Matrix $A$ itself (of which the $2(n-1)\times2n$ part is the integral
       kernel)
-\item The function $f(\bs{h}')$. I.e. given $\bs{h}'$ you need to calculate
+\item The function $f(\bs{\theta})$. I.e. given $\bs{\theta}$ you need to calculate
       $\int_z^{\infty}\lambda/h^2 dx$ (Key functions ``hprime\_to\_h'' and
       ``hprime\_to\_p'').
 \item Need to calculate $Df$ which involves calculating $\displaystyle \frac
-      {\partial} {\partial \bs{h}'} \int_z^{\infty} \frac{\lambda}{h(x)^2}dx$
+      {\partial} {\partial \bs{\theta}} \int_z^{\infty} \frac{\lambda}{h(x)^2}dx$
 
 \end{itemize}
 So we have worked out numerically $K(\lambda)$, now we want to solve 
