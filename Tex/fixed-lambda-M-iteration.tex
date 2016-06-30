@@ -1,33 +1,25 @@
-Arguably the most important function. Takes a value of $\lambda$ and
-returns the corresponding $K$ value.
-
-Hard coded into the program are the values of $P$ and $M$ set as
-\[ \left\{ \begin{array}{c} M=1 \\ P=0 \end{array} \right. \]
-Sets up spacing for $x$. $\tan^2$ spacing is used.
+Takes a value of $\lambda$ and returns the corresponding $K$ value.
+Now using the ``scaled'' version, so the values of $P,M$ are implicitly
+assumed to be $0,1$ respectively.
 
 \textcolor{red}{Somewhat concerningly, $\bs{h}'$ is assumed to 
 already have this spacing, which could potentially cause issues.
 If you wanted to change the spacing you would have to do it in
 two different places.}
 
-\textcolor{orange}{Also a cause for concern, or note is that 
-with this $\tan^2$ spacing is that the maximum value of $x_{max}$
-is not actually $x_{max}$ but rather $x_{max}^2$. I.e. using 
-$x_{max}=20$ actually results in the maximum value of $x$ used 
-being 400.}
-
 Subroutines then return the kernel matrix \& the interpolate matrix.
 The kernel matrix is in lieu of $\displaystyle \left( \begin{array}{c}
 p \\ 0 \end{array} \right) = \int \underline{\underline{K}} \left(
 \begin{array}{c} g' \\ h' \end{array} \right) $.
-\textcolor{red}{I am not sure of what the interpolate matrix actually
-is, or what it's for. Finding this out is a big priority.}
+The interpolate matrix actually only appears here to add in boundary
+conditions to the matrix $A$.
 
 The matrix $A$ is set up, which is part kernel, part interpolate matrix,
 same matrix as described earlier.
 
 The rcond statement is testing how conditioned the matrix $A$ is, or how 
-ameniable it is to being numerically inverted. 
+ameniable it is to being numerically inverted. There does not seem to be
+a huge amount of point in adding this step in.
 
 Then the iteration loop begins. Follows Newton's method for the equation
 $f(\bs{h}') = A \bs{h}'$ and iterates via $\displaystyle \bs{h}'_{new} =

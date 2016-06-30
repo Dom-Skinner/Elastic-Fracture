@@ -1,0 +1,29 @@
+This function takes $h'$ and returns $H$ the coefficient matrix for $h$.
+Starting point, suppose we know the $c,d$ coefficients for $h'$.
+Then have that 
+$$ h'(x) = \left\{ \begin{array}{cc} \frac{1}{\sqrt{x}}(c_ix+d_i) &
+i <t \\ c_ix+d_i & i \geq t \end{array} \right. \;\; x \in [x_i,x_{i+1}] $$
+Then integrating gives that 
+$$ h'(x) = \left\{ \begin{array}{cc} w_ix^{3/2}+e_ix^{1/2}+r_i &
+i <t \\ w_ix^2+e_i x + r_i & i \geq t \end{array} \right. \;\; x 
+\in [x_i,x_{i+1}] $$
+where
+$$ w_i = \left\{ \begin{array}{cc} \frac{2}{3} c_i &
+i <t \\[4pt] \frac{1}{2}c_i & i \geq t \end{array} \right.  $$
+
+$$ e_i = \left\{ \begin{array}{cc} 2d_i &
+i <t \\[4pt] d_i & i \geq t \end{array} \right.  $$
+
+We recover the $r_i$'s through imposing continuity and $c_1=0$. Get
+that
+
+$$ r_i = \left\{ \begin{array}{cc} r_i + \frac{2}{3}(c_i-c_{i+1})x^{3/2}_{i+1}
++2(d_i-d_{i+1})x^{2/3}_{i+1} & i <t \\[4pt] 
+r_{i+1} + \frac{1}{2}(c_i-c_{i+1})x^2_{i+1} +(d_i-d_{i+1})x_{i+1} & 
+i \geq t \end{array} \right.  $$
+Which looks complicated, but can see that $r$ is related to $c,d$ linearly. 
+
+So all this function does is return a matrix $H$.
+Important note: The coefficients of $h$ are stored
+$(w_1,e_1,r_1, \dots, w_n,e_n,r_n)$, rather than what you might expect, 
+$(w_1,\dots, w_n, e_1, \dots, e_n, r_1, \dots, r_n)$. (For reasons unknown)

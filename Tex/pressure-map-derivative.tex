@@ -1,0 +1,13 @@
+This function calculates $Df$ or $\frac{\partial}{\partial \bs{\theta}} f$.
+Most of $f$ is either zeros, or the boundary conditions which we assume to
+be constant. (actually, our more refined guess of the boundary conditions makes
+them non-constant, but \texttt{bending\_p\_adjust} will do these corrections.
+
+The easiest way to think of $p$ is as a function of the coefficients of $h$,
+i.e. the $w,e,r$. So $p(z) = p(z;w,e,r)$, and actually we can find analytic
+expressions for things like $\frac{\partial}{\partial e_i} p$. Now there is 
+a linear relationship between $(w,e,r)$ and $\bs{\theta}$, say 
+$(w,e,r) = H \bs{\theta}$ where $H$ is the h\_coeff matrix, provided by
+\texttt{h\_coefficient\_matrix.m}
+
+We use this, together with the chain rule, to find an expression for $Df$.

@@ -21,8 +21,8 @@ Consider the govering equations
 \left( \begin{array}{c} p(z) \\ 0 \end{array} \right) =
  \left( \begin{array}{c} \sigma_y \\ \tau_{xy} \end{array} \right) =
 \int_0^{\infty} \left(
-\begin{array}{cc} K_{11}(x-z) & K_{12}(x-z) \\ K_{21}(x-z) & K_{22}(x-z) \end{array}
-\right)
+\begin{array}{cc} K_{11}(x-z) & K_{12}(x-z) \\ K_{21}(x-z) & K_{22}(x-z) 
+\end{array} \right)
  \left( \begin{array}{c} g'(x) \\ h'(x) \end{array} \right) dx
 \end{equation}
 %
@@ -40,7 +40,7 @@ we have so far focused on $K_I$.
 \includegraphics{NumFig3.pdf}
 \end{figure}
 
-\underline{Goal:} 
+\textbf{Goal:} 
 Find $\lambda$ such that $K_I(\lambda)=0$, ``Zero toughness solution''.
 Given this we then want to investigate the behaviour for small $K_I\approx 0$.
 To do this, take some given value of $\lambda$ and then solve equations
@@ -49,7 +49,7 @@ To do this, take some given value of $\lambda$ and then solve equations
 The method chosen to discretize the problem is to take a vector 
 $(x_1, \dots , x_n)$ of $n$ points at which we measure $g', h'$ and have a 
 vector $(z_1, \dots ,z_{n-1})$ of $n-1$ intermediate 
-points at which $p$ is measured. (The spacing chosen is a $\tan^2$ spacing)
+points at which $p$ is measured. The spacing chosen is a $\tan^2$ spacing.
 \begin{figure}[!ht]\centering
 \includegraphics{NumFig2.pdf}
 \end{figure}
@@ -65,8 +65,8 @@ for $x$ in the spline $x \in [x_i,x_{i+1}]$. Choose $1 < t < n$, typically
 $t=n/2$. Similarly
 \[ h'(x) = \left\{ \begin{array}{cc} \frac{1}{\sqrt{x}}(c_ix+d_i) &
 i <t \\ c_ix+d_i & i \geq t \end{array} \right. \]
-With the same $t$ used. We also define $a_n, b_n, c_n, d_n$ for interpolation
-beyond $x_n$.
+With the same $t$ used. We will interpolate beyond $x_n$ via 
+$g'(x) = a_n x + b_n$, for $x>x_n$, and similar for $h'$.
 
 The values of $g',h'$ are stored via 
 \[ \bs{\theta} = \left( \begin{array}{c} a_1x_1+b_1 \\ \vdots 
@@ -118,7 +118,7 @@ Now, B.C. for $h'$ implies $h''(x_n) \approx h''(x_{n-1})$ i.e.
 $c_n=c_{n-1}$ and thus from continuity $d_n=d_{n-1}$. This completes
 our interpolation matrix $T$. We still have some extra boundary
 conditions to impose, which we will do later. Naively, these
-are $g'(x_n) = 1/2$, $c_n=1$. These are approximately true, but
+are $g'(x_n) = b_n = 1/2$, $c_n=1$. These are approximately true, but
 we need to do a bit better. (I will add this into the explanation
 once I understand it$\dots$)  
 \\
@@ -186,10 +186,11 @@ spacings, we have
 Where we now just need to solve for $\bs{\theta}$.
 
 \subsection*{Newton's method}
-Suppose $\bs{\theta}$ is iterate 1. To get the next iterate you need to solve (to 
-first order)
+Suppose $\bs{\theta}$ is iterate 1. To get the next iterate you need to solve 
+(to first order)
 \[ f(\bs{\theta}+\delta\bs{\theta}) = A(\bs{\theta}+\delta \bs{\theta})\]
-\[ f(\bs{\theta}) + (Df|_{\bs{\theta}})(\delta\bs{\theta}) = A\bs{\theta}+A\delta \bs{\theta}\]
+\[ f(\bs{\theta}) + (Df|_{\bs{\theta}})(\delta\bs{\theta}) = A\bs{\theta}+
+A\delta \bs{\theta}\]
 Where $Df|_{\bs{\theta}}$ is a matrix of partial derivatives. Therefore, get to 
 first order that 
 \[ \delta \bs{\theta} =  (A-Df|_{\bs{\theta}})^{-1}(f(\bs{\theta}) - A\bs{\theta}) \]
@@ -221,8 +222,21 @@ For example in Figure \ref{March}, the obvious choice for $\lambda_4$
 and therefore the naive extrapolation method won't quite work.
 \clearpage
 \section*{Guide to programs}
+Important note: What I have called $\bs{\theta}$ in this document is
+(confusingly) called hprime in the code. From now on I will call it
+$\bs{h}'$, in bold to try to avoid confusion.
 \subsection*{\color{blue} \texttt{K\_of\_c\_march}}
 \input{K-of-c-march.tex}
 \subsection*{\color{blue} \texttt{fixed\_lambda\_M\_iteration}}
 \input{fixed-lambda-M-iteration.tex}
+\subsection*{\color{blue} \texttt{pprime\_to\_p}}
+\input{pprime-to-p.tex}
+\subsection*{\color{blue} \texttt{pressure\_map\_derivative}}
+\input{pressure-map-derivative.tex}
+\subsection*{\color{blue} \texttt{hprime\_to\_p}}
+\input{hprime-to-p.tex}
+\subsection*{\color{blue} \texttt{hprime\_to\_h}}
+\input{hprime-to-h.tex}
+\subsection*{\color{blue} \texttt{pressure\_shear\_matrix}}
+\input{pressure-shear-matrix.tex}
 \end{document}

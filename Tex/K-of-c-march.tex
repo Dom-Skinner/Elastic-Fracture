@@ -1,8 +1,7 @@
 First the program sets up the spacing as $\tan^2$. It also sets the
 initial $\bs{h}'= (\underbrace{1,\dots,1}_{g'} \underbrace{x_1+1, \dots,
-x_n+1}_{h'})$ \textcolor{orange}{(Not sure why this is a reasonable first
-guess, perhaps from the boundary conditions at $\infty$. Seems to have
-no problems converging though.)}
+x_n+1}_{h'})$ (This first guess is based on the
+the boundary conditions at $\infty$.)
 
 Most of the work is then done by \texttt{fixed\_lambda\_M\_iteration}
 which then solves for $K_I$ and $\bs{h}'$. 

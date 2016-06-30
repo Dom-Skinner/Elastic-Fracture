@@ -1,0 +1,11 @@
+This function is given $h,x,z$ ($h$ in the form of the h\_coeff vector)
+and returns 
+$\displaystyle \frac{1}{\lambda} \left( \begin{array}{c} p(z_1) \\ \vdots \\
+p(z_{n-1}) \end{array} \right) $ via the equation $\displaystyle p =-\lambda
+ \int_z^{\infty} \frac{1}{h^2} dx$
+\\
+
+Again, once one has made the approximation of $h$ as piecewise analytic, can 
+actually work out the exact integrals. So all this function really has to do
+is to evaluate some known functions, plugging in the values of h\_coeff.
+
