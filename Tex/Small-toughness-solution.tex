@@ -1,0 +1,75 @@
+%
+%
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{caption}
+\usepackage{amsfonts}
+\usepackage[margin=3cm]{geometry}
+\usepackage{tikz}
+\newcommand{\cE}{\mathcal{E}}                               %
+
+\begin{document}
+
+\title{Small toughness solution}
+\author{Tim Large, Dominic Skinner}
+\maketitle
+\section{Setup}
+Recall we have a system goverened by the equations
+\begin{equation} \left( \begin{array}{c} p(z) \\ 0 \end{array} \right) =
+\int_0^{\infty} \left( \begin{array}{cc} K_{11}(x-z) & K_{12}(x-z) \\
+ K_{21}(x-z) & K_{22}(x-z) \end{array} \right)
+ \left( \begin{array}{c} g'(x) \\ h'(x) \end{array} \right) dx
+\end{equation}
+\begin{equation}
+p(z) = - \int_z^{\infty} \frac{\lambda}{h(x)^2} dx
+\end{equation}
+where the kernel terms are given by
+\[ \begin{array}{lcl}
+\displaystyle K_{11}(z) = \frac{32-24z^2}{(z^2+4)^3} & &
+\displaystyle K_{12}(z) = \frac{48z^2-64}{z(z^2+4)^3} \\[19pt]
+\displaystyle K_{21}(z) = -\frac{(16z^3+16z^2+4)}{z(z^2+4)^3} & &
+\displaystyle K_{22}(z) = -\frac{(32-24z^2)}{(z^2+4)^3} 
+\end{array} \] 
+with boundary conditions at infinity
+\[ h''(x) \to 1, \quad g'(x) \to \frac{1}{2} \]
+For a given speed parameter $\lambda$, we wish to find the material toughness
+$K$, which is given by
+\[ K(\lambda) = \lim_{x\to 0} 3 \sqrt{2\pi} \sqrt{x} \;h'(x) \]
+We are interested in the value $\lambda = \lambda_0$ for which 
+$K(\lambda_0)=0$, since this is then the propagation speed of a zero-toughness
+system. We are also interested in $\lambda \approx \lambda_0$.
+%
+\section{Zero toughness solution}
+% 
+Consider setting $K=0$. We investigate only the nature of the solution near
+$x=0$. We suspect, (and will verify later) that $p$ is singular near the crack
+tip. Thus in equation 1, we can neglect terms that are non singular. 
+\[ p(z) = \int_0^{\infty} \frac{h'(x)}{x-z} dx \]
+Also have that $p' = \lambda/h^2$. We try the ansatz $h \sim x^{\alpha}$. From
+our two equations linking $h$ and $p$, this gives that
+\[ p \sim x^{\alpha-1} \]
+\[ p' \sim x^{-2\alpha} \]
+and so $\alpha = 2/3$. We have made use of the integral
+\[ \int_0^\infty \frac{z^{s-1}}{z-x}dz = -\pi \cot (\pi s)z^{s-1} \]
+So starting with a solution $h_0 = A_0 x^{2/3} + o(x^{2/3})$ near the
+crack tip, we get $p_0(x) = -\frac{3\lambda_0}{A_0^2x^{1/3}} + O(1)$
+
+%
+% References/Bibliography ////////////////////////////////////////////////////
+%
+\clearpage 
+\begin{thebibliography}{9}  
+%
+\bibitem{GandD}
+Garagash, D.I., Detournay, E.,
+\emph{Plane-Strain Propagation of a Fluid-Driven Fracture: Small Toughness
+Solution,}
+Journal of Applied Mechanics,
+2005.
+%
+%
+\end{thebibliography}
+\end{document}
+
