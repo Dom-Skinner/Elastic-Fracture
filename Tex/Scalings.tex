@@ -1,0 +1,180 @@
+%
+%
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{caption}
+\usepackage{amsfonts}
+\usepackage[margin=4cm]{geometry}
+\usepackage{tikz}
+\newcommand{\cE}{\mathcal{E}}                               %
+
+\begin{document}
+
+\title{Rescaling the equations and boundary conditions}
+\author{Dominic Skinner}
+\maketitle
+In this document, we ignore all of the physics, geometry of the problem, and 
+the approximations made, to just consider the governing equations on their
+own. Recall that with equations 1,2 can solve for $K_I$ given the BC's at 
+$\infty$ or alternatively, given the BC's at $\infty$, we can solve for $K_I$.
+\\
+\begin{equation}
+ \left( \begin{array}{c} p(z) \\ 0 \end{array} \right) =
+\frac{E}{4\pi (1-\nu^2)} \int_0^{\infty} 
+\underline{\underline{K}}(x-z) 
+\left( \begin{array}{c} g'(x) \\ h'(x) \end{array} \right) dx
+\end{equation}
+\\
+\begin{equation}
+12\mu c = h^2 p'
+\end{equation}
+\\
+\begin{equation}
+\left\{ \begin{array}{ccc}
+\displaystyle \lim_{x\to\infty} h''(x) & = & \frac{12(1-\nu^2)}{E\ell^3} M \\
+\displaystyle \lim_{x\to\infty} g'(x) & = & \frac{6(1-\nu^2)}{E\ell^3} M 
+\end{array} \right.
+\end{equation}
+\\
+\begin{equation}
+K = \lim_{x\to 0} \frac{E}{1-\nu^2} \sqrt{\frac{\pi}{8}} \sqrt{x} h'(x)
+\end{equation}
+\\
+We switch to working with dimensionless variables, 
+\[ (x,p,h,g,\underline{\underline{K}}) \to (\xi, \Pi, H, G, 
+\underline{\underline{\Lambda}} )\]
+Let us do this by the following transforms:
+\begin{align*}
+x &= \ell \xi \\
+p(x) &= \beta \Pi (\xi) \\
+h(x) &= \alpha H(\xi) \\
+g(x) &= \alpha G(\xi) \\
+\underline{\underline{K}}(x) &= \frac{1}{\ell} 
+\underline{\underline{\Lambda}}(\xi) \end{align*}
+At this point we have already made some choices. I would claim the
+choices made this far are ``natural'' although I don't have any more
+justification than that. The equations become
+\\
+\begin{equation}
+ \left( \begin{array}{c} \Pi(\xi) \\ 0 \end{array} \right) =
+\frac{E\alpha}{4\pi (1-\nu^2)\beta \ell} \int_0^{\infty} 
+\underline{\underline{\Lambda}}(\tilde{\xi}- \xi) 
+\left( \begin{array}{c} G'(\tilde{\xi}) \\[4pt] H'(\tilde{\xi}) \end{array} 
+\right) d\tilde{\xi}
+\end{equation}
+\\
+\begin{equation}
+\frac{12\mu c\ell}{\alpha^2 \beta}  = H^2 \Pi'
+\end{equation}
+\\
+\begin{equation}
+\left\{ \begin{array}{ccc}
+\displaystyle \lim_{\xi\to\infty} H''(x) & = & \frac{12(1-\nu^2)}
+{E\ell\alpha} M \\
+\displaystyle \lim_{\xi\to\infty} G'(x) & = & \frac{6(1-\nu^2)}{E\ell\alpha} M 
+\end{array} \right.
+\end{equation}
+\\
+\begin{equation}
+K_I = \lim_{\xi\to 0} \frac{E\alpha}{1-\nu^2} \sqrt{\frac{\pi}{8\ell}} 
+\sqrt{\xi} H'(\xi)
+\end{equation}
+\\
+We now have several choices. The first to be explored, is to take equations
+5 and 6 and set the dimensionless parameters appearing in them to unity.
+\section{Scaling out $c$}
+Set $\displaystyle \frac{E\alpha}{4\pi (1-\nu^2)\beta \ell} =1$ 
+and $\displaystyle \frac{12\mu c\ell}{\alpha^2 \beta}=1 $
+which uniquely determines $\alpha, \beta$ as
+\[ \alpha^3 = \frac{48\pi(1-\nu^2) \mu c \ell^2}{E} \qquad
+ \beta^3 = \frac{3\mu c E^2}{\pi (1 - \nu^2) \ell} \]
+We then have the relavent equations as 
+\\
+\begin{equation}
+ \left( \begin{array}{c} \Pi(\xi) \\ 0 \end{array} \right) =
+\int_0^{\infty} 
+\underline{\underline{\Lambda}}(\tilde{\xi}- \xi) 
+\left( \begin{array}{c} G'(\tilde{\xi}) \\[4pt] H'(\tilde{\xi}) \end{array} 
+\right) d\tilde{\xi}
+\end{equation}
+\\
+\begin{equation}
+1 = H^2 \Pi'
+\end{equation}
+\\
+\begin{equation}
+\left\{ \begin{array}{ccc}
+\displaystyle \lim_{\xi\to\infty} H''(x) & = & \gamma \\
+\displaystyle \lim_{\xi\to\infty} G'(x) & = & \gamma/2  
+\end{array} \right.
+\end{equation}
+\\
+\begin{equation}
+K_I = \lim_{\xi\to 0} \frac{E\alpha}{1-\nu^2} \sqrt{\frac{\pi}{8\ell}} 
+\sqrt{\xi} H'(\xi)
+\end{equation}
+\\
+Where $\gamma = M \left( \frac{36(1-\nu^2)^2}{\pi E^2 \mu c \ell^5} 
+\right)^{1/3}$. Given equations 9,10,11, we can solve for $K_I$. It is 
+clear from the form of them, that the only way the physical parameters
+can enter the solution is through $\gamma$. Thus, the relationship between
+$K_I$ and the other physical quantities \emph{must} be of the form
+\[ K_I = E^{2/3} \mu^{1/3} c^{1/3} \ell^{1/6}(1-\nu^2)^{-2/3} f(\gamma) \]
+N.B. if all we are interested in is $K_I,c,M$, get the relationship
+\[K_I = c^{1/3} \tilde{f}(M/c^{1/3}) \]
+but this does depend on other physical parameters.
+\section{Scaling out $\gamma$}
+Set $\displaystyle \frac{E\alpha}{4\pi (1-\nu^2)\beta \ell} =1$ 
+and $\displaystyle \frac{12(1-\nu^2)}{E \ell \alpha}M=1 $. We get that
+\[ \alpha = \frac{12(1-\nu^2)M}{E\ell} \qquad \beta = \frac{3M}{\pi \ell^2} \]
+We then have the relevant equations as 
+\\
+\begin{equation}
+ \left( \begin{array}{c} \Pi(\xi) \\ 0 \end{array} \right) =
+\int_0^{\infty} 
+\underline{\underline{\Lambda}}(\tilde{\xi}- \xi) 
+\left( \begin{array}{c} G'(\tilde{\xi}) \\[4pt] H'(\tilde{\xi}) \end{array} 
+\right) d\tilde{\xi}
+\end{equation}
+\\
+\begin{equation}
+\lambda = H^2 \Pi'
+\end{equation}
+\\
+\begin{equation}
+\left\{ \begin{array}{ccc}
+\displaystyle \lim_{\xi\to\infty} H''(x) & = & 1 \\
+\displaystyle \lim_{\xi\to\infty} G'(x) & = & 1/2  
+\end{array} \right.
+\end{equation}
+\\
+\begin{equation}
+K_I = \lim_{\xi\to 0} 3M \sqrt{\frac{\pi}{2\ell^3}} 
+\sqrt{\xi} H'(\xi)
+\end{equation}
+\\
+Where $\lambda = \frac{\pi \mu c E^2 \ell^5}{36(1-\nu^2)^2 M^3}$. 
+Thus $K_I$ must be of the form
+\[K_I = M\ell^{-3/2} s(\lambda) \]
+for some function $s$. This is not a new relationship, writing 
+$s = \lambda^{1/3} \tilde{s}(\lambda)$ recovers the exact same relationship
+that we had earlier.
+%
+%
+% References/Bibliography //////////////////////////////////////////////\\/////////////
+%
+%\clearpage 
+%\begin{thebibliography}{9}  
+%
+%\bibitem{Pedlosky}
+%Pedlosky, J.,
+%\emph{Geophysical Fluid Dynamics,}
+%Springer-Verlag,
+%1979.
+%
+%
+%\end{thebibliography}
+\end{document}
+
