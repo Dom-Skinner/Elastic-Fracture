@@ -61,7 +61,7 @@ while abs(K_diff) >= tol && iteration_number<20
 end
 
 KI = K_new;
-if iteration_number == 20
+if iteration_number == 10 || KI < 0
     fprintf('Failure to coverge');
     KI=-1;
 end
