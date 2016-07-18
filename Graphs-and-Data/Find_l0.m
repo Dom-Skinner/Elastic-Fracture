@@ -3,36 +3,38 @@
 % here numerically. 
 
 clear
-load n800x30-extended.mat
+load n800x20-extended.mat
 
 s = 0.138673;
 u = 4 - 6*s;
 Kap = 3*sqrt(2*pi)*KI;
-p = polyfit(Kap(end-13:end-3).^u,lambda(end-13:end-3),1);
-D = p(1);
-l0 = p(2);
+p1 = polyfit(Kap.^u,lambda,1);
+p2 = polyfit(Kap(end-7:end-3).^u,lambda(end-7:end-3),1);
+p3 = polyfit(Kap(end-3:end).^u,lambda(end-3:end),1);
+
 
 figure('units','normalized','outerposition',[0 0 0.5 1]) % Makes figure fill 
 % the whole screen. Needed when using export fig.
 %
 
-plot(Kap.^u,l0+D.*Kap.^u, Kap.^u,lambda,'o--');
+plot(Kap.^u,lambda,'o', Kap.^u,p1(2)+p1(1).*Kap.^u,  ...
+Kap.^u,p2(2)+p2(1).*Kap.^u, Kap.^u,p3(2)+p3(1).*Kap.^u);
+
 axis( [0, 1.5, 0.05,0.06]);
 axis square
 xlabel('$K_I^u$','Interpreter','Latex','fontsize',25)
 set(gca,'fontsize',20')
 set(gca,'TickLabelInterpreter', 'latex');
-
 title('Plot of $K_I^u$ against $\lambda$',...
     'fontsize', 25,'Interpreter','latex');
 
-legend({'$\lambda_0+DK_I^u$', '$\lambda$'},'Interpreter','Latex','fontsize',20)
-fprintf('lambda_0 = %.2e, D = %.2e\n',l0,D);
-fprintf('Where lambda = lambda_0 + D*K_I^u\n');
+s1 = strcat(num2str(p1(2),4),num2str(p1(1),4),'$K_I^u$');
+s2 = strcat(num2str(p2(2),4),num2str(p2(1),4),'$K_I^u$');
+s3 = strcat(num2str(p3(2),4),num2str(p3(1),4),'$K_I^u$');
 
-for l = 1:numel(lambda)-1
-    p = polyfit(Kap(l:end).^u,lambda(l:end),1);
-    D = p(1);
-    l0 = p(2);
-    fprintf('lambda_0 = %.4e, D = %.2e\n',l0,D);
-end
+
+
+legend({'$\lambda$',s1,s2,s3},'Interpreter','Latex','fontsize',20)
+
+
+clear s1 s2 s3 p1 p2 p3 u s Kap
