@@ -108,9 +108,11 @@ H_0 - a H_1$ etc. gets the equations
 \[ \tilde{H}'' \to 1, \qquad \tilde{H} \sim - \frac{3\lambda_0}{\lambda_1} 
 \xi^s \]
 Note that this is a slightly different scaling than proposed before, but 
-the idea is, that this has imposable boundary conditions at $\infty$, and
+this has the same boundary conditions at $\infty$ as before, and
 the elasticity integral equation is exactly the same as before. This means
-the old code can hopefully be reused.
+the old code can hopefully be reused, as well as the fact that we can easily
+impose conditions at $\infty$, whereas it is non-obvious how to easily impose 
+them at 0.
 \section{Numerical strategy}
 The old method of linearising via $\tilde{H}'(\xi) \approx 
 \frac{1}{\sqrt{\xi}}(a\xi+b)$ may no longer be too helpful, since we do not 
@@ -122,7 +124,7 @@ approximation, makes the analytic expressions inside the elasticity integal
 become worse than they already were.
 \\
 \\
-For now, I propose sticking to the old scheme. Even though it doesn't correctly
+For now, we propose sticking to the old scheme. Even though it doesn't correctly
 predict the behaviour near zero, the code should be written to see if this works
 at all. If it doesn't, then at least we have a rough structure of the code
 which shouldn't be too time consuming to change for a new representation.
@@ -141,8 +143,8 @@ and recall that
  d_n) \]
 \[ \bs{\theta} = (a_1\xi_1+b_1, \dots, a_n\xi_n+b_n,\dots , c_1\xi_1+d_1, \dots,
  c_n \xi_n +  d_n) \]
-Now, the difference from before is that the second equation for $\Pi$ is linear
-in $\tilde{H}$. 
+Now, the difference from before is that the second equation for $\tilde{\Pi}$ 
+is linear in $\tilde{H}$. 
 \[ \tilde{\Pi} = \int_z^{\infty} \frac{2 \tilde{H} \Pi_0'}{H_0} d\xi \]
 So (after a struggle) one might be able to alternatively represent 
 $\tilde{\Pi}$ via 
@@ -158,7 +160,7 @@ matrix by demanding $\theta_n=1/2$ and
 $\displaystyle \frac{\theta_{2n}-\theta_{2n-1}}{x_{2n}- x_{2n-1}}=1$.
 This gives us a matrix equation to solve: $A \bs{\theta} = \bs{c}$, where
 $\bs{c}=0$ except $c_n=1/2$, $c_{2n}=1$. Inverting $A$ should get the 
-required answer.
+required answer, no iteration needed.
 \section{Numerical Details}
 We have inherited the matrix $BT$ from Tim's code. It may well be that this
 needs changing in the future, but for now, we shall take this as given.
@@ -185,8 +187,8 @@ x_1^{3/2} & x_1^{1/2} & 1 & & & & & & & & & & 0 \\
 thought of one). Recall the equation we are trying to solve:
 \[ \tilde{\Pi} = \int_z^{\infty} \frac{2 \tilde{H} \Pi_0'}{H_0} d\xi \]
 We want to solve for $(\tilde{\Pi}(z_1), \dots \tilde{\Pi}(z_{n-1}))$.
-In a break with the approaches previously used, we will solve this via
-simple numerical integration using the trapezium rule. We will also use
+In a break with the approaches previously used, we will solve this with
+simple numerical integration via the trapezium rule. We will also use
 the lubrication equation $\Pi_0'H_0^2=\lambda_0$ to remove $\Pi_0'$.
 \[ \tilde{\Pi}(z_k) = \int_{z_k}^{\xi_{k+1}} \frac{2\lambda_0 \tilde{H}}{H_0^3} 
 d\xi + \sum_{r=k+1}^{n-1}\int_{\xi_r}^{\xi_{r+1}} \frac{2\lambda_0 \tilde{H}}
@@ -199,7 +201,7 @@ It is simple to approximate some of these integrals with the trapezium rule:
 {H_0^3(\xi_{r})} \right) =(\xi_{r+1} - \xi_r)(f(\xi_{r+1})+f(\xi_r)) \]
 Where we adopt the new notation $f(\xi) = \lambda_0 \tilde{H}(\xi)/H_0^3(\xi)$
 for convenience. It is easy to see that 
-\[ (f(\xi_1), \dots , f(\xi_n)) = FSH_{Coeff} \] 
+\[ (f(\xi_1), \dots , f(\xi_n)) = FSH_{Coeff}\bs{\theta} \] 
 where now 
 \[ F = \left( \begin{array}{ccc}
 \lambda_0/H_0^3(\xi_1) \\
@@ -217,6 +219,10 @@ so
 \left( f(\xi_k) \frac{\xi_{k+1}-z_k}{\xi_{k+1}-\xi_k} + f(\xi_{k+1})
 \frac{z_k - 2 \xi_k +\xi_{k+1}}{\xi_{k+1}-\xi_k} \right)
 \]
+\begin{figure}[!ht]\centering
+\includegraphics{LinFig1.pdf}
+\end{figure}
+\\
 As for $ \int_{\xi_n}^{\infty} 2f(\xi) d\xi$, this is where I don't have any
 particularly good ideas so far. From the boundary conditions, expect that
 $f(\xi) \approx 4\lambda_0 /\xi^4$ to leading order. So
@@ -232,7 +238,16 @@ improvement to make. Finally we get that
 &+ \sum_{r = k+1}^{n-1} (\xi_{r+1} - \xi_{r})(f(\xi_{r+1})+f(\xi_r)) + 
 \frac{2}{3}\xi_n f(\xi_n)
 \end{align*}
-Which, one notes, is linear in the $f(\xi_k)$.
+Which, one notes, is linear in the $f(\xi_k)$. Thus 
+\[ (\tilde{\Pi}(z_1), \dots , \tilde{\Pi}(z_{n-1})) = QFSH_{Coeff}\bs{\theta} \] 
+Where
+\begin{align*}
+ Q(k,:) =& \left(\underbrace{0, \dots , 0}_{k-1 \mbox{ times}}, (\xi_{k+1}-z_k) 
+\frac{\xi_{k+1}-z_k}{\xi_{k+1}-\xi_k},  (\xi_{k+1}-z_k) \frac{z_k - 2 \xi_k 
++\xi_{k+1}}{\xi_{k+1}-\xi_k} + (\xi_{k+2}-\xi_{k+1}), \right. \\[4pt]
+& \qquad\qquad \left. \xi_{k+3}-\xi_{k+1}, \dots, \xi_{n}-\xi_{n-2}, 
+\xi_{n}-\xi_{n-1} + \frac{2}{3}\xi_n  \right)
+\end{align*}
 %
 %
 % References/Bibliography /////////////////////////////////////////////////////
