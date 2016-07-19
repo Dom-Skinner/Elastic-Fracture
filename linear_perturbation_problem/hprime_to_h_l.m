@@ -4,13 +4,13 @@
 %produces a matrix, which when multiplied by the n values of h',
 %gives 3n coefficients for h.
 
-function h_coefficient_matrix = hprime_to_h(x)
+function h_coefficient_matrix = hprime_to_h_l(x)
 
 n = length(x);
 t = round(n/2);
 
 %gets the coefficients of g', h'
-interpolate_matrix = linear_simpleinfty_interpolate(x);
+interpolate_matrix = linear_simpleinfty_interpolate_l(x);
 interpolate_matrix = interpolate_matrix(2*n+1:4*n,n+1:2*n);
 
 h_coefficient_matrix = zeros(3*n,2*n);

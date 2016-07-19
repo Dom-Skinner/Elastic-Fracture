@@ -3,7 +3,7 @@
 % here numerically. 
 
 clear
-load n800x20-extended.mat
+load n400x40.mat
 
 s = 0.138673;
 u = 4 - 6*s;

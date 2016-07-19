@@ -1,6 +1,6 @@
 %a function to do interpolation for the coefficients of h'
 
-function interpolate_matrix = linear_simpleinfty_interpolate(x)
+function interpolate_matrix = linear_simpleinfty_interpolate_l(x)
 
 n = length(x);
 t = round(n/2);
