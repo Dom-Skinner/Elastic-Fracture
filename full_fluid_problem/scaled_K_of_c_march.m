@@ -1,12 +1,12 @@
 %sets easy geometric parameters
-n = 800;
+n = 400;
 t = round(n/2);
-xmax = 40;
+xmax = 20;
 
 x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
 
 %some values of lambda to try
-lambda = 0.05:0.001:0.055;
+lambda = 0.056:0.0004:0.0592;
 
 hprime_data = zeros(2*n,length(lambda));
 
@@ -37,7 +37,7 @@ end
 % terminated. Will be limited by numerical accuracy & the choice of n
 i = length(lambda); 
 
-while 1
+while 0
     
     if KI(i) == -1 % If previous attempt failed, try again
         lambda(i) = [];

@@ -6,18 +6,18 @@ ax = gca;
 hold on
 
 clear data
-load n400x40.mat
+load n400x40-extended.mat
 dat = 1:40;
 s = 0.138673;
 u = 4 - 6*s;
 
 K = 3*sqrt(2*pi)*KI;
 
-[interp1, interp2] = interpolate_hprime(x,n,hprime_data,K);
+[interp1, interp2] = interpolate_hprime(x,n,hprime_data,K,6);
 
-plot(ax,x(dat),hprime_data(n+dat,9)'.*x(dat).^(-1/6), '*-', ...
-    x(dat),hprime_data(n+dat,10)'.*x(dat).^(-1/6),'*-', ...
-            x(dat),hprime_data(n+dat,11)'.*x(dat).^(-1/6),'*-', ...
+plot(ax,x(dat),hprime_data(n+dat,6)'.*x(dat).^(-1/6), '*-', ...
+    x(dat),hprime_data(n+dat,7)'.*x(dat).^(-1/6),'*-', ...
+            x(dat),hprime_data(n+dat,8)'.*x(dat).^(-1/6),'*-', ...
 x(dat),interp1(dat).*x(dat).^(-1/6),x(dat),interp2(dat).*x(dat).^(-1/6))
 
 axis( [0.0, 0.01, 0.35,0.38]);
@@ -32,9 +32,9 @@ set(get(ax,'YLabel'),'Rotation',0)
 set(get(ax,'YLabel'),'Rotation',0, 'Position', [-0.0014, 0.365])
 
 s = '$K_I$ =';
-s1 = strcat(s, num2str(K(9)));
-s2 = strcat(s, num2str(K(10)));
-s3 = strcat(s, num2str(K(11)));
+s1 = strcat(s, num2str(K(6)));
+s2 = strcat(s, num2str(K(7)));
+s3 = strcat(s, num2str(K(8)));
 
 
 legend({s1,s2,s3,'Interpolated','Interpolated with LEFM correction'}...

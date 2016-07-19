@@ -2,7 +2,7 @@
 %load n400x40.mat
 
 %K = 3*sqrt(2*pi)*KI;
-function [interp1, interp2] = interpolate_hprime(x,n,hprime_data,K)
+function [interp1, interp2] = interpolate_hprime(x,n,hprime_data,K,fit)
 s = 0.138673;
 u = 4 - 6*s;
 interp1 = zeros(1,n);
@@ -11,8 +11,8 @@ pc_er = zeros(1,n);
 
 % First go at interpolation of hprime
 for l = 1:n
-    p1 = polyfit(K(10:11).^u , hprime_data(n+l,10:11),1);
-    p2 = polyfit(K(9:11).^u , hprime_data(n+l,9:11),2);
+    p1 = polyfit(K(fit:fit+1).^u , hprime_data(n+l,fit:fit+1),1);
+    p2 = polyfit(K(fit:fit+2).^u , hprime_data(n+l,fit:fit+2),2);
     interp1(l) = p1(2);
     er(l)    = abs(p1(2)-p2(3));
     pc_er(l) = abs(p1(2)-p2(3))/p1(2);

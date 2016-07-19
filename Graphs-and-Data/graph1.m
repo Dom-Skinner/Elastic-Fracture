@@ -18,7 +18,7 @@ set(get(ax,'YLabel'),'Rotation',0, 'Position', [-0.006, 1])
 clear data
 load n800x30.mat
 K = 3*sqrt(2*pi).*KI;
-plot(ax,lambda,K,'black')
-scatter(ax,lambda,K,70,'black')
+plot(ax,lambda,K, 'ko-')
+%scatter(ax,lambda,K,70,'black')
 
 export_fig ('K-lambda', '-png', '-transparent','-m1.5')

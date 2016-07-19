@@ -3,7 +3,7 @@
 % here numerically. 
 
 clear
-load n400x40.mat
+load n400x40-extended.mat
 
 s = 0.138673;
 u = 4 - 6*s;
@@ -20,7 +20,7 @@ figure('units','normalized','outerposition',[0 0 0.5 1]) % Makes figure fill
 plot(Kap.^u,lambda,'o', Kap.^u,p1(2)+p1(1).*Kap.^u,  ...
 Kap.^u,p2(2)+p2(1).*Kap.^u, Kap.^u,p3(2)+p3(1).*Kap.^u);
 
-axis( [0, 1.5, 0.05,0.06]);
+axis( [0, 0.5, 0.055,0.06]);
 axis square
 xlabel('$K_I^u$','Interpreter','Latex','fontsize',25)
 set(gca,'fontsize',20')
