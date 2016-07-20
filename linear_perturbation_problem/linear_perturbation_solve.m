@@ -1,6 +1,5 @@
 function [theta,h] = linear_perturbation_solve(n,t,xmax, h0,l0)
 % Solves the linear perturbation problem.
-% TODO - rename this function to something more sensible. 
 
 %the data points
 x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;

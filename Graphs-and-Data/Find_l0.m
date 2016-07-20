@@ -3,38 +3,51 @@
 % here numerically. 
 
 clear
-load n400x40-extended.mat
+nstr = '400';
+xstr = '50';
+file = strcat('n',nstr,'x',xstr,'-extended');
+load(file)
 
 s = 0.138673;
 u = 4 - 6*s;
-Kap = 3*sqrt(2*pi)*KI;
-p1 = polyfit(Kap.^u,lambda,1);
-p2 = polyfit(Kap(end-7:end-3).^u,lambda(end-7:end-3),1);
-p3 = polyfit(Kap(end-3:end).^u,lambda(end-3:end),1);
+K = 3*sqrt(2*pi)*KI;
+p1 = polyfit(K(end-1:end).^u,lambda(end-1:end),1);
+p2 = polyfit(K(end-2:end).^u,lambda(end-2:end),2);
 
+er    = abs(p1(2)-p2(3));
+pc_er = abs(p1(2)-p2(3))/p1(2);
+
+fprintf('Approximate interpolation error = %.2e\n',er)
+fprintf('Approximate interpolation percentage error = %.2e%%\n',100*pc_er)
 
 figure('units','normalized','outerposition',[0 0 0.5 1]) % Makes figure fill 
 % the whole screen. Needed when using export fig.
 %
+lx = [K.^u 0];
+plot(lx,p1(2)+p1(1).*lx,'k--', lx,p2(3)+p2(2).*lx+p2(1).*lx.^2,'b:', ...
+    K.^u,lambda,'ko','LineWidth',2.5, 'MarkerFaceColor', 'k', 'MarkerSize', 10);
 
-plot(Kap.^u,lambda,'o', Kap.^u,p1(2)+p1(1).*Kap.^u,  ...
-Kap.^u,p2(2)+p2(1).*Kap.^u, Kap.^u,p3(2)+p3(1).*Kap.^u);
-
-axis( [0, 0.5, 0.055,0.06]);
+axis( [0, 0.5, 0.0555,0.0595]);
 axis square
 xlabel('$K_I^u$','Interpreter','Latex','fontsize',25)
+ylabel('$\lambda$','Rotation',0, 'Position', [-0.08, 0.0574],...
+    'Interpreter','Latex','fontsize',25)
 set(gca,'fontsize',20')
 set(gca,'TickLabelInterpreter', 'latex');
 title('Plot of $K_I^u$ against $\lambda$',...
     'fontsize', 25,'Interpreter','latex');
 
-s1 = strcat(num2str(p1(2),4),num2str(p1(1),4),'$K_I^u$');
-s2 = strcat(num2str(p2(2),4),num2str(p2(1),4),'$K_I^u$');
-s3 = strcat(num2str(p3(2),4),num2str(p3(1),4),'$K_I^u$');
+s1 = strcat('Linear fit: $\lambda_0 =$',num2str(p1(2),5));
+s2 = strcat('Quadratic fit: $\lambda_0 =$',num2str(p2(3),5));
+text(0.27,0.0585,s1,'Interpreter','latex','fontsize',20)
+text(0.27,0.0583,s2,'Interpreter','latex','fontsize',20)
+text(0.27,0.0581,['$n=', nstr, '$'],'Interpreter','latex','fontsize',20)
+text(0.27,0.0579,['$x_{end}=', xstr, '$'],'Interpreter','latex','fontsize',20)
 
 
 
-legend({'$\lambda$',s1,s2,s3},'Interpreter','Latex','fontsize',20)
+legend({'Linear fit','Quadratic fit','$\lambda$'},'Interpreter','Latex'...
+    ,'fontsize',20)
 
 
-clear s1 s2 s3 p1 p2 p3 u s Kap
+clear

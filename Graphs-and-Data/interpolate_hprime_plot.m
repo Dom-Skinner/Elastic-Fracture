@@ -1,24 +1,26 @@
 clear plot
 figure('units','normalized','outerposition',[0 0 0.5 1]) % Makes figure fill 
-% the whole screen. Needed when using export fig.
+% the whole screen. 
 %
 ax = gca;
 hold on
 
 clear data
-load n400x40-extended.mat
-dat = 1:40;
+load n400x50-extended.mat
+dat = 1:80;
 s = 0.138673;
 u = 4 - 6*s;
 
 K = 3*sqrt(2*pi)*KI;
 
-[interp1, interp2] = interpolate_hprime(x,n,hprime_data,K,6);
+[interp1, interp2] = interpolate_hprime(x,n,hprime_data,K);
 
 plot(ax,x(dat),hprime_data(n+dat,6)'.*x(dat).^(-1/6), '*-', ...
     x(dat),hprime_data(n+dat,7)'.*x(dat).^(-1/6),'*-', ...
             x(dat),hprime_data(n+dat,8)'.*x(dat).^(-1/6),'*-', ...
-x(dat),interp1(dat).*x(dat).^(-1/6),x(dat),interp2(dat).*x(dat).^(-1/6))
+x(dat),interp1(dat).*x(dat).^(-1/6),':',...
+x(dat),interp2(dat).*x(dat).^(-1/6),'--',...
+'LineWidth',1.5,'MarkerSize', 8)
 
 axis( [0.0, 0.01, 0.35,0.38]);
 axis square
@@ -40,3 +42,4 @@ s3 = strcat(s, num2str(K(8)));
 legend({s1,s2,s3,'Interpolated','Interpolated with LEFM correction'}...
     ,'Interpreter','latex')
 
+clear

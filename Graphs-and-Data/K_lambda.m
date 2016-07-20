@@ -19,6 +19,6 @@ clear data
 load n800x30.mat
 K = 3*sqrt(2*pi).*KI;
 plot(ax,lambda,K, 'ko-')
-%scatter(ax,lambda,K,70,'black')
 
-export_fig ('K-lambda', '-png', '-transparent','-m1.5')
+%export_fig ('K-lambda', '-png', '-transparent','-m1.5')
+clear

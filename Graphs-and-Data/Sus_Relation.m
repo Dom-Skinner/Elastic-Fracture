@@ -37,15 +37,5 @@ title(ax(2),'Zoom of plot, for $n=800$, $x_{max}=30$','fontsize',25,...
 set(get(ax(1),'YLabel'),'Rotation',0,'Position', [-0.007, 4.5])
 set(get(ax(2),'YLabel'),'Rotation',0,'Position', [0.0566, 0.15])
 
-%
-
-%title(ax,'Scatter plot of toughness against speed with $n =800$, $x_{end}=30$',...
-%    'fontsize', 25,'Interpreter','latex');
-%set(ax,'TickLabelInterpreter', 'latex');
-%set(ax,'fontsize',20')
-%set(get(ax,'YLabel'),'Rotation',0)
-%set(get(ax,'YLabel'),'Rotation',0, 'Position', [-0.006, 1])
-
-
-
-export_fig ('sus-relation', '-png', '-transparent','-m1.5')
+%export_fig ('sus-relation', '-png', '-transparent','-m1.5')
+clear
