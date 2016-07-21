@@ -19,4 +19,16 @@ p1_prime = find_p1_prime(n,pprime_data,K,p0_prime);
 % the built in x^(-0.5) singularity
 
 dat = 1:400;
-plot(x(dat),h0(dat)'.^2.*p1_prime(dat)+2*h0(dat)'.*h1(dat)'.*p0_prime(dat))
+clear plot
+figure('units','normalized','outerposition',[0 0 0.5 1])
+plot(x(dat),h0(dat)'.^2.*p1_prime(dat)+2*h0(dat)'.*h1(dat)'.*p0_prime(dat),...
+    'LineWidth',2)
+ax = gca;
+axis( [0.0, 30, -0.0081,-0.00805]);
+axis square
+xlabel(ax,'$ x $','Interpreter','latex','fontsize',25);
+ylabel(ax,'$ h_0^2 p_1'' + 2h_0h_1p_0'' $','Interpreter','latex','fontsize',25);
+title(ax,'Plot to test our approximations of $h_1$, $p_1''$',...
+    'fontsize', 25,'Interpreter','latex');
+set(ax,'TickLabelInterpreter', 'latex');
+set(ax,'fontsize',20')

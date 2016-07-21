@@ -16,7 +16,7 @@ end
 
 FSH = zeros(n,n);
 for l = 1:n
-    FSH(l,:) = l0*h0(l)^(-3) .* SH(l,:);
+    FSH(l,:) = l0*(h0(l)+eps)^(-3) .* SH(l,:);
 end
 
 Q = zeros(n-1,n);
@@ -25,8 +25,8 @@ for k = 1:n-1
     Q(k,k) = (x(k+1)-z(k))^2 /(x(k+1)-x(k));
     Q(k,k+1) = (x(k+1)-z(k))*(z(k)-2*x(k)+x(k+1))/(x(k+1)-x(k));
     for r = k+1: n-1
-        Q(k,r) = Q(k,r) - x(r);
-        Q(k,r+1) = Q(k,r+1) + x(r+1);
+        Q(k,r) = Q(k,r) + x(r+1)- x(r);
+        Q(k,r+1) = Q(k,r+1) + x(r+1)- x(r);
     end
     Q(k,n) = Q(k,n) + (2/3)*x(n);
 end

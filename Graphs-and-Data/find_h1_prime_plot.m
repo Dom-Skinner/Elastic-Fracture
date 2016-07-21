@@ -4,7 +4,7 @@ K = 3*sqrt(2*pi)*KI;
 s = 0.138673;
 u = 4 - 6*s;
 
-[~, h0_prime] = interpolate_hprime(x,n,hprime_data,K);
+[h0_prime,~] = interpolate_hprime(x,n,hprime_data,K);
 h1_prime = find_h1_prime(n,hprime_data,K,h0_prime);
 h1_prime_data = zeros(n,numel(K));
 
@@ -15,10 +15,12 @@ end
 figure('units','normalized','outerposition',[0 0 1 1]) % Makes figure fill 
 % the whole screen. 
 %
+
+
 ax = gca;
 
-dat = 2:199;
-plot(x(dat),x(dat).^(0.5-s).*h1_prime_data(dat,5)','o-',...
+dat = 1:199;
+xplot(x(dat),x(dat).^(0.5-s).*h1_prime_data(dat,5)','o-',...
      x(dat),x(dat).^(0.5-s).*h1_prime_data(dat,6)','o-',...
      x(dat),x(dat).^(0.5-s).*h1_prime_data(dat,7)','o-',...
      x(dat),x(dat).^(0.5-s).*h1_prime_data(dat,9)','o-',...
@@ -28,7 +30,7 @@ plot(x(dat),x(dat).^(0.5-s).*h1_prime_data(dat,5)','o-',...
 axis square
 xlabel(ax,'$ x $','Interpreter','latex','fontsize',25);
 ylabel(ax,'$ h''x^{1/3} $','Interpreter','latex','fontsize',25);
-title(ax,'Plot of $x$ against $(h''-h_0'')x^{1-s}$',...
+title(ax,'Plot of $x$ against $(h''-h_0'')x^{1-s}K_I^{-u}$',...
     'fontsize', 25,'Interpreter','latex');
 set(ax,'TickLabelInterpreter', 'latex');
 set(ax,'fontsize',20')

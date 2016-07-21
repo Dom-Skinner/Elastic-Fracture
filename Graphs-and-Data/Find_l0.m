@@ -4,7 +4,7 @@
 
 clear
 nstr = '400';
-xstr = '50';
+xstr = '30';
 file = strcat('n',nstr,'x',xstr,'-extended');
 load(file)
 
@@ -44,7 +44,7 @@ text(0.27,0.0583,s2,'Interpreter','latex','fontsize',20)
 text(0.27,0.0581,['$n=', nstr, '$'],'Interpreter','latex','fontsize',20)
 text(0.27,0.0579,['$x_{end}=', xstr, '$'],'Interpreter','latex','fontsize',20)
 
-
+disp(100*p1(1))
 
 legend({'Linear fit','Quadratic fit','$\lambda$'},'Interpreter','Latex'...
     ,'fontsize',20)
