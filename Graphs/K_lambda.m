@@ -1,5 +1,5 @@
 clear plot
-figure('units','normalized','outerposition',[0 0 1 1]) % Makes figure fill 
+figure('units','normalized','outerposition',[0 0 0.5 1]) % Makes figure fill 
 % the whole screen. Needed when using export fig.
 %
 ax = gca;
@@ -20,5 +20,5 @@ load n800x30.mat
 K = 3*sqrt(2*pi).*KI;
 plot(ax,lambda,K, 'ko-')
 
-%export_fig ('K-lambda', '-png', '-transparent','-m1.5')
+export_fig ('K-lambda', '-pdf', '-transparent')
 clear

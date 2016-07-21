@@ -20,7 +20,7 @@ pc_er = abs(p1(2)-p2(3))/p1(2);
 fprintf('Approximate interpolation error = %.2e\n',er)
 fprintf('Approximate interpolation percentage error = %.2e%%\n',100*pc_er)
 
-figure('units','normalized','outerposition',[0 0 0.5 1]) % Makes figure fill 
+figure('units','normalized','outerposition',[0 0 0.6 1]) % Makes figure fill 
 % the whole screen. Needed when using export fig.
 %
 lx = [K.^u 0];
@@ -48,6 +48,7 @@ disp(100*p1(1))
 
 legend({'Linear fit','Quadratic fit','$\lambda$'},'Interpreter','Latex'...
     ,'fontsize',20)
+export_fig ('l0', '-pdf', '-transparent')
 
 
 clear

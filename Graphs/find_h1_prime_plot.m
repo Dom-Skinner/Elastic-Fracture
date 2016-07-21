@@ -12,7 +12,7 @@ for k = 1:n
     h1_prime_data(k,:) = (hprime_data(n+k,:)-h0_prime(k)).*K.^(-u);
 end
 
-figure('units','normalized','outerposition',[0 0 1 1]) % Makes figure fill 
+figure('units','normalized','outerposition',[0 0 0.5 1]) % Makes figure fill 
 % the whole screen. 
 %
 
@@ -20,13 +20,13 @@ figure('units','normalized','outerposition',[0 0 1 1]) % Makes figure fill
 ax = gca;
 
 dat = 1:199;
-xplot(x(dat),x(dat).^(0.5-s).*h1_prime_data(dat,5)','o-',...
+plot(x(dat),x(dat).^(0.5-s).*h1_prime_data(dat,5)','o-',...
      x(dat),x(dat).^(0.5-s).*h1_prime_data(dat,6)','o-',...
      x(dat),x(dat).^(0.5-s).*h1_prime_data(dat,7)','o-',...
      x(dat),x(dat).^(0.5-s).*h1_prime_data(dat,9)','o-',...
      x(dat),x(dat).^(0.5-s).*h1_prime(dat),':','LineWidth',1.5,'MarkerSize', 3)
     
-%axis([0, 0.15, 0.002, 0.0045])
+axis([0, 0.15, 0.002, 0.0045])
 axis square
 xlabel(ax,'$ x $','Interpreter','latex','fontsize',25);
 ylabel(ax,'$ h''x^{1/3} $','Interpreter','latex','fontsize',25);

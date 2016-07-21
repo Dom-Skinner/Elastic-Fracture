@@ -47,5 +47,12 @@ plot [domain=1:70, samples=50, thick ] ( {0.1*\x-0.5}, {2+0.003*pow(\x,1.6)})
 
 \draw [->] (6.8,1) to (6,1);
 \node at (6.4,1) [above] {\small{$q(x)$}};
+
+\draw [<->] (0.1,0.1) to (0.1,1.9);
+\node at (0.1,1) [right] {\small{$\ell$}};
+
+\draw [->] (5,2.9) arc [radius=3, start angle=20, end angle=60];
+\node at (3.8,4) {$M$};
+
 \end{tikzpicture}
 \end{document}
