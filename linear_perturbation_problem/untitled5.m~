@@ -1,0 +1,41 @@
+clear
+load n400x30-extended
+K = 3*sqrt(2*pi)*KI;
+s = 0.1386;
+u = 4 - 6*s;
+l0 = 0.05943;
+D = -0.00809;
+z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
+
+
+[h0_prime_l,~] = interpolate_hprime(x,n,hprime_data,K);
+
+h_coefficient_matrix_l = hprime_to_h_l(x);
+h_coefficient_matrix_s = hprime_to_h_s(x,s);
+
+h0 = h_integrate(h0_prime_l',x,n,t,h_coefficient_matrix_l);
+
+
+
+
+
+
+R_s = lubrication_integral_s(x,z,n,t,h_coefficient_matrix_s,h0,l0,s);
+R_l = lubrication_integral_l(x,z,n,t,h_coefficient_matrix_l,h0,l0);
+
+R_s=R_s(1:n-1,n+1:2*n);
+R_l=R_l(1:n-1,n+1:2*n);
+
+
+T_s = R_s;
+T_l = R_l;
+for k = 1:t-1
+    T_s(:,k) = R_s(:,k)*x(k)^(1-s);
+    T_l(:,k) = R_l(:,k)*x(k)^(0.5);
+end
+
+diff = T_s-T_l;
+100*diff(1:20,1:20)
+%plot(z,z.^(1-s).*P_s','o',z,z.^(1-s).*P_l','o')
+
+

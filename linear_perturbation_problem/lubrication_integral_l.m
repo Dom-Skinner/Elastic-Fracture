@@ -1,4 +1,4 @@
-function R = lubrication_integral(x,z,n,t,h_coefficient_matrix,h0,l0)
+function R = lubrication_integral_l(x,z,n,t,h_coefficient_matrix,h0,l0)
 
 % First we create the matrix SH_coeff
 SH = zeros(n,n);
