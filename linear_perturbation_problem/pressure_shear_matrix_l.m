@@ -4,7 +4,7 @@ n = length(x);
 t = round(n/2);
 infinity = 10^10;
 
-interpolate_matrix = linear_simpleinfty_interpolate_l(x);
+interpolate_matrix = linear_simpleinfty_interpolate_s(x,0.5);
 function_matrix = zeros(2*(n-1),4*n);
 
 

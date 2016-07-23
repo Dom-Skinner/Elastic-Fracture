@@ -10,10 +10,10 @@ z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
 [h0_prime,h0_prime_LEFM] = interpolate_hprime(x,n,hprime_data,K);
 
-h_coefficient_matrix = hprime_to_h_l(x);
+h_coefficient_matrix = hprime_to_h_s(x,0.5);
 
-h0 = h_integrate(h0_prime',x,n,t,h_coefficient_matrix);
-h0_LEFM = h_integrate(h0_prime_LEFM',x,n,t,h_coefficient_matrix);
+h0 = h_integrate(h0_prime',x,n,t,h_coefficient_matrix,0.5);
+h0_LEFM = h_integrate(h0_prime_LEFM',x,n,t,h_coefficient_matrix,0.5 );
 
 
 [~,H] = linear_perturbation_solve(n,t,xmax, h0,l0);
@@ -21,7 +21,7 @@ h0_LEFM = h_integrate(h0_prime_LEFM',x,n,t,h_coefficient_matrix);
 
 
 figure('units','normalized','outerposition',[0 0 0.5 1])
-plot(x,H.*x.^-s,'o',x,H_LEFM.*x.^-s,'o')
+plot(x,H'.*x.^-s,'o',x,H_LEFM'.*x.^-s,'o')
 
 ax = gca;
 axis square

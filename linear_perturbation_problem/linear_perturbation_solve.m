@@ -9,8 +9,8 @@ z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 [kernel_matrix, ~] = pressure_shear_matrix_l(x,z);
 % so this is the part that is exactly as before
 %saves a matrix to convert h' to h
-h_coefficient_matrix = hprime_to_h_l(x);
-R = lubrication_integral(x,z,n,t,h_coefficient_matrix,h0,l0);
+h_coefficient_matrix = hprime_to_h_s(x,0.5);
+R = lubrication_integral_s(x,z,n,t,h_coefficient_matrix,h0,l0,0.5);
 
 %BT = kernel_matrix;
 
@@ -33,8 +33,5 @@ c(2*n,1) = 1;
 theta = A\c;
 
 h_coeffs = h_coefficient_matrix*theta(n+1:2*n,1);
-h(1: t-1) = x(1:t-1)'.^(1.5) .* h_coeffs(1:3:3*(t-1)-2) + x(1:t-1)'.^(0.5) ...
-    .*h_coeffs(2:3:3*(t-1)-1) + h_coeffs(3:3:3*(t-1));
-h(t:n) = x(t:n)'.^2 .* h_coeffs(3*t-2:3:3*n) + x(t:n)' ...
-    .*h_coeffs(3*t-1:3:3*n) + h_coeffs(3*t:3:3*n);
+h = h_eval(h_coeffs,x,n,t,0.5);
 end
