@@ -15,11 +15,11 @@ D = -0.00809;
 z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
 
-[h0_prime,~] = interpolate_hprime(x,n,hprime_data,K);
+[~,h0_prime] = interpolate_hprime(x,n,hprime_data,K);
 h_coefficient_matrix = hprime_to_h_s(x,0.5);
 h0 = h_integrate(h0_prime',x,n,t,h_coefficient_matrix,0.5);
+
 h1_prime = find_h1_prime(n,hprime_data,K,h0_prime);
-h1 = h_integrate(h1_prime',x,n,t,h_coefficient_matrix,0.5);
 
 
 pprime_data=find_pprime(lambda,x,hprime_data,n,t);
@@ -37,10 +37,12 @@ R=R(1:n-1,n+1:2*n);
 
 
 Hprime_tilde = h0_prime - (3*l0/D)*h1_prime;
-H_tilde = h0 - (3*l0/D)*h1;
 Pprime_tilde = p0_prime - (3*l0/D)*p1_prime;
 
 Hprime_tilde_s = convert(0.5,s,n,t,x,Hprime_tilde);
+p1 = polyfit(x(25:35) , Hprime_tilde_s(25:35)',1);
+Hprime_tilde_s(1:20)=p1(1).*x(1:20)+p1(2);
+
 P_s = R_s*Hprime_tilde_s;
 Pprime_s = (P_s(2:end)-P_s(1:end-1))'./(z(2:end)-z(1:end-1));
 

@@ -15,13 +15,17 @@ h_coefficient_matrix = hprime_to_h_s(x,0.5);
 h0 = h_integrate(h0_prime',x,n,t,h_coefficient_matrix,0.5);
 h0_LEFM = h_integrate(h0_prime_LEFM',x,n,t,h_coefficient_matrix,0.5 );
 
+h0_prime_LEFM_23 = convert(0.5,2/3,n,t,x,h0_prime);
+h_coefficient_matrix_23 = hprime_to_h_s(x,2/3);
+h0_LEFM_23 = h_integrate(h0_prime_LEFM_23,x,n,t,h_coefficient_matrix_23,2/3);
 
 [~,H] = linear_perturbation_solve(n,t,xmax, h0,l0);
 [~,H_LEFM] = linear_perturbation_solve(n,t,xmax, h0_LEFM,l0);
+[~,H_LEFM_23] = linear_perturbation_solve(n,t,xmax, h0_LEFM_23,l0);
 
 
 figure('units','normalized','outerposition',[0 0 0.5 1])
-plot(x,H'.*x.^-s,'o',x,H_LEFM'.*x.^-s,'o')
+plot(x,H'.*x.^-s,'o',x,H_LEFM'.*x.^-s,'o',x,H_LEFM_23'.*x.^-s)
 
 ax = gca;
 axis square
