@@ -1,7 +1,7 @@
 %sets easy geometric parameters
 n = 800;
 t = round(n/2);
-xmax = 20;
+xmax = 50;
 
 x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
 
