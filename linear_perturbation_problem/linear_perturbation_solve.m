@@ -1,4 +1,4 @@
-function [theta,h] = linear_perturbation_solve(n,t,xmax, h0,l0)
+function [theta,h] = linear_perturbation_solve(n,t,xmax, h0,h0_z,l0)
 % Solves the linear perturbation problem.
 
 %the data points
@@ -10,7 +10,9 @@ z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 % so this is the part that is exactly as before
 %saves a matrix to convert h' to h
 h_coefficient_matrix = hprime_to_h_s(x,0.5);
-R = lubrication_integral_s(x,z,n,t,h_coefficient_matrix,h0,l0,0.5);
+%R = lubrication_integral_s(x,z,n,t,h_coefficient_matrix,h0,l0,0.5);
+R = zeros(2*(n-1),2*n);
+R(1:n-1,n+1:2*n) = lubrication_integral(x,z,n,t,h_coefficient_matrix,h0,h0_z,l0,0.5);
 
 %BT = kernel_matrix;
 

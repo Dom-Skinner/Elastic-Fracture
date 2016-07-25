@@ -1,32 +1,47 @@
 clear
-load n400x40-extended
 
-clear
-load n400x30-extended
-K = 3*sqrt(2*pi)*KI;
-s = 0.138673;
-l0 = 0.05943;
-D = -0.00809;
+w = 0.1;
+e = 2;
+r = 2;
+alpha = 0.14;
+beta = 2/3;
 
+x = 0.003:0.001:0.05;
 
-[~,h0_prime] = interpolate_hprime(x,n,hprime_data,K);
-h_coefficient_matrix = hprime_to_h_s(x,0.5);
-h0 = h_integrate(h0_prime',x,n,t,h_coefficient_matrix,0.5);
-
-h1_prime = find_h1_prime(n,hprime_data,K,h0_prime);
-
-h_coefficient_matrix_s = hprime_to_h_s(x,s);
+H_tilde = @(x) w*x.^(alpha+1)+e*x.^(alpha) + r;
+H0 = @(x) 0.1*x.^(beta+1)+2*x.^(beta) + 0.02;
 
 
-Hprime_tilde = h0_prime - (3*l0/D)*h1_prime;
+xmeas = x(1:5:end);
+for k = 1:numel(xmeas)-1
+x1 = xmeas(k);
+xn = xmeas(k+1);
+Hn = H0(xn);
+H1 = H0(x1);
 
-Hprime_tilde_s = convert(0.5,s,n,t,x,Hprime_tilde);
+a(k) = w*(xn^(1+2*beta)/Hn^2 - x1^(1+2*beta)/H1^2)/(xn-x1) + ...
+    e*(xn^(2*beta)/Hn^2 - x1^(2*beta)/H1^2)/(xn-x1) + ...
+    r*(xn^(2*beta-alpha)/Hn^2 - x1^(2*beta-alpha)/H1^2)/(xn-x1) ;
 
+b(k) = w*xn*x1*(x1^(2*beta)/H1^2 - xn^(2*beta)/Hn^2)/(xn-x1) + ...
+    e*xn*x1*(x1^(2*beta-1)/H1^2 - xn^(2*beta-1)/Hn^2)/(xn-x1) + ...
+    r*xn*x1*(x1^(2*beta-alpha-1)/H1^2 - xn^(2*beta-alpha-1)/Hn^2)/(xn-x1) ;
 
-p1 = polyfit(x(25:35) , Hprime_tilde_s(25:35)',1);
-Hprime_tilde_s(1:20)=p1(1).*x(1:20)+p1(2);
+al(k) = (H_tilde(xn)/H0(xn)^2-H_tilde(x1)/H0(x1)^2)/(xn-x1);
+bl(k) = H_tilde(xn)/H0(xn)^2-al(k)*xn;
+end
 
+interp = @(x,a,b) x.^(alpha-2*beta).*(a.*x+b);
+interpl = @(x,a,b) (a.*x+b);
 
+hold on
+int = 0;
+for k = 1:numel(xmeas)-1
+    int_dat = interp(x(5*k-4:5*k+1),a(k),b(k));
+    plot(x(5*k-4:5*k+1),int_dat,'b');
+    int_datl = interpl(x(5*k-4:5*k+1),al(k),bl(k));
+    plot(x(5*k-4:5*k+1),int_datl,'k');
+    int = int + [w,e,r].*get_integral_coeff(x(5*k-4),x(5*k+1),int_dat(1),int_dat(6),alpha,beta,1);
+end
 
-plot(x,Hprime_tilde_s,'o',x,Hprime_tilde_u)
-axis([0,0.1,0.05,0.2])
+plot(x, H_tilde(x)./H0(x).^2,'ro')
