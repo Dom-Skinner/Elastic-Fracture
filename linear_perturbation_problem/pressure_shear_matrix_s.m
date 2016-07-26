@@ -70,11 +70,41 @@ K11sqrtx0 = @(x,z) real(2.*x.^(1/2).*(4+z.^2).^(-2).*(4+x.^2+(-2).*x.*z+z.^2).^(
 
 
     function K12_int_s = K12_s(z,ux,lx,a)
+        fun1 = @(x1) x1.^(a).*((x1-z).^5+12.*(x1-z).^4+96.*(x1-z))./((x1-z).^2+4).^3 ;
+        fun2 = @(x1) x1.^(a+1)./(a+1)./( (x1-z).^2 + 4).^4 .*( (x1-z).^6 + ...
+            16.*(x1-z).^4 -144.*(x1-z).^2 - 384 );
+        fun3 = @(theta) ((1+theta).^a-1)./theta;
+        fun4 = @(u) u.^(a+1)./(u-1).^2 /(a+1);
+        
+        if a < 0 && lx < 0.5
+            non_singular_bit = ux/(a+1) * fun1(ux) - lx/(a+1) * fun1(lx) + ...
+                integral(fun2, lx,ux,'AbsTol',1e-5);
+        else
+            non_singular_bit = integral(fun1,lx,ux,'AbsTol',1e-5);
+        end
+        
+        if a >= 0 ||  lx/z > 0.5
+            singular_bit = -z^a *( integral(fun3, lx/z -1, ux/z -1, ...
+                'AbsTol',1e-5) + log(abs((ux-z)/(z-lx))));
+        elseif ux/z < 0.5 
+            singular_bit = z^a *( (lx/z)^(a+1)/(a+1)/((lx/z)-1) - ...
+                (ux/z)^(a+1)/(a+1)/((ux/z)-1) + ...
+                integral(fun4,lx/z,ux/z,'AbsTol',1e-5));
+        else
+               singular_bit = z^a *( (lx/z)^(a+1)/(a+1)/((lx/z)-1) + ...
+                (2)^(-a)/(a+1) + ...
+                integral(fun4,lx/z,0.5,'AbsTol',1e-5) - ...
+                integral(fun3,-0.5,ux/z-1,'AbsTol',1e-5)-log(abs((ux-z)/(z-0.5)))) ;
+        
+        end
+        K12_int_s = singular_bit + non_singular_bit;
+        return 
+        
         if abs(ux - z) < 0.03 || abs(z - lx) < 0.03
             fun_non_singular = @(x1) x1.^(a).*((x1-z).^5+12.*(x1-z).^4+96.*(x1-z))./((x1-z).^2+4).^3 ;
             
             fun_remov_sing = @(theta) ( (1+theta).^a - 1)./theta ;
-            if lx/z -1 > -0.95
+            if 1% lx/z -1 > -0.95
                 singular_bit = z.^(a) .*(integral(fun_remov_sing,lx/z-1,ux/z-1) + ...
                 log(abs((ux-z)/(z-lx))));            
             else
@@ -131,7 +161,7 @@ K21sqrtx0 = @(x,z) -real((1/2).*(2.*x.^(1/2).*(4+(x+(-1).*z).^2).^(-2).*(4+z.^2)
 %finds the kernel K22
 %K22sqrtx1_change_this(ux,z(i))-K22sqrtx1_change_this(lx,z(i));
     function K22_int_s = K22_s(z,ux,lx,a)
-        if ux > 0.1 || a > 0
+        if  ux > 0.1 || a > 0
             fun_internal = @(x1) -x1.^(a).*(32-24*(x1-z).^2)./((x1-z).^2+4).^3;
             K22_int_s = integral(fun_internal,lx,ux,'AbsTol',1e-5);
         else
@@ -191,6 +221,7 @@ for i=1:n-1
         function_matrix(n-1+i,2*n+j) = K22x1(ux,z(i))-K22x1(lx,z(i));
         function_matrix(n-1+i,2*n+n+j) = K22x0(ux,z(i))-K22x0(lx,z(i));        
     end    
+    disp(i)
 end        
 
 kernel_matrix = function_matrix*interpolate_matrix;
