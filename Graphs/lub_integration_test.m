@@ -1,5 +1,5 @@
 clear
-load n400x30-extended
+load n800x30-extended
 K = 3*sqrt(2*pi)*KI;
 s = 0.138673;
 u = 4 - 6*s;
@@ -24,7 +24,7 @@ func = @(x) (x.^(2/3)+0.5*x.^2).^(-2);
 int_func = @(x) integral(func,x,10000);
 
 
-exact =@(x) -3.497-3/32 *(-(8*x)./(x.^(4/3)+2)-5* 2^(1/4) *log(sqrt(2) *x.^(2/3)...
+exact =@(x) -3/32 *(-(8*x)./(x.^(4/3)+2)-5* 2^(1/4) *log(sqrt(2) *x.^(2/3)...
     - 2^(5/4) *x.^(1/3)+2)+5*2^(1/4)*log(sqrt(2)*x.^(2/3)+2^(5/4)...
     *x.^(1/3)+2)-32./x.^(1/3)+10* 2^(1/4)*atan(1-2^(1/4)* x.^(1/3))-...
     10*2^(1/4)* atan(2^(1/4)* x.^(1/3)+1));
@@ -37,4 +37,4 @@ int = R2*hprime';
 for k = 1:n-1
     int_mat(k) = int_func(z(k));
 end
- plot(z,int,'o',z,exact(z),z,int_mat)   
+ plot(z,int,'o',z,exact(z)-exact(99999),'o',z,int_mat)   

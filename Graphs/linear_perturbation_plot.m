@@ -24,13 +24,14 @@ h0_LEFM_23 = h_integrate(h0_prime_LEFM_23,x,n,t,h_coefficient_matrix_23,2/3);
 h0_LEFM_23_z = h_integrate(h0_prime_LEFM_23,z,n-1,t,h_coefficient_matrix_23,2/3);
 
 
-[~,H] = linear_perturbation_solve(n,t,xmax, h0,h0_z,l0);
-[~,H_LEFM] = linear_perturbation_solve(n,t,xmax, h0_LEFM,h0_LEFM_z,l0);
+%[~,H] = linear_perturbation_solve(n,t,xmax, h0,h0_z,l0);
+%[~,H_LEFM] = linear_perturbation_solve(n,t,xmax, h0_LEFM,h0_LEFM_z,l0);
 [~,H_LEFM_23] = linear_perturbation_solve(n,t,xmax, h0_LEFM_23,h0_LEFM_z,l0);
 
 
 figure('units','normalized','outerposition',[0 0 0.5 1])
-plot(x,H'.*x.^-s,'o',x,H_LEFM'.*x.^-s,'o',x,H_LEFM_23'.*x.^-s)
+%plot(x,H'.*x.^-s,'o',x,H_LEFM'.*x.^-s,'o',x,H_LEFM_23'.*x.^-s)
+plot(x,H_LEFM_23'.*x.^-s)
 
 ax = gca;
 axis square
@@ -40,8 +41,9 @@ title(ax,'Linear perturbation problem estimates of $\tilde{H}\xi^{-s}$',...
     'fontsize', 25,'Interpreter','latex');
 set(ax,'TickLabelInterpreter', 'latex');
 set(ax,'fontsize',20')
-legend({'$H_0$ interpolated',...
-    '$H_0$ interpolated with LEFM correction'},'Interpreter','Latex'...
+legend({'$H_0$ interpolated','$H_0$ with LEFM correction',...
+    '$H_0$ with LEFM correction and $2/3$ integration'...
+    },'Interpreter','Latex'...
     ,'fontsize',20,'Location','southeast')
 
 
