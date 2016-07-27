@@ -3,8 +3,8 @@
 % here numerically. 
 
 clear
-nstr = '800';
-xstr = '30';
+nstr = '400';
+xstr = '50';
 file = strcat('n',nstr,'x',xstr,'-extended');
 load(file)
 
@@ -48,7 +48,7 @@ disp(100*p1(1))
 
 legend({'Linear fit','Quadratic fit','$\lambda$'},'Interpreter','Latex'...
     ,'fontsize',20)
-export_fig ('l0', '-pdf', '-transparent')
+%export_fig ('l0', '-pdf', '-transparent')
 
 
 clear

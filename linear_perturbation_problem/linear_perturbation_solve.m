@@ -1,15 +1,17 @@
-function [theta,h,kernel_matrix] = linear_perturbation_solve(n,t,xmax, h0,h0_z,l0)
+function [theta,h] = linear_perturbation_solve(n,t,xmax, h0,h0_z,l0,kernel_matrix,s)
 % Solves the linear perturbation problem.
-s = 0.138673;
-%s = 0.5;
+
 
 %the data points
 x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
 z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
+
+% We will have kernel_matrix as an input, since it takes so long to compute
 %finds the appropriate elasticity kernel
-[kernel_matrix, ~] = pressure_shear_matrix_s(x,z,s);
-% so this is the part that is exactly as before
+%[kernel_matrix, ~] = pressure_shear_matrix_s(x,z,s);
+
+
 %saves a matrix to convert h' to h
 h_coefficient_matrix = hprime_to_h_s(x,s);
 %R = lubrication_integral_s(x,z,n,t,h_coefficient_matrix,h0,l0,0.5);
@@ -25,10 +27,6 @@ A(2*n-1,n) = 1;
 %the limit of h'' at infinity
 A(2*n,2*n-1) = -1/(x(n)-x(n-1));
 A(2*n,2*n) = 1/(x(n)-x(n-1));
-
-%conditioning = rcond(kernel_matrix);
-
-%fprintf(' condition number = %6.4e \n', conditioning)
 
 c = zeros(2*n,1);
 c(2*n-1,1) = 0.5;

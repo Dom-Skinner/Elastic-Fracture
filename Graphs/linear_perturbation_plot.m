@@ -1,37 +1,39 @@
 clear
-load n400x30-extended
+load n400x50-extended
 K = 3*sqrt(2*pi)*KI;
-s = 0.138673;
-u = 4 - 6*s;
-l0 = 0.0594;
+l0 = 0.0593;
 z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
-
-[h0_prime,h0_prime_LEFM] = interpolate_hprime(x,n,hprime_data,K);
-
+[h0_prime ,h0_prime_LEFM] = interpolate_hprime(x,n,hprime_data,K,0.5);
 
 h_coefficient_matrix = hprime_to_h_s(x,0.5);
 
-h0 = h_integrate(h0_prime',x,n,t,h_coefficient_matrix,0.5);
-h0_z = h_integrate(h0_prime',z,n-1,t,h_coefficient_matrix,0.5);
+h0 = h_integrate(h0_prime',x,n,t,h_coefficient_matrix,0.5 );
+h0_z = h_integrate(h0_prime',z,n-1,t,h_coefficient_matrix,0.5 );
 
 h0_LEFM = h_integrate(h0_prime_LEFM',x,n,t,h_coefficient_matrix,0.5 );
 h0_LEFM_z = h_integrate(h0_prime_LEFM',z,n-1,t,h_coefficient_matrix,0.5 );
 
+
+
 h0_prime_LEFM_23 = convert(0.5,2/3,n,t,x,h0_prime_LEFM);
 h_coefficient_matrix_23 = hprime_to_h_s(x,2/3);
-h0_LEFM_23 = h_integrate(h0_prime_LEFM_23,x,n,t,h_coefficient_matrix_23,2/3);
-h0_LEFM_23_z = h_integrate(h0_prime_LEFM_23,z,n-1,t,h_coefficient_matrix_23,2/3);
+h0_LEFM_23 = h_integrate(h0_prime_LEFM_23,x,n,t, ... 
+    h_coefficient_matrix_23,2/3);
+h0_LEFM_23_z = h_integrate(h0_prime_LEFM_23,z,n-1,t, ...
+    h_coefficient_matrix_23,2/3);
 
+[~,H] = linear_perturbation_solve(n,t,xmax, h0,h0_z,l0,kernel_matrix_s,s);
 
-%[~,H] = linear_perturbation_solve(n,t,xmax, h0,h0_z,l0);
-%[~,H_LEFM] = linear_perturbation_solve(n,t,xmax, h0_LEFM,h0_LEFM_z,l0);
-[~,H_LEFM_23,kernel_matrix] = linear_perturbation_solve(n,t,xmax, h0_LEFM_23,h0_LEFM_23_z,l0);
+[~,H_LEFM] = linear_perturbation_solve(n,t,xmax, h0_LEFM,h0_LEFM_z,l0,...
+    kernel_matrix_s,s);
+[~,H_LEFM_23] = linear_perturbation_solve(n,t,xmax, h0_LEFM_23,...
+    h0_LEFM_23_z,l0,kernel_matrix_s,s);
 
 
 figure('units','normalized','outerposition',[0 0 0.5 1])
-%plot(x,H'.*x.^-s,'o',x,H_LEFM'.*x.^-s,'o',x,H_LEFM_23'.*x.^-s)
-plot(x,H_LEFM_23'.*x.^-s)
+plot(x,H'.*x.^-s,'o',x,H_LEFM'.*x.^-s,'o',x,H_LEFM_23'.*x.^-s,'*')
+
 
 ax = gca;
 axis square
@@ -46,5 +48,6 @@ legend({'$H_0$ interpolated','$H_0$ with LEFM correction',...
     },'Interpreter','Latex'...
     ,'fontsize',20,'Location','southeast')
 
+axis([0,0.15,0.5,0.75])
+%export_fig ('linear-perturbation', '-pdf', '-transparent')
 
-axis([0,0.3,0.5,1])
