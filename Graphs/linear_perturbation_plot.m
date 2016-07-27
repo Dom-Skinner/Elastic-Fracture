@@ -1,5 +1,5 @@
 clear
-load n800x30-extended
+load n400x30-extended
 K = 3*sqrt(2*pi)*KI;
 s = 0.138673;
 u = 4 - 6*s;
@@ -26,7 +26,7 @@ h0_LEFM_23_z = h_integrate(h0_prime_LEFM_23,z,n-1,t,h_coefficient_matrix_23,2/3)
 
 %[~,H] = linear_perturbation_solve(n,t,xmax, h0,h0_z,l0);
 %[~,H_LEFM] = linear_perturbation_solve(n,t,xmax, h0_LEFM,h0_LEFM_z,l0);
-[~,H_LEFM_23] = linear_perturbation_solve(n,t,xmax, h0_LEFM_23,h0_LEFM_z,l0);
+[~,H_LEFM_23,kernel_matrix] = linear_perturbation_solve(n,t,xmax, h0_LEFM_23,h0_LEFM_23_z,l0);
 
 
 figure('units','normalized','outerposition',[0 0 0.5 1])

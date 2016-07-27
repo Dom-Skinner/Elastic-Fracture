@@ -1,7 +1,7 @@
 clear
 %load n400x40-extended
-n=400;
-xmax = 4;
+n=100;
+xmax = 40;
 
 x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
 z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;

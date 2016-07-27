@@ -4,7 +4,7 @@ n = length(x);
 t = round(n/2);
 infinity = 10^10;
 
-interpolate_matrix = linear_simpleinfty_interpolate_s(x,0.5);
+interpolate_matrix = linear_simpleinfty_interpolate_s(x,s);
 function_matrix = zeros(2*(n-1),4*n);
 
 
@@ -70,14 +70,17 @@ K11sqrtx0 = @(x,z) real(2.*x.^(1/2).*(4+z.^2).^(-2).*(4+x.^2+(-2).*x.*z+z.^2).^(
 
 
     function K12_int_s = K12_s(z,ux,lx,a)
-        fun1 = @(x1) x1.^(a).*((x1-z).^5+12.*(x1-z).^4+96.*(x1-z))./((x1-z).^2+4).^3 ;
+        fun0 = @(x1) x1.^(a+1).*((x1-z).^5+12.*(x1-z).^3+96.*(x1-z)) ... 
+            ./((x1-z).^2+4).^3/(a+1) ;
+        fun1 = @(x1) x1.^(a).*((x1-z).^5+12.*(x1-z).^3+96.*(x1-z))./((x1-z).^2+4).^3 ;
         fun2 = @(x1) x1.^(a+1)./(a+1)./( (x1-z).^2 + 4).^4 .*( (x1-z).^6 + ...
-            16.*(x1-z).^4 -144.*(x1-z).^2 - 384 );
+            16.*(x1-z).^4 +336.*(x1-z).^2 - 384 );
         fun3 = @(theta) ((1+theta).^a-1)./theta;
         fun4 = @(u) u.^(a+1)./(u-1).^2 /(a+1);
+        fun5 = @(u) u.^(a+1)./(u-1) /(a+1);
         
         if a < 0 && lx < 0.5
-            non_singular_bit = ux/(a+1) * fun1(ux) - lx/(a+1) * fun1(lx) + ...
+            non_singular_bit = fun0(ux) -fun0(lx) + ...
                 integral(fun2, lx,ux,'AbsTol',1e-5);
         else
             non_singular_bit = integral(fun1,lx,ux,'AbsTol',1e-5);
@@ -87,43 +90,17 @@ K11sqrtx0 = @(x,z) real(2.*x.^(1/2).*(4+z.^2).^(-2).*(4+x.^2+(-2).*x.*z+z.^2).^(
             singular_bit = -z^a *( integral(fun3, lx/z -1, ux/z -1, ...
                 'AbsTol',1e-5) + log(abs((ux-z)/(z-lx))));
         elseif ux/z < 0.5 
-            singular_bit = z^a *( (lx/z)^(a+1)/(a+1)/((lx/z)-1) - ...
-                (ux/z)^(a+1)/(a+1)/((ux/z)-1) + ...
-                integral(fun4,lx/z,ux/z,'AbsTol',1e-5));
+            singular_bit = z^a *( fun5(lx/z)-fun5(ux/z)  - ...
+                integral(fun4,lx/z,ux/z,'AbsTol',1e-5) );
         else
                singular_bit = z^a *( (lx/z)^(a+1)/(a+1)/((lx/z)-1) + ...
-                (2)^(-a)/(a+1) + ...
+                (2)^(-a)/(a+1) - ...
                 integral(fun4,lx/z,0.5,'AbsTol',1e-5) - ...
-                integral(fun3,-0.5,ux/z-1,'AbsTol',1e-5)-log(abs((ux-z)/(z-0.5)))) ;
+                integral(fun3,-0.5,ux/z-1,'AbsTol',1e-5)-log(2*abs(ux/z-1))) ;
         
         end
         K12_int_s = singular_bit + non_singular_bit;
         return 
-        
-        if abs(ux - z) < 0.03 || abs(z - lx) < 0.03
-            fun_non_singular = @(x1) x1.^(a).*((x1-z).^5+12.*(x1-z).^4+96.*(x1-z))./((x1-z).^2+4).^3 ;
-            
-            fun_remov_sing = @(theta) ( (1+theta).^a - 1)./theta ;
-            if 1% lx/z -1 > -0.95
-                singular_bit = z.^(a) .*(integral(fun_remov_sing,lx/z-1,ux/z-1) + ...
-                log(abs((ux-z)/(z-lx))));            
-            else
-                ep = 0.05;
-                lp = lx/z -1;
-                int_approx = integral(fun_remov_sing,-0.95,ux/z-1)+...
-                    ((ep^(a+1)-lp^(a+1))/(1+a) - (ep^(a+2)-lp^(a+2))/(2+a) +...
-                    (ep^(3+a)-lp^(3+a))/(3+a) -(ep^(4+a)-lp^(4+a))/(4+a))+...
-                -log((1+ep)/(1+lp));
-            
-                singular_bit = z.^(a) .*(int_approx + ...
-                log(abs((ux-z)/(z-lx))));            
-                
-            end
-            K12_int_s = integral(fun_non_singular,lx,ux,'AbsTol',1e-5)-singular_bit;
-        else
-            fun_internal = @(x1) x1.^(a).*(48.*(x1-z).^2 - 64)./(x1-z)./((x1-z).^2+4).^3;
-            K12_int_s = integral(fun_internal,lx,ux,'AbsTol',1e-5);
-        end
     end
 K12_s_fun = @K12_s;
 

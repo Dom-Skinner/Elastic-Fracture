@@ -1,6 +1,7 @@
-function [theta,h] = linear_perturbation_solve(n,t,xmax, h0,h0_z,l0)
+function [theta,h,kernel_matrix] = linear_perturbation_solve(n,t,xmax, h0,h0_z,l0)
 % Solves the linear perturbation problem.
 s = 0.138673;
+%s = 0.5;
 
 %the data points
 x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
@@ -25,9 +26,9 @@ A(2*n-1,n) = 1;
 A(2*n,2*n-1) = -1/(x(n)-x(n-1));
 A(2*n,2*n) = 1/(x(n)-x(n-1));
 
-conditioning = rcond(A);
+%conditioning = rcond(kernel_matrix);
 
-fprintf(' condition number = %6.4e \n', conditioning)
+%fprintf(' condition number = %6.4e \n', conditioning)
 
 c = zeros(2*n,1);
 c(2*n-1,1) = 0.5;

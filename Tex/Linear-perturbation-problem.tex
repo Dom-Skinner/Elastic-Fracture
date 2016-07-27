@@ -118,19 +118,12 @@ The old method of linearising via $\tilde{H}'(\xi) \approx
 \frac{1}{\sqrt{\xi}}(a\xi+b)$ may no longer be too helpful, since we do not 
 predict such a $\xi^{-1/2}$ singularity. It is possible (and even likely) 
 that $\tilde{G}'$ still has such a singularity, but we predict $\tilde{H}'$ 
-to have a $\xi^{s-1}$ singularity near the origin. The 
-$\tilde{H}'(\xi) \approx \xi^{s-1}(a\xi+b)$ 
-approximation, makes the analytic expressions inside the elasticity integal 
-become worse than they already were.
+to have a $\xi^{s-1}$ singularity near the origin. Therefore, we shall use
+the $\tilde{H}'(\xi) \approx \xi^{s-1}(a\xi+b)$ 
+approximation.
 \\
 \\
-For now, we propose sticking to the old scheme. Even though it doesn't correctly
-predict the behaviour near zero, the code should be written to see if this works
-at all. If it doesn't, then at least we have a rough structure of the code
-which shouldn't be too time consuming to change for a new representation.
-\\
-\\
-Since we are using the same representation as before, we get that 
+Recall that,
 \[ \left( \begin{array}{c} \tilde{\Pi}(z_1) \\ \vdots \\ \tilde{\Pi}(z_{n-1}) 
 \\[4pt] 0 \\ \vdots \\ 0 \end{array} \right) =
 \left( \begin{array}{ccc} B_{1,1} & \cdots & B_{1 , 2n} \\
@@ -141,7 +134,7 @@ Where $B$ is in lieu of the Kernel integral, $T$ is the interpolation matrix,
 and recall that 
 \[ \bs{\gamma} = (a_1, \dots, a_n, b_1, \dots , b_n, c_1, \dots, c_n, d_1, \dots 
  d_n) \]
-\[ \bs{\theta} = (a_1\xi_1+b_1, \dots, a_n\xi_n+b_n,\dots , c_1\xi_1+d_1, \dots,
+\[ \bs{\theta} = (a_1\xi_1+b_1, \dots, a_n\xi_n+b_n, c_1\xi_1+d_1, \dots,
  c_n \xi_n +  d_n) \]
 Now, the difference from before is that the second equation for $\tilde{\Pi}$ 
 is linear in $\tilde{H}$. 
@@ -162,92 +155,142 @@ This gives us a matrix equation to solve: $A \bs{\theta} = \bs{c}$, where
 $\bs{c}=0$ except $c_n=1/2$, $c_{2n}=1$. Inverting $A$ should get the 
 required answer, no iteration needed.
 \section{Numerical Details}
-We have inherited the matrix $BT$ from Tim's code. It may well be that this
-needs changing in the future, but for now, we shall take this as given.
-Therefore, the only real new part to code is the matrix $R$. 
-\\
-\\
-Recall we have also inhereted a matrix $H_{Coeff}$. It has the property that
-\[ ( w_1, e_1, r_1, \dots ,w_n, e_n, r_n ) = H_{Coeff} \bs{\theta} \]
-We also recall that 
-\[ \tilde{H}(\xi) = \left\{ \begin{array}{cc} \sqrt{\xi}(w_i\xi+e_i)+r_i &
+\subsection{Lubrication matrix}
+We need to figure out a way to work out the matrix $R$. Our best possible 
+representation of $H_0$ and $\tilde{H}$ look something like
+\[ H_0(\xi) = \left\{ \begin{array}{cc} \xi^{2/3}(w_i^0\xi+e_i^0)+r_i^0 &
+i <t \\ w_i^0\xi^2+e_i^0\xi + r_i^0 & i \geq t \end{array} \right. \]
+%
+\[ \tilde{H}(\xi) = \left\{ \begin{array}{cc} \xi^{s}(w_i\xi+e_i)+r_i &
 i <t \\ w_i\xi^2+e_i\xi + r_i & i \geq t \end{array} \right. \]
-For $\xi \in [\xi_i,\xi_{i+1}]$. We have that 
-\[ (H(\xi_1), \dots, H(\xi_n) ) = S H_{coeff} \bs{\theta} \]
-Where 
-\[ S = \left( \begin{array}{*{14}{c}}
-x_1^{3/2} & x_1^{1/2} & 1 & & & & & & & & & & 0 \\
- & & & \ddots \\
- & & & & x_{t-1}^{3/2} & x_{t-1}^{1/2} & 1 \\
- & & & & & & & x_{t}^{2} & x_{t} & 1 \\
- & & & & & & &  & & & \ddots \\
-0 & & & & & & &  & & & &    x_{n}^{2} & x_{n} & 1 \\
-\end{array} \right) \]
-(This will never appear as a matrix in the code, point is that it can be
-thought of one). Recall the equation we are trying to solve:
+For $\xi \in [\xi_i,\xi_{i+1}]$. 
+
+Recall the equation we are trying to solve:
 \[ \tilde{\Pi} = \int_z^{\infty} \frac{2 \tilde{H} \Pi_0'}{H_0} d\xi \]
 We want to solve for $(\tilde{\Pi}(z_1), \dots \tilde{\Pi}(z_{n-1}))$.
-In a break with the approaches previously used, we will solve this with
-simple numerical integration via the trapezium rule. We will also use
-the lubrication equation $\Pi_0'H_0^2=\lambda_0$ to remove $\Pi_0'$.
+We will also use the lubrication equation $\Pi_0'H_0^2=\lambda_0$ 
+to remove $\Pi_0'$.
 \[ \tilde{\Pi}(z_k) = \int_{z_k}^{\xi_{k+1}} \frac{2\lambda_0 \tilde{H}}{H_0^3} 
 d\xi + \sum_{r=k+1}^{n-1}\int_{\xi_r}^{\xi_{r+1}} \frac{2\lambda_0 \tilde{H}}
 {H_0^3} d\xi + \int_{\xi_n}^{\infty} \frac{2\lambda_0 \tilde{H}}
 {H_0^3} d\xi\]
-It is simple to approximate some of these integrals with the trapezium rule:
-\[ \int_{\xi_r}^{\xi_{r+1}} \frac{2\lambda_0 \tilde{H}}{H_0^3} d\xi 
-\approx (\xi_{r+1} - \xi_r)\left( \frac{\lambda_0\tilde{H}(\xi_{r+1})}
-{H_0^3(\xi_{r+1})} + \frac{\lambda_0\tilde{H}(\xi_{r})}
-{H_0^3(\xi_{r})} \right) =(\xi_{r+1} - \xi_r)(f(\xi_{r+1})+f(\xi_r)) \]
-Where we adopt the new notation $f(\xi) = \lambda_0 \tilde{H}(\xi)/H_0^3(\xi)$
-for convenience. It is easy to see that 
-\[ (f(\xi_1), \dots , f(\xi_n)) = FSH_{Coeff}\bs{\theta} \] 
-where now 
-\[ F = \left( \begin{array}{ccc}
-\lambda_0/H_0^3(\xi_1) \\
-& \ddots \\
-& & \lambda_0/H_0^3(\xi_n) \end{array} \right) \]
-That leaves two integrals to deal with. The first is also easily despached
-with the trapezium rule, just needs a little bit of care.
-\[ \int_{z_k}^{\xi_{k+1}} 2f(\xi) d\xi \approx (\xi_{k+1} - z_k)(f(\xi_{k+1})
-+ f(z_k) )\]
-where
-\[f(z_k) \approx f(\xi_k) + \frac{z_k - \xi_k}{\xi_{k+1}-\xi_k} (f(\xi_{k+1})
--f(\xi_k) ) \] 
-so
-\[ \int_{z_k}^{\xi_{k+1}} 2f(\xi) d\xi \approx (\xi_{k+1} - z_k)
-\left( f(\xi_k) \frac{\xi_{k+1}-z_k}{\xi_{k+1}-\xi_k} + f(\xi_{k+1})
-\frac{z_k - 2 \xi_k +\xi_{k+1}}{\xi_{k+1}-\xi_k} \right)
-\]
-\begin{figure}[!ht]\centering
-\includegraphics{LinFig1.pdf}
-\end{figure}
+It becomes a question of approximating integrals of the form
+\[ \int_{\tau_1}^{\tau_2} \frac{2\lambda_0 \tilde{H}}{H_0^3} d\xi \]
+Where $\tau_2 = \xi_{r+1}$, $\tau_1 = \xi_r$ or $z_r$. The way chosen to 
+approximate the integrand was
+\[ 2\lambda_0\tilde{H}/H_0^3 = 
+\left\{ \begin{array}{cc} \xi^{s-4/3}(a_i\xi+b_i) &
+i <t \\ \xi^{-5}(a_i\xi+b_i) & i \geq t \end{array} \right. \]
+To reflect the suspected asymptotics of the integrand, near 0 and near 
+$\infty$. The general way to think about this is if 
+$ 2\lambda_0\tilde{H}/H_0^3 = \xi^{\alpha}(a_i\xi+b_i) $, then
+\[ \int_{\tau_1}^{\tau_2} \frac{2\lambda_0 \tilde{H}}{H_0^3} d\xi =
+a_i\left[ \frac{\tau_2^{\alpha+2}-\tau_1^{\alpha+2}}{\alpha+2}\right]+
+b_i\left[ \frac{\tau_2^{\alpha+1}-\tau_1^{\alpha+1}}{\alpha+1}\right] \]
+By matching at the endpoints, one can determine the coefficients, $a,b$
+linearly in terms of the $w,e,r,$ coeffs. Further, since the integral is
+clearly linear in $a,b$,  one can find formulae to make the integral linear
+in the $w,e,r$. 
+\subsection{Integral Kernel}
+We wish to recalculate the integral kernel, given that near the origin,
+$\tilde{H}' = \xi^{s-1} (a_i \xi + b_i)$. We assume the same $\tilde{G}'$
+spacing as always. This raises the problem of calculating such integrals as
+\[ \int_{\ell_\xi}^{u_\xi} \frac{48(\xi-z)^2 -64}{(\xi-z)( (\xi-z)^2+4)^3}
+\xi^{\alpha} d\xi \]
+\[ \int_{\ell_\xi}^{u_\xi} \frac{24(\xi-z)^2 -32}{( (\xi-z)^2+4)^3}
+\xi^{\alpha} d\xi \]
+Where $\alpha = s,s-1$ and $u_\xi = \xi_{k+1}$, $\ell_{\xi} = \xi_k$.
+In a deviation from what was done previously, there is no nice analytic solution
+to this equation in for general $\alpha$. There is a solution in terms of 
+hypergeometric functions, but these take a long time to compute, and worse, 
+don't seem to give a very good answer. That is to say that they don't capture
+the nature of the singularity, removed by using a Cauchy principal value.
+We can rewrite the first integral as 
+\[ \int_{\ell_\xi}^{u_\xi} \frac{48(\xi-z)^2 -64}{(\xi-z)( (\xi-z)^2+4)^3}
+\xi^{\alpha} d\xi = \int_{\ell_\xi}^{u_\xi} \frac{(\xi-z)^5 + 12 (\xi-z)^3 + 
+96(\xi-z)}{((\xi-z)^2 +4)^3} \xi^{\alpha} d \xi - 
+ \int_{\ell_\xi}^{u_\xi} \frac{\xi^{\alpha}}{\xi-z} d\xi \]
+Which splits the integrals into singular and non singular parts. The non 
+singular parts are mostly well behaved and can be integrated with matlabs
+inbuilt routine. However, when $\alpha = s-1$, they have an integrable
+singularity near the origin that numerical integrators can't handle. This 
+can be removed manually via integration by parts. For instance, consider
+a well behaved function $f$. Then
+\[ \int_{u_\xi}^{\ell_\xi} f(\xi - z) \xi^{\alpha} d\xi = \left[
+\frac{\xi^{\alpha+1}}{\alpha+1} f(\xi - z) \right]_{\ell_\xi}^{u_\xi} 
+- \int_{\ell_\xi}^{u_\xi} \frac{\xi^{\alpha+1}}{\alpha+1} f'(\xi -z)d\xi\]
+Where for $-1 < \xi < 0$ the left hand side is numerically suspect, whereas
+the right hand side is numerically tractable.
 \\
-As for $ \int_{\xi_n}^{\infty} 2f(\xi) d\xi$, this is where I don't have any
-particularly good ideas so far. From the boundary conditions, expect that
-$f(\xi) \approx 4\lambda_0 /\xi^4$ to leading order. So
-\[ \int_{\xi_n}^{\infty} 2f(\xi) d\xi \approx \frac{8\lambda_0}{4\xi_n^3}
-= \frac{2}{3} \xi_n f(\xi_n)\]
-This may prove to be a pretty poor approximation, so if this method fails, 
-correcting this (or putting solid bounds on the error) is an important 
-improvement to make. Finally we get that
+\\
+This leaves the important issue of the singularity, and the Cauchy principal
+value, ie. the integral
+\[ \int_{\ell_\xi}^{u_\xi} \frac{\xi^{\alpha}}{\xi-z} d\xi \]
+We will do some substutions and some reshuffling until this takes a form that
+is convenient to work with. 
+\[ \int_{\ell_\xi}^{u_\xi} \frac{\xi^{\alpha}}{\xi-z} d\xi = 
+z^{\alpha} \int_{\ell_\xi/z}^{u_\xi/z} \frac{u^{\alpha}}{u-1} du = 
+ z^{\alpha} \left\{ \int_{\ell_\xi/z-1}^{u_\xi/z-1} 
+\frac{\theta^{\alpha}-1}{\theta} d\theta +  \int_{\ell_\xi/z-1}^{u_\xi/z-1}
+1/\theta d \theta 
+\right\}\]
+Where $\frac{\theta^{\alpha}-1}{\theta}$ is a well behaved function near 0.
+We also can show that 
+\[\int_{\ell_\xi/z-1}^{u_\xi/z-1} 1/\theta \; d \theta = \log \left| 
+\frac{u_\xi - z}{z - \ell_\xi} \right|\]
+Which conveniently holds whether or not the interval contains the origin.
+The algorithm goes something like:
+\[ \int_{\ell_\xi}^{u_\xi} \frac{48(\xi-z)^2-64}{(\xi-z)( (\xi-z)^2 + 4)^3} 
+\xi^{\alpha} d\xi= 
+\underbrace{\int_{\ell_\xi}^{u_\xi} 
+\frac{(\xi-z)((\xi-z)^4+12(\xi-z)^2-96)}{( (\xi-z)^2 + 4)^3}}_{I_1} 
+\xi^{\alpha} d\xi +
+\underbrace{ \int_{\ell_x}^{u_x} \frac{\xi^{\alpha}}{z-\xi} d\xi}_{I_2} \]
+
+\subsubsection*{I$_1$}
+Is $\ell_x < 0.5$ and $\alpha < 0$?
+\begin{itemize}
+\item Yes. The integral as it stands will have trouble at $0$ Write
 \begin{align*}
-\tilde{\Pi}(z_k) \approx &(\xi_{k+1} - z_k)
-\left( f(\xi_k) \frac{\xi_{k+1}-z_k}{\xi_{k+1}-\xi_k} + f(\xi_{k+1})
-\frac{z_k - 2 \xi_k +\xi_{k+1}}{\xi_{k+1}-\xi_k} \right) \\
-&+ \sum_{r = k+1}^{n-1} (\xi_{r+1} - \xi_{r})(f(\xi_{r+1})+f(\xi_r)) + 
-\frac{2}{3}\xi_n f(\xi_n)
+ I_1 =& \left[ \frac{\xi^{\alpha+1}}{\alpha+1}
+\frac{(\xi-z)((\xi-z)^4+12(\xi-z)^2-96)}{( (\xi-z)^2 + 4)^3}
+\right]_{\ell_\xi}^{u_\xi} \\
+& - \int_{\ell_x}^{u_x} \frac{\xi^{\alpha+1}}{\alpha+1} \frac{d}{dx}
+\left\{ \frac{(\xi-z)((\xi-z)^4+12(\xi-z)^2-96)}{( (\xi-z)^2 + 4)^3}
+\right\} d\xi \end{align*}
+Where both parts of the expression are numerically tractable.
+\item No. Just evaluate the integral numerically, as is.
+\end{itemize}
+\subsubsection*{I$_2$}
+\begin{itemize}
+\item Case: $\alpha > 0$ or $\ell_\xi/z > 1/2$. 
+\\
+\[ I_2 = - z^{\alpha} \left\{ \int_{\ell_\xi/z-1}^{u_\xi/z -1} 
+\frac{(1+\theta)^{\alpha} -1}{\theta} d\theta + \log \left| 
+\frac{u_\xi - z}{z - \ell_\xi} \right| \right\} \]
+\item Case: $\alpha < 0$, $u_\xi/z < 1/2$. No problems with Cauchy PV,
+but might have some issues with integrable singualarity at 0.
+\[ I_2 = - z^{\alpha} \left\{ \left[ \frac{u^{\alpha+1}}{\alpha+1} 
+\frac{1}{u-1} \right]_{\ell_\xi/z}^{u_\xi/z} + \int_{\ell_\xi/z}^{u_\xi/z}
+\frac{u^{\alpha+1}}{\alpha+1} 
+\frac{1}{(u-1)^2} du \right\}\]
+\item Case: $\alpha < 0$,  $\; \ell_\xi/z < 1/2 < u_\xi/z$. Trouble from
+both poles. We split the integral
+\begin{align*} I_2 =& -z^{\alpha} \left\{ 
+\int_{\ell_\xi/z}^{1/2} \frac{u^{\alpha}}{u-1} du  + 
+\int_{1/2}^{u_\xi/z} \frac{u^{\alpha}}{u-1} du 
+\right\}  \\
+= & -z^{\alpha} \left\{ \left[ \frac{u^{\alpha+1}}{\alpha+1} 
+\frac{1}{u-1} \right]_{\ell_\xi/z}^{1/2} + \int_{\ell_\xi/z}^{1/2}
+\frac{u^{\alpha+1}}{\alpha+1} 
+\frac{1}{(u-1)^2} du  \right. \\
+& \qquad \qquad + \left. \int_{-1/2}^{u_\xi/z -1} 
+\frac{(1+\theta)^{\alpha} -1}{\theta} d\theta + \log \left| 
+2u_\xi/z - 1 \right| 
+\right\} 
 \end{align*}
-Which, one notes, is linear in the $f(\xi_k)$. Thus 
-\[ (\tilde{\Pi}(z_1), \dots , \tilde{\Pi}(z_{n-1})) = QFSH_{Coeff}\bs{\theta} \] 
-Where
-\begin{align*}
- Q(k,:) =& \left(\underbrace{0, \dots , 0}_{k-1 \mbox{ times}}, (\xi_{k+1}-z_k) 
-\frac{\xi_{k+1}-z_k}{\xi_{k+1}-\xi_k},  (\xi_{k+1}-z_k) \frac{z_k - 2 \xi_k 
-+\xi_{k+1}}{\xi_{k+1}-\xi_k} + (\xi_{k+2}-\xi_{k+1}), \right. \\[4pt]
-& \qquad\qquad \left. \xi_{k+3}-\xi_{k+1}, \dots, \xi_{n}-\xi_{n-2}, 
-\xi_{n}-\xi_{n-1} + \frac{2}{3}\xi_n  \right)
-\end{align*}
+\end{itemize}
+
 %
 %
 % References/Bibliography /////////////////////////////////////////////////////
