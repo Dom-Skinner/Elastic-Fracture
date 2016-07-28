@@ -12,6 +12,7 @@ scaling_2(1:t-1) = x(1:t-1).^(s1-s2).*scaling_1(1:t-1);
 scaling_2(t:n) = scaling_1(t:n);
 if s1 < s2 
     disp('Warning, could be singularities in convert function')
-    scaling_2(1) = scaling_2(2); % Better than infinity right?...
+    p1 = polyfit(x(2:5)' , scaling_2(2:5),1);
+    scaling_2(1) = p1(2); % Better than infinity right?...
 end
 end

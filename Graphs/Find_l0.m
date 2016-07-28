@@ -3,9 +3,9 @@
 % here numerically. 
 
 clear
-nstr = '400';
-xstr = '50';
-file = strcat('n',nstr,'x',xstr,'-extended');
+nstr = '200';
+xstr = '70';
+file = strcat('n',nstr,'x',xstr);
 load(file)
 
 s = 0.138673;
@@ -44,7 +44,6 @@ text(0.27,0.0583,s2,'Interpreter','latex','fontsize',20)
 text(0.27,0.0581,['$n=', nstr, '$'],'Interpreter','latex','fontsize',20)
 text(0.27,0.0579,['$x_{end}=', xstr, '$'],'Interpreter','latex','fontsize',20)
 
-disp(100*p1(1))
 
 legend({'Linear fit','Quadratic fit','$\lambda$'},'Interpreter','Latex'...
     ,'fontsize',20)

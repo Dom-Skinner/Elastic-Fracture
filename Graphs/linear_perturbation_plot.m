@@ -1,7 +1,10 @@
 clear
-load n400x50-extended
+load n200x20
+u = 4 - 6*s;
+
 K = 3*sqrt(2*pi)*KI;
-l0 = 0.0593;
+p1 = polyfit(K(end-1:end).^u,lambda(end-1:end),1);
+l0 = p1(2);
 z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
 [h0_prime ,h0_prime_LEFM] = interpolate_hprime(x,n,hprime_data,K,0.5);
@@ -50,4 +53,20 @@ legend({'$H_0$ interpolated','$H_0$ with LEFM correction',...
 
 axis([0,0.15,0.5,0.75])
 %export_fig ('linear-perturbation', '-pdf', '-transparent')
+
+er = ones(1,round(0.2*n));
+for k = 20:round(0.25*n)
+    p3 = polyfit(x(k:k+3) , H_LEFM_23(k:k+3)'.*x(k:k+3).^(-s),1);
+    p4 = polyfit(x(k:k+4) ,H_LEFM_23(k:k+4)'.*x(k:k+4).^(-s) ,2);
+    er(k) = abs(p3(2)-p4(3));
+end
+[~,I] = min(er(:));
+
+p3 = polyfit(x(I:I+1) ,H_LEFM_23(I:I+1)'.*x(I:I+1).^(-s), 1);
+%p4 = polyfit(x(I:I+2) ,H_LEFM_23(I:I+2)'.*x(I:I+2).^(-s), 2);
+
+%interp2(1:I) = (p3(1)*x(1:I)+p3(2)).*x(1:I).^(2/3-a);
+fprintf('intercept = %.2e%%\n',p3(2))
+
+
 
