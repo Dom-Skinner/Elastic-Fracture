@@ -1,7 +1,8 @@
+%{
 clear
 x_val = [20, 30 , 40 ,50, 60, 70];
 
-for k = 2
+for k = 1:4
     clearvars -except x_val k
 
     n = 800;
@@ -16,13 +17,13 @@ for k = 2
     
     save(file,'kernel_matrix_s','s','z','-append')
 end
+%}
 
-%{
 clear
 xend_val = [20, 30 , 40 ,50, 60, 70];
-l=2;
+l=1;
 
-file = strcat('n200','x',num2str(xend_val(l)));
+file = strcat('n800','x',num2str(xend_val(l)));
 load(file)
 
 u = 4 - 6*s;

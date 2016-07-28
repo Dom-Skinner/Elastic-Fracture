@@ -3,8 +3,8 @@
 % here numerically. 
 
 clear
-nstr = '200';
-xstr = '70';
+nstr = '400';
+xstr = '50';
 file = strcat('n',nstr,'x',xstr);
 load(file)
 
