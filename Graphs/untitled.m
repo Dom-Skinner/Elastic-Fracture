@@ -1,6 +1,6 @@
 clear
 n_val = [200,400,800];
-xend_val = [20,30,40,50];%,60,70];
+xend_val = [20,30,40,50,60,70];
 for q  = 1:numel(n_val)
 for l = 1:numel(xend_val)
 
@@ -33,8 +33,8 @@ figure('units','normalized','outerposition',[0 0 1 1])
 
 
 ax1 = subplot(2,2,1);
-plot(xend_val,l0_save(1,:),'o-',xend_val,l0_save(2,:),'o-',xend_val,l0_save(3,:),'o-')
-xlabel(ax1,'$ x_{end} $','Interpreter','latex','fontsize',25);
+plot(xend_val.^(-2),l0_save(1,:),'o-',xend_val.^(-2),l0_save(2,:),'*-',xend_val.^(-2),l0_save(3,:),'+-')
+xlabel(ax1,'$ 1/x_{end}^2 $','Interpreter','latex','fontsize',25);
 ylabel(ax1,'$ \lambda_0$','Rotation',0,'Position', [10, 0.0594], ...
     'Interpreter','latex','fontsize',25);
 title(ax1,'Numerical estimates of $\lambda_0$ against $x_{end}$',...
@@ -43,7 +43,7 @@ set(ax1,'TickLabelInterpreter', 'latex');
 set(ax1,'fontsize',20')
 
 ax2 = subplot(2,2,2);
-plot(xend_val,l1_save(1,:),'o-',xend_val,l1_save(2,:),'o-',xend_val,l1_save(3,:),'o-')
+plot(xend_val,l1_save(1,:),'o-',xend_val,l1_save(2,:),'*-',xend_val,l1_save(3,:),'+-')
 xlabel(ax2,'$ x_{end} $','Interpreter','latex','fontsize',25);
 ylabel(ax2,'$ \lambda_1$','Rotation',0,'Interpreter','latex','fontsize',25);
 title(ax2,'Numerical estimates of $\lambda_1$ against $x_{end}$',...
@@ -52,8 +52,8 @@ set(ax2,'TickLabelInterpreter', 'latex');
 set(ax2,'fontsize',20')
 
 ax3 = subplot(2,2,3);
-plot(xend_val,D_save(1,:),'o-',xend_val,D_save(2,:),'o-',xend_val,D_save(3,:),'o-')
-xlabel(ax3,'$ x_{end} $','Interpreter','latex','fontsize',25);
+plot(xend_val.^(-1),D_save(1,:),'o-',xend_val.^(-1),D_save(2,:),'*-',xend_val.^(-1),D_save(3,:),'+-')
+xlabel(ax3,'$ 1/x_{end} $','Interpreter','latex','fontsize',25);
 ylabel(ax3,'$ D$','Rotation',0,'Interpreter','latex','fontsize',25);
 title(ax3,'Numerical estimates of $D$ against $x_{end}$',...
     'fontsize', 25,'Interpreter','latex');
@@ -63,13 +63,14 @@ set(ax3,'fontsize',20')
 ax4 = subplot(2,2,4);
 s = 0.138673;
 C = D_save./l1_save .*(l0_save).^(1-2*s); % TODO CHECK HOW THIS WORKS....
-plot(xend_val,C(1,:),'o-',xend_val,C(2,:),'o-',xend_val,C(3,:),'o-')
-xlabel(ax4,'$ x_{end} $','Interpreter','latex','fontsize',25);
+plot(xend_val.^(-1),C(1,:),'o-',xend_val.^(-1),C(2,:),'*-',xend_val.^(-1),C(3,:),'+-')
+xlabel(ax4,'$ 1/x_{end} $','Interpreter','latex','fontsize',25);
 ylabel(ax4,'$C$','Rotation',0,'Interpreter','latex','fontsize',25);
 title(ax4,'Numerical estimates of $C$ against $x_{end}$',...
     'fontsize', 25,'Interpreter','latex');
 set(ax4,'TickLabelInterpreter', 'latex');
 set(ax4,'fontsize',20')
+legend({'n=200','n=400','n=800'},'Interpreter','latex','Location', 'southeast');
 %fprintf('\n\n xend = %.3e%%\n',xend)
 %fprintf('l0 = %.3e%%\n',l0)
 %fprintf('l1 = %.3e%%\n',-3*l0/p3(2))

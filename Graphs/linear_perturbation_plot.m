@@ -1,5 +1,5 @@
 clear
-load n200x20
+load n800x70
 u = 4 - 6*s;
 
 K = 3*sqrt(2*pi)*KI;
@@ -7,7 +7,7 @@ p1 = polyfit(K(end-1:end).^u,lambda(end-1:end),1);
 l0 = p1(2);
 z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
-[h0_prime ,h0_prime_LEFM] = interpolate_hprime(x,n,hprime_data,K,0.5);
+[h0_prime ,h0_prime_LEFM] = interpolate_hprime(x,n,hprime_data,K,0.5,l0);
 
 h_coefficient_matrix = hprime_to_h_s(x,0.5);
 

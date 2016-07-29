@@ -11,11 +11,11 @@ c = h_coeffs(3*n);
 %finds ...int_xend^infty 1/h^2 *(x-xend) dx, and its derivatives in a, b, c.
 %outputs a scalar entry adjust, and a 3-element row vector d_adjust.
 
-integral = @(x) (-1/6).*a.^(-1).*(2.*(b+2.*a.*x).^(-1)+(-1).*(b+2.*a.*x).^(-2).*( ...
-  b+2.*a.*xend)+6.*((-1).*b.^2+4.*a.*c).^(-1/2).*atan(((-1).*b.^2+ ...
-  4.*a.*c).^(-1/2).*(b+2.*a.*x))+6.*(b.^2+(-4).*a.*c).^(-1).*(b+2.* ...
-  a.*xend).*log(b+2.*a.*x)+(-3).*(b.^2+(-4).*a.*c).^(-1).*(b+2.*a.* ...
-  xend).*log(c+x.*(b+a.*x)));
+%integral = @(x) (-1/6).*a.^(-1).*(2.*(b+2.*a.*x).^(-1)+(-1).*(b+2.*a.*x).^(-2).*( ...
+%  b+2.*a.*xend)+6.*((-1).*b.^2+4.*a.*c).^(-1/2).*atan(((-1).*b.^2+ ...
+%  4.*a.*c).^(-1/2).*(b+2.*a.*x))+6.*(b.^2+(-4).*a.*c).^(-1).*(b+2.* ...
+%  a.*xend).*log(b+2.*a.*x)+(-3).*(b.^2+(-4).*a.*c).^(-1).*(b+2.*a.* ...
+%  xend).*log(c+x.*(b+a.*x)));
 
 da_integral = @(x) (1/6).*a.^(-2).*((b+2.*a.*x).^(-2).*((-5).*b+(-4).*a.*xend)+2.*b.* ...
 ...
@@ -57,12 +57,27 @@ dc_integral = @(x) (b.^2+(-4).*a.*c).^(-2).*((b.^2+(-4).*a.*c).*(c+x.*(b+a.*x)).
 ...
   x)+2.*(b+2.*a.*xend).*log(c+x.*(b+a.*x)));
 
-adjust = integral(infinity) - integral(xend);
+adjust = 0;%integral(infinity) - integral(xend);
 
 d_adjust = zeros(1,3*n);
 d_adjust(3*n-2) = da_integral(infinity) - da_integral(xend);
 d_adjust(3*n-1) = db_integral(infinity) - db_integral(xend);
 d_adjust(3*n) = dc_integral(infinity) - dc_integral(xend);
+
+d_adjust = 0;%d_adjust*h_coefficient_matrix;
+
+fun_h = @(x) a.*x.^2 + b.*x +c;
+fun1 = @(x) -0.5*(x-xend).^2./fun_h(x).^2;
+fun2 = @(x) x.^2 .*fun1(x)./fun_h(x);
+fun3 = @(x) x.*fun1(x)./fun_h(x);
+fun4 = @(x) fun1(x)./fun_h(x);
+
+adjust = integral(fun1,xend,infinity);
+
+d_adjust = zeros(1,3*n);
+d_adjust(3*n-2) = integral(fun2,xend,infinity);
+d_adjust(3*n-1) = integral(fun3,xend,infinity);
+d_adjust(3*n) = integral(fun4,xend,infinity);
 
 d_adjust = d_adjust*h_coefficient_matrix;
 

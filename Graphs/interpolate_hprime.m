@@ -1,4 +1,4 @@
-function [interp1, interp2] = interpolate_hprime(x,n,hprime_data,K,a)
+function [interp1, interp2] = interpolate_hprime(x,n,hprime_data,K,a,l0)
 % Interpolates h_0' based on values of h' for non zero K.
 % Also attempts to correct for the LEFM boundary layer since this is not
 % present in the h_0 solution.
@@ -27,8 +27,8 @@ fprintf('Approximate interpolation error = %.2e%%\n',100*max(pc_er(40:end)))
 
 er = zeros(1,round(0.2*n));
 for k = 1:round(0.25*n)
-    p3 = polyfit([x(k:k+1), 0] , [interp1(k:k+1).*x(k:k+1).^(a-2/3),0.352],1);
-    p4 = polyfit([x(k:k+2), 0] , [interp1(k:k+2).*x(k:k+2).^(a-2/3),0.352],2);
+    p3 = polyfit([x(k:k+1), 0] , [interp1(k:k+1).*x(k:k+1).^(a-2/3),(16*l0^2/(3*pi^2))^(1/6)],1);
+    p4 = polyfit([x(k:k+2), 0] , [interp1(k:k+2).*x(k:k+2).^(a-2/3),(16*l0^2/(3*pi^2))^(1/6)],2);
     er(k) = abs(p3(2)-p4(3));
 end
 [~,I] = min(er(:));

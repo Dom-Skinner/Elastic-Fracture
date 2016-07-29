@@ -1,3 +1,4 @@
+%{
 clear
 x_val = [60, 70];
 
@@ -17,14 +18,14 @@ for k = 1:2
     %save(file,'kernel_matrix_s','s','z','-append')
     save(file)
 end
+%}
 
 
-%{
 clear
-xend_val = [20, 30 , 40 ,50, 60, 70];
+xend_val = [20,30,40,50,60, 70];
 l=1;
 
-file = strcat('n800','x',num2str(xend_val(l)));
+file = strcat('n200','x',num2str(xend_val(l)));
 load(file)
 
 u = 4 - 6*s;
@@ -32,7 +33,7 @@ K = 3*sqrt(2*pi)*KI;
 p1 = polyfit(K(end-1:end).^u,lambda(end-1:end),1);
 l0 = p1(2);
 
-[~ ,h0_prime_LEFM] = interpolate_hprime(x,n,hprime_data,K,0.5);
+[h0_prime ,h0_prime_LEFM] = interpolate_hprime(x,n,hprime_data,K,0.5,l0);
 
 h0_prime_LEFM_23 = convert(0.5,2/3,n,t,x,h0_prime_LEFM);
 h_coefficient_matrix_23 = hprime_to_h_s(x,2/3);
