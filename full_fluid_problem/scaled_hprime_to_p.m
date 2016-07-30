@@ -18,7 +18,7 @@ pressure = pprime_to_p(x,z,h_coeffs);
 deriv_pressure = pressure_map_derivative(x,z,h_coeffs,h_coefficient_matrix);
 
 %finds the adjustments to things
-[adjust, d_adjust] = bending_p_adjust(x,h_coeffs,h_coefficient_matrix);
+%[adjust, d_adjust] = bending_p_adjust(x,h_coeffs,h_coefficient_matrix);
 
 p = zeros(2*n,1);
 dp = zeros(2*n,2*n);
@@ -37,12 +37,12 @@ dp(1:n-1,n+1:2*n) = lambda*deriv_pressure;
 %p(2*n) = h_doubledash;
 
 %the P condition
+adjust = 1-2*lambda/(3*x(n)) - 4*lambda^2 *log(x(n)) / x(n)^2 ;
+p(2*n-1) = 0.5*adjust;
+p(2*n) = adjust;
 
-p(2*n-1) = 0.5 + 0.5*lambda*adjust;
-p(2*n) = 1 + lambda*adjust;
-
-dp(2*n-1,n+1:2*n) = 0.5*lambda*d_adjust;
-dp(2*n,n+1:2*n) = lambda*d_adjust;
+%dp(2*n-1,n+1:2*n) = 0.5*lambda*d_adjust;
+%dp(2*n,n+1:2*n) = lambda*d_adjust;
 
 
 

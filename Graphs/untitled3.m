@@ -1,9 +1,10 @@
 
-n_vals = [150,200,250,300,350];
+x_vals = [20,25,30,40];
 
-for k = 1:numel(n_vals)
-    n = n_vals(k);
-    xmax = 30;
+%n=150;
+
+for k = 1:numel(x_vals)
+    xmax = x_vals(k);
     scaled_K_of_c_march
     s = 0.138673;
     u = 4 - 6*s;
@@ -12,4 +13,4 @@ for k = 1:numel(n_vals)
     l0(k) = p1(2);
 end
 hold on
-plot(n_vals.^(-2),l0,'o-')
+plot(x_vals.^(-2),l0,'o-')

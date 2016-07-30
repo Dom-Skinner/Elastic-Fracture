@@ -64,7 +64,7 @@ d_adjust(3*n-2) = da_integral(infinity) - da_integral(xend);
 d_adjust(3*n-1) = db_integral(infinity) - db_integral(xend);
 d_adjust(3*n) = dc_integral(infinity) - dc_integral(xend);
 
-d_adjust = 0;%d_adjust*h_coefficient_matrix;
+d_adjust = d_adjust*h_coefficient_matrix;
 
 fun_h = @(x) a.*x.^2 + b.*x +c;
 fun1 = @(x) -0.5*(x-xend).^2./fun_h(x).^2;
@@ -72,12 +72,11 @@ fun2 = @(x) x.^2 .*fun1(x)./fun_h(x);
 fun3 = @(x) x.*fun1(x)./fun_h(x);
 fun4 = @(x) fun1(x)./fun_h(x);
 
-adjust = integral(fun1,xend,infinity);
 
 d_adjust = zeros(1,3*n);
-d_adjust(3*n-2) = integral(fun2,xend,infinity);
-d_adjust(3*n-1) = integral(fun3,xend,infinity);
-d_adjust(3*n) = integral(fun4,xend,infinity);
+%d_adjust(3*n-2) = integral(fun2,xend,infinity);
+%d_adjust(3*n-1) = integral(fun3,xend,infinity);
+%d_adjust(3*n) = integral(fun4,xend,infinity);
 
 d_adjust = d_adjust*h_coefficient_matrix;
 
