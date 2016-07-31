@@ -3,10 +3,12 @@
 % here numerically. 
 
 clear
-nstr = '800';
-xstr = '70';
-file = strcat('n',nstr,'x',xstr);
-load(file)
+%nstr = '800';
+%xstr = '70';
+%file = strcat('n',nstr,'x',xstr);
+%load(file)
+load n200x30-tmp
+
 
 s = 0.138673;
 u = 4 - 6*s;

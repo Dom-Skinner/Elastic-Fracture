@@ -1,25 +1,26 @@
-%{
-clear
-x_val = [60, 70];
 
-for k = 1:2
+clear
+x_val = [20,24,32,38,45,48];
+
+for k = 1:numel(x_val)
     clearvars -except x_val k
 
-    n = 800;
+    n = 400;
     xmax = x_val(k);
-    file = strcat('n',num2str(n),'x',num2str(xmax));
+    file = strcat('n',num2str(n),'x',num2str(xmax),'-tmp');
     %load(file)
     scaled_K_of_c_march
     z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
     s = 0.138673;
-    [kernel_matrix_s, ~] = pressure_shear_matrix_s(x,z,s);
+    %[kernel_matrix_s, ~] = pressure_shear_matrix_s(x,z,s);
 
     
     %save(file,'kernel_matrix_s','s','z','-append')
     save(file)
 end
-%}
 
+
+%{
 
 clear
 xend_val = [20,30,40,50,60, 70];

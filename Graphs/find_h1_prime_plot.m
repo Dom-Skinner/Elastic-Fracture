@@ -1,10 +1,11 @@
 clear
-load n400x30-extended
+load n200x30-tmp
 K = 3*sqrt(2*pi)*KI;
 s = 0.138673;
 u = 4 - 6*s;
 
-[h0_prime,~] = interpolate_hprime(x,n,hprime_data,K);
+p1 = polyfit(K(end-1:end).^u,lambda(end-1:end),1);
+[h0_prime,~] = interpolate_hprime(x,n,hprime_data,K,1/2,p1(2));
 h1_prime = find_h1_prime(n,hprime_data,K,h0_prime);
 h1_prime_data = zeros(n,numel(K));
 
