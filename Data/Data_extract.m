@@ -5,7 +5,7 @@ x_val = [20,24,32,38,45,48];
 for k = 1:numel(x_val)
     clearvars -except x_val k
 
-    n = 400;
+    n = 300;
     xmax = x_val(k);
     file = strcat('n',num2str(n),'x',num2str(xmax),'-tmp');
     %load(file)
