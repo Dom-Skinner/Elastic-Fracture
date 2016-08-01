@@ -1,4 +1,4 @@
-function deriv_pressure = pressure_map_derivative(x,z,h_coeffs,h_coefficient_matrix)
+function deriv_pressure = pressure_map_derivative(x,z,h_coeffs,h_coefficient_matrix,t)
 
 %returns the (n-1)xn matrix for the derivative of the map that sounds h' to
 %pressure
@@ -7,7 +7,6 @@ function deriv_pressure = pressure_map_derivative(x,z,h_coeffs,h_coefficient_mat
 %then multiplied by the map that takes h' to coefficients of h.
 %h_coeffs = h_coefficient_matrix*hprime_old(n+1:2*n);
 n = length(x);
-t = round(n/2);
 infinity = 10^(10);
 
 %the coefficients of h

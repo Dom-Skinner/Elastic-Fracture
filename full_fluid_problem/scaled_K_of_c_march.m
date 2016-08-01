@@ -1,10 +1,12 @@
 %sets easy geometric parameters
-%n = 200;
-t = round(n/2);
-%xmax = 60;
+%{
+n = 200;
+t = 150;
+xmax = 60;
 
 x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
-
+z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
+%}
 %some values of lambda to try
 %lambda = 0.056:0.0004:0.0592;
 lambda = 0.0588:0.0004:0.0592;
@@ -29,7 +31,7 @@ for i=1:length(lambda)
             hprime_data(:,i-1))/(lambda(i-1)-lambda(i-2));
     end
     [KI(i),hprime_new,~] = ...
-        scaled_fixed_lambda_M_iteration(n,xmax,lambda(i),tol,hprime_start);
+        scaled_fixed_lambda_M_iteration(x,z,n,t,xmax,lambda(i),tol,hprime_start);
     hprime_data(:,i) = hprime_new;
 end
 

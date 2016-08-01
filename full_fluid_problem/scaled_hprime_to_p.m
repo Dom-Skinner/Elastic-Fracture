@@ -1,7 +1,7 @@
 %this function takes a given h' and returns two the pressure map, and the
 %derivative of the pressure map.
 
-function [p, dp] = scaled_hprime_to_p(x,z,hprime,lambda, h_coefficient_matrix)
+function [p, dp] = scaled_hprime_to_p(x,z,hprime,lambda, h_coefficient_matrix,t)
 
 n = length(x);
 
@@ -13,9 +13,9 @@ n = length(x);
 h_coeffs = h_coefficient_matrix*hprime(n+1:2*n);
 
 %finds the pressure: an n-1 vector
-pressure = pprime_to_p(x,z,h_coeffs);
+pressure = pprime_to_p(x,z,h_coeffs,t);
 %finds the pressure differential: a (n-1)xn matrix
-deriv_pressure = pressure_map_derivative(x,z,h_coeffs,h_coefficient_matrix);
+deriv_pressure = pressure_map_derivative(x,z,h_coeffs,h_coefficient_matrix,t);
 
 %finds the adjustments to things
 %[adjust, d_adjust] = bending_p_adjust(x,h_coeffs,h_coefficient_matrix);

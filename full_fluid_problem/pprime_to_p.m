@@ -1,10 +1,9 @@
 %takes in coefficients for h, stores as a 3*n vector, and gives out the
 %values of p at the z values
 
-function pressure = pprime_to_p(x, z, h_coeffs)
+function pressure = pprime_to_p(x, z, h_coeffs,t)
 
 n = length(x);
-t = round(n/2);
 infinity = 10^(10);
 
 a = h_coeffs(1:3:3*n-2);

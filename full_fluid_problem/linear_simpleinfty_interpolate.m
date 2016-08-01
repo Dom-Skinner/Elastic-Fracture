@@ -1,9 +1,8 @@
 %a function to do interpolation for the coefficients of h'
 
-function interpolate_matrix = linear_simpleinfty_interpolate(x)
+function interpolate_matrix = linear_simpleinfty_interpolate(x,t)
 
 n = length(x);
-t = round(n/2);
 
 %creates a matrix for 4*n coefficients, incl 4 infinity coeffs
 interpolate_matrix = zeros(4*n, 2*n);

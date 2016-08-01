@@ -1,11 +1,12 @@
 
 clear
-x_val = [20,24,32,38,45,48];
+%x_val = [20,24,32,38,45,48];
+x_val = [20,30,40,50,60,70];
 
 for k = 1:numel(x_val)
     clearvars -except x_val k
 
-    n = 300;
+    n = 600;
     xmax = x_val(k);
     file = strcat('n',num2str(n),'x',num2str(xmax),'-tmp');
     %load(file)

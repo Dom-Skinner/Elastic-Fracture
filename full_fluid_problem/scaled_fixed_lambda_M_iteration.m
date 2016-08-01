@@ -1,4 +1,4 @@
-function [KI, hprime_new,p] = scaled_fixed_lambda_M_iteration(n,xmax, lambda, tol, hprime_start)
+function [KI, hprime_new,p] = scaled_fixed_lambda_M_iteration(x,z,n,t,xmax, lambda, tol, hprime_start)
 % Function that iterates, finding K for some given value of lambda,
 % up to some tolerance, tol. ~Dom
 
@@ -6,12 +6,10 @@ function [KI, hprime_new,p] = scaled_fixed_lambda_M_iteration(n,xmax, lambda, to
 %lambda = 0.02, n = 100, tol = 10^(-8), xmax = 10;
 
 %the data points
-x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
 
-z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
 %finds the appropriate elasticity kernel
-[kernel_matrix, interpolate_matrix] = pressure_shear_matrix(x,z);
+[kernel_matrix, interpolate_matrix] = pressure_shear_matrix(x,z,t);
 
 %in short, we wish to solve Ah = f(h), where f is our map from h' to p.
 %to do this, we try find dh such that
@@ -33,7 +31,7 @@ A(2*n,:) = interpolate_matrix(3*n,:);
 conditioning = rcond(A);
 
 %saves a matrix to convert h' to h
-h_coefficient_matrix = hprime_to_h(x);
+h_coefficient_matrix = hprime_to_h(x,t);
 
 fprintf('\n n = %d xmax = %d lambda = %6.4g \n', n, xmax, lambda)
 fprintf(' condition number = %6.4e \n', conditioning)
@@ -44,11 +42,11 @@ K_new = hprime_new(n+1);
 iteration_number = 0;
 K_diff = tol+1; % Just to ensure that it iterates at least once
 
-while abs(K_diff) >= tol && iteration_number<10
+while abs(K_diff) >= tol && iteration_number<13
     hprime_old = hprime_new;
     K_old = K_new;
     
-    [p,dp] = scaled_hprime_to_p(x,z,hprime_old,lambda,h_coefficient_matrix);
+    [p,dp] = scaled_hprime_to_p(x,z,hprime_old,lambda,h_coefficient_matrix,t);
     hprime_new = hprime_old + (A-dp)\(p-A*hprime_old);
     
     K_new = hprime_new(n+1);
@@ -61,7 +59,7 @@ while abs(K_diff) >= tol && iteration_number<10
 end
 
 KI = K_new;
-if iteration_number == 10
+if iteration_number == 13
     fprintf('Failure to coverge');
     KI=-1;
 end
