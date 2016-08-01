@@ -1,12 +1,12 @@
-%{
-n = 300;
+%%{
+n = 400;
 t = 200;
 xmax = 15;
 x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
 z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
-n_increase = 6;
+n_increase = 8;
 %}
-for iterate = 10:10
+for iterate = 1:12
 
 scaled_K_of_c_march
 K = 3*sqrt(2*pi)*KI;
