@@ -1,15 +1,15 @@
 %sets easy geometric parameters
-%{
-n = 200;
-t = 150;
-xmax = 60;
+%%{
+n = 800;
+t = 400;
+xmax = 40;
 
 x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
 z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 %}
 %some values of lambda to try
 %lambda = 0.056:0.0004:0.0592;
-lambda = 0.0588:0.0004:0.0592;
+lambda = 0.0584:0.0004:0.0588;
 
 hprime_data = zeros(2*n,length(lambda));
 

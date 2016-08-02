@@ -1,12 +1,14 @@
-%%{
-n = 400;
-t = 200;
+%{
+n = 300;
+t = 150;
 xmax = 15;
 x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
 z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
-n_increase = 8;
+n_increase = 7;
+s = 0.138673;
+u = 4 - 6*s;
 %}
-for iterate = 1:12
+for iterate = 1:0
 
 scaled_K_of_c_march
 K = 3*sqrt(2*pi)*KI;
@@ -24,12 +26,15 @@ end
 n = n+n_increase;
 xmax = x(n);
 end
+load n600xiterate
 
+hold on
 subplot(2,1,1)
 plot(x_val, l0,'o-')
 xlabel('xend')
 ylabel('l0')
 
+hold on
 subplot(2,1,2)
 plot(x_val.^(-2), l0,'o-')
 xlabel('xend^{-2}')

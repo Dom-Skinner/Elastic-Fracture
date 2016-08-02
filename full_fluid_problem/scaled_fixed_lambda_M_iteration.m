@@ -46,6 +46,7 @@ while abs(K_diff) >= tol && iteration_number<13
     hprime_old = hprime_new;
     K_old = K_new;
     
+
     [p,dp] = scaled_hprime_to_p(x,z,hprime_old,lambda,h_coefficient_matrix,t);
     hprime_new = hprime_old + (A-dp)\(p-A*hprime_old);
     
