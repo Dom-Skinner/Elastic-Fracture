@@ -172,19 +172,27 @@ diag_b_store0 = [dh_b_sqrtrepn_store_x - dh_b_sqrtrepn_store_x0, ...
 diag_c_store0 = [dh_c_sqrtrepn_store_x - dh_c_sqrtrepn_store_x0, ...
         dh_c_quadrepn_store_x - dh_c_quadrepn_store_x0];
     %
-for j = 1:n-1
-    %does the variation integral when i=j, integrate between z(j) and
-    %x(i+1)
-    dp_h(j,3*(j-1)+1) = diag_a_store(j);
-    dp_h(j,3*(j-1)+2) = diag_b_store(j);
-    dp_h(j,3*(j-1)+3) = diag_c_store(j);
-  
-    i = j+1:n;
-    dp_h(j,3*(i-1)+1) = diag_a_store0(i);
-    dp_h(j,3*(i-1)+2) = diag_b_store0(i);
-    dp_h(j,3*(i-1)+3) = diag_c_store0(i);
-   
-end
+
+% Hard to say what this vectorised loop does, but here's what it was
+% unvectorised: 
+%for j = 1:n-1
+% dp_h(j,3*(j-1)+1) = diag_a_store(j);
+% dp_h(j,3*(j-1)+2) = diag_b_store(j);
+% dp_h(j,3*(j-1)+3) = diag_c_store(j);
+%    i = j+1:n;
+% dp_h(j,3*(i-1)+1) = diag_a_store0(i);
+% dp_h(j,3*(i-1)+2) = diag_b_store0(i);
+% dp_h(j,3*(i-1)+3) = diag_c_store0(i);
+%end
+%
+dp_h(:,1:3:end) = triu(repmat(diag_a_store0,n-1,1),1);
+dp_h(:,2:3:end) = triu(repmat(diag_b_store0,n-1,1),1);
+dp_h(:,3:3:end) = triu(repmat(diag_c_store0,n-1,1),1);
+
+j = 1:n-1;
+dp_h(3*(j-1)*(n-1)+j)     = diag_a_store;
+dp_h((3*(j-1)+1)*(n-1)+j) = diag_b_store;
+dp_h((3*(j-1)+2)*(n-1)+j) = diag_c_store;
 
 %we computed it the wrong sign!
 dp_h = -real(dp_h);

@@ -6,7 +6,7 @@ ax = gca;
 hold on
 
 clear data
-load n200x30-tmp %n400x50-extended.mat
+load n1000x40
 dat = 1:80;
 s = 0.138673;
 u = 4 - 6*s;

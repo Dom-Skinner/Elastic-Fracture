@@ -7,7 +7,7 @@ clear
 %xstr = '70';
 %file = strcat('n',nstr,'x',xstr);
 %load(file)
-load n200x30-tmp
+load n1000x40
 
 
 s = 0.138673;
