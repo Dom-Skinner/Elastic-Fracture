@@ -1,9 +1,9 @@
-function [kernel_matrix, interpolate_matrix] = pressure_shear_matrix(x,z,t)
+function [kernel_matrix, interpolate_matrix] = pressure_shear_matrix(x,z,t,lambda)
 
 n = length(x);
 infinity = 10^10;
 
-interpolate_matrix = linear_simpleinfty_interpolate(x,t);
+interpolate_matrix = linear_simpleinfty_interpolate(x,t,lambda);
 function_matrix = zeros(2*(n-1),4*n);
 
 

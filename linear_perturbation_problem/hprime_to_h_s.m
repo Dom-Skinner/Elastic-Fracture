@@ -3,10 +3,9 @@
 %produces a matrix, which when multiplied by the n values of h', in the 
 %s representation, gives 3n coefficients for h.
 
-function h_coeff_mat = hprime_to_h_s(x,s)
+function h_coeff_mat = hprime_to_h_s(x,s,t)
 
 n = length(x);
-t = round(n/2);
 
 %gets the coefficients of g', h'
 interpolate_matrix = linear_simpleinfty_interpolate_s(x,s);
@@ -25,7 +24,33 @@ for j=1:n
         h_coeff_mat(3*(j-1)+2,n+j) = 1;
     end
 end
+%gets the c coefficients.
+% now vectorised for speed at some readibility cost...
+x_diff_save_s_1 = (1/(s+1))*(x(2:t).^(s+1) - x(1:t-1).^(s+1));
+x_diff_save_s_2 = (1/s)*(x(2:t).^(s) - x(1:t-1).^(s));
 
+for j = 2:t-1
+     h_coeff_mat(3*j,j) = -(1/(s+1))*x(j)^(s+1);
+     h_coeff_mat(3*j,n+j) = -(1/s)*x(j)^(s);
+     %
+     i = 1:j-1;
+     h_coeff_mat(3*j,i) = x_diff_save_s_1(i);
+     h_coeff_mat(3*j,n+i) = x_diff_save_s_2(i);
+    
+end
+for j = t:n
+      h_coeff_mat(3*j,j) = -(1/2)*x(j)^2;
+      h_coeff_mat(3*j,n+j) = -x(j);
+   
+      h_coeff_mat(3*j,1:t-1) = x_diff_save_s_1;
+      h_coeff_mat(3*j,n+1:t-1+n) = x_diff_save_s_2;
+      if j > t
+          i = t:j-1;
+          h_coeff_mat(3*j,i) = (1/2)*(x(i+1).^2 - x(i).^2);
+          h_coeff_mat(3*j,n+i) = x(i+1) - x(i);
+      end
+end
+%{
 %gets the c coefficients.
 for j=2:n
     for i = 1:j-1
@@ -46,6 +71,7 @@ for j=2:n
         h_coeff_mat(3*j,n+j) = -x(j);
     end
 end
+%}
 %
 % The following lines are equivalent to:
 %h_co_mat = h_coeff_mat*interpolate_matrix;

@@ -6,16 +6,17 @@ ax = gca;
 hold on
 
 clear data
-load n1000x40
+load n273x778
 dat = 1:80;
 s = 0.138673;
 u = 4 - 6*s;
 
 K = 3*sqrt(2*pi)*KI;
-p1 = polyfit(K(end-1:end).^u,lambda(end-1:end),1);
+l0 = 0.0591;
 
-[interp1,interp2] = interpolate_hprime(x,n,hprime_data,K,1/2,p1(2));
+[interp1,interp2] = interpolate_hprime(x,n,hprime_data,K,1/2,l0);
 
+hold on
 plot(ax,x(dat),hprime_data(n+dat,5)'.*x(dat).^(-1/6), '*-', ...
     x(dat),hprime_data(n+dat,6)'.*x(dat).^(-1/6),'*-', ...
             x(dat),hprime_data(n+dat,7)'.*x(dat).^(-1/6),'*-', ...

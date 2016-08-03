@@ -9,7 +9,7 @@ function [KI, hprime_new,p] = scaled_fixed_lambda_M_iteration(x,z,n,t,xmax, lamb
 
 
 %finds the appropriate elasticity kernel
-[kernel_matrix, interpolate_matrix] = pressure_shear_matrix(x,z,t);
+[kernel_matrix, interpolate_matrix] = pressure_shear_matrix(x,z,t,lambda);
 
 %in short, we wish to solve Ah = f(h), where f is our map from h' to p.
 %to do this, we try find dh such that
@@ -24,14 +24,16 @@ function [KI, hprime_new,p] = scaled_fixed_lambda_M_iteration(x,z,n,t,xmax, lamb
 A = zeros(2*n,2*n);
 A(1:2*(n-1),:) = kernel_matrix;
 %the limit of g' at infinity
-A(2*n-1,:) = interpolate_matrix(2*n,:);
+
 %the limit of h'' at infinity
-A(2*n,:) = interpolate_matrix(3*n,:);
+
+A(2*n-1,n) = 1;
+A(2*n,:) = interpolate_matrix(3*n-1,:);
 
 conditioning = rcond(A);
 
 %saves a matrix to convert h' to h
-h_coefficient_matrix = hprime_to_h(x,t);
+h_coefficient_matrix = hprime_to_h(x,t,lambda);
 
 fprintf('\n n = %d xmax = %d lambda = %6.4g \n', n, xmax, lambda)
 fprintf(' condition number = %6.4e \n', conditioning)

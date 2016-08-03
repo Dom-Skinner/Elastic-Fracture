@@ -1,7 +1,6 @@
-function [kernel_matrix, interpolate_matrix] = pressure_shear_matrix_s(x,z,s)
+function [kernel_matrix, interpolate_matrix] = pressure_shear_matrix_s(x,z,s,t)
 
 n = length(x);
-t = round(n/2);
 infinity = 10^10;
 
 interpolate_matrix = linear_simpleinfty_interpolate_s(x,s);
@@ -158,46 +157,65 @@ K22_s_fun = @K22_s;
 
 for i=1:n-1
     %goes over the 1/sqrt(x) panels
+        x_t = x(1:t);
+    %
+    %atan_store_1 = atan(x_t.^(1/2).*((sqrt(-1)*2)+(-1)*z(i)).^(-1/2));
+    %atan_store_2 = atan(x_t.^(1/2).*((sqrt(-1)*(-2))+(-1)*z(i)).^(-1/2));
+    %
+   % atanh_store_1 = atanh(x_t.^(1/2).*((sqrt(-1)*2)+z(i)).^(-1/2));
+   % atanh_store_2 = atanh(x_t.^(1/2).*z(i).^(-1/2));
+    % for K11
+    K11sqrtx1_store = K11sqrtx1(x_t,z(i));%,atan_store_1,atan_store_2); 
+    K11sqrtx0_store = K11sqrtx0(x_t,z(i));%,atan_store_1,atan_store_2); 
+    % for K21
+    K21sqrtx1_store = K21sqrtx1(x_t,z(i));%,atan_store_1,atanh_store_1,atanh_store_2);
+    K21sqrtx0_store = K21sqrtx0(x_t,z(i));%,atan_store_1,atanh_store_1,atanh_store_2);
+   
+    
+    j=1:t-1;
+    %for K11
+    function_matrix(i,j)         = K11sqrtx1_store(j+1)-K11sqrtx1_store(j);
+    function_matrix(i,n+j)       = K11sqrtx0_store(j+1)-K11sqrtx0_store(j);
+    %for K21
+    function_matrix(n-1+i,j)     = K21sqrtx1_store(j+1)-K21sqrtx1_store(j);
+    function_matrix(n-1+i,n+j)   = K21sqrtx0_store(j+1)-K21sqrtx0_store(j);
+    
+    
     for j=1:t-1
         lx = x(j);
         ux = x(j+1);
-        %for K11
-        function_matrix(i,j) = K11sqrtx1(ux,z(i))-K11sqrtx1(lx,z(i));
-        function_matrix(i,n+j) = K11sqrtx0(ux,z(i))-K11sqrtx0(lx,z(i));
         %for K12
         function_matrix(i,2*n+j) = K12_s_fun(z(i),ux,lx,s);
-        %K12sqrtx1_change_this(ux,z(i))-K12sqrtx1_change_this(lx,z(i));
         function_matrix(i,2*n+n+j) = K12_s_fun(z(i),ux,lx,s-1);
-        %K12sqrtx0_change_this(ux,z(i))-K12sqrtx0_change_this(lx,z(i));
-        %for K21
-        function_matrix(n-1+i,j) = K21sqrtx1(ux,z(i))-K21sqrtx1(lx,z(i));
-        function_matrix(n-1+i,n+j) = K21sqrtx0(ux,z(i))-K21sqrtx0(lx,z(i));
+     
         %for K22
         function_matrix(n-1+i,2*n+j) = K22_s_fun(z(i),ux,lx,s);
         function_matrix(n-1+i,2*n+n+j) = K22_s_fun(z(i),ux,lx,s-1);
-        %K22sqrtx0_change_this(ux,z(i))-K22sqrtx0_change_this(lx,z(i));
     end
     %goes over the linear panels including infinity
-    for j=t:n
-        if j==n
-            lx = x(n);
-            ux = infinity;
-        else
-            lx = x(j);
-            ux = x(j+1);
-        end
-        function_matrix(i,j) = K11x1(ux,z(i))-K11x1(lx,z(i));
-        function_matrix(i,n+j) = K11x0(ux,z(i))-K11x0(lx,z(i));
-        %for K12
-        function_matrix(i,2*n+j) = K12x1(ux,z(i))-K12x1(lx,z(i));
-        function_matrix(i,2*n+n+j) = K12x0(ux,z(i))-K12x0(lx,z(i));
-        %for K21
-        function_matrix(n-1+i,j) = K21x1(ux,z(i))-K21x1(lx,z(i));
-        function_matrix(n-1+i,n+j) = K21x0(ux,z(i))-K21x0(lx,z(i));
-        %for K22
-        function_matrix(n-1+i,2*n+j) = K22x1(ux,z(i))-K22x1(lx,z(i));
-        function_matrix(n-1+i,2*n+n+j) = K22x0(ux,z(i))-K22x0(lx,z(i));        
-    end    
+    x_tmp = [x(t:n) infinity];
+    K11x1_store = K11x1(x_tmp,z(i));
+    K11x0_store = K11x0(x_tmp,z(i));
+    K12x1_store = K12x1(x_tmp,z(i));
+    K12x0_store = K12x0(x_tmp,z(i));
+    K21x1_store = K21x1(x_tmp,z(i));
+    K21x0_store = K21x0(x_tmp,z(i));
+    K22x1_store = K22x1(x_tmp,z(i));
+    K22x0_store = K22x0(x_tmp,z(i));
+    %
+    j=1:n-t+1;
+    %
+    function_matrix(i,j+t-1)           = K11x1_store(j+1)-K11x1_store(j);
+    function_matrix(i,n+j+t-1)         = K11x0_store(j+1)-K11x0_store(j);
+    %for K12
+    function_matrix(i,2*n+j+t-1)       = K12x1_store(j+1)-K12x1_store(j);
+    function_matrix(i,2*n+n+j+t-1)     = K12x0_store(j+1)-K12x0_store(j);
+    %for K21
+    function_matrix(n-1+i,j+t-1)       = K21x1_store(j+1)-K21x1_store(j);
+    function_matrix(n-1+i,n+j+t-1)     = K21x0_store(j+1)-K21x0_store(j);
+    %for K22
+    function_matrix(n-1+i,2*n+j+t-1)   = K22x1_store(j+1)-K22x1_store(j);
+    function_matrix(n-1+i,2*n+n+j+t-1) = K22x0_store(j+1)-K22x0_store(j);
     disp(i)
 end        
 

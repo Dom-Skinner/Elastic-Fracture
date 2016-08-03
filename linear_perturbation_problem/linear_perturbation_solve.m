@@ -1,11 +1,8 @@
-function [theta,h] = linear_perturbation_solve(n,t,xmax, h0,h0_z,l0,kernel_matrix,s)
+function [theta,h] = linear_perturbation_solve(n,t,x,z, h0,h0_z,l0,kernel_matrix,s)
 % Solves the linear perturbation problem.
 
 
 %the data points
-x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
-z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
-
 
 % We will have kernel_matrix as an input, since it takes so long to compute
 %finds the appropriate elasticity kernel
@@ -13,7 +10,7 @@ z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
 
 %saves a matrix to convert h' to h
-h_coefficient_matrix = hprime_to_h_s(x,s);
+h_coefficient_matrix = hprime_to_h_s(x,s,t);
 %R = lubrication_integral_s(x,z,n,t,h_coefficient_matrix,h0,l0,0.5);
 R = zeros(2*(n-1),2*n);
 R(1:n-1,n+1:2*n) = lubrication_integral(x,z,n,t,h_coefficient_matrix,h0,h0_z,l0,s);

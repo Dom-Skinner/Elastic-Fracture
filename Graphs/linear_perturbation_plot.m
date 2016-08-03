@@ -1,10 +1,11 @@
 clear
-load n800x70
+load n546x788
 u = 4 - 6*s;
 
 K = 3*sqrt(2*pi)*KI;
 p1 = polyfit(K(end-1:end).^u,lambda(end-1:end),1);
-l0 = p1(2);
+l0 = 0.0591;
+%{
 z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
 [h0_prime ,h0_prime_LEFM] = interpolate_hprime(x,n,hprime_data,K,0.5,l0);
@@ -30,12 +31,15 @@ h0_LEFM_23_z = h_integrate(h0_prime_LEFM_23,z,n-1,t, ...
 
 [~,H_LEFM] = linear_perturbation_solve(n,t,xmax, h0_LEFM,h0_LEFM_z,l0,...
     kernel_matrix_s,s);
-[~,H_LEFM_23] = linear_perturbation_solve(n,t,xmax, h0_LEFM_23,...
-    h0_LEFM_23_z,l0,kernel_matrix_s,s);
+%}
+[~,H_LEFM_23] = linear_perturbation_solve(n,t,x,z, h0_LEFM_23,...
+    h0_LEFM_23_z,l0,kernel_matrix,s);
 
 
-figure('units','normalized','outerposition',[0 0 0.5 1])
-plot(x,H'.*x.^-s,'o',x,H_LEFM'.*x.^-s,'o',x,H_LEFM_23'.*x.^-s,'*')
+%figure('units','normalized','outerposition',[0 0 0.5 1])
+%plot(x,H'.*x.^-s,'o',x,H_LEFM'.*x.^-s,'o',x,H_LEFM_23'.*x.^-s,'*')
+hold on
+plot(x,H_LEFM_23'.*x.^-s,'*')
 
 
 ax = gca;

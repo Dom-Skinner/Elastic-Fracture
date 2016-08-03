@@ -1,6 +1,6 @@
 %a function to do interpolation for the coefficients of h'
 
-function interpolate_matrix = linear_simpleinfty_interpolate(x,t)
+function interpolate_matrix = linear_simpleinfty_interpolate(x,t,lambda)
 
 n = length(x);
 
@@ -48,14 +48,18 @@ for i = t:n-1
     interpolate_matrix(3*n+i,n+i+1) = -x(i)/(x(i+1)-x(i));
 end
 
+adjust_pen = 1-2*lambda/(3*x(n-1)) - 4*lambda^2 *log(x(n-1)) / x(n-1)^2;
+adjust_end = 1-2*lambda/(3*x(n  )) - 4*lambda^2 *log(x(n  )) / x(n  )^2;
+adjust_der = lambda/3/x(n)^2 + 4*lambda^2 *log(x(n))/x(n)^3;
 %linear term of g'
-interpolate_matrix(n,:) = 0;
+interpolate_matrix(n,n) = 2*adjust_der/adjust_end ;
 %constant term of g'
-interpolate_matrix(2*n,n) = 1;
+interpolate_matrix(2*n,n) = 1-x(n)*2*adjust_der/adjust_end ;
 %linear term of h'
-interpolate_matrix(3*n,:) = interpolate_matrix(3*n-1,:);
+interpolate_matrix(3*n,:) =  (adjust_end/adjust_pen)*interpolate_matrix(3*n-1,:);
 %constant term of h'
-interpolate_matrix(4*n, :) = interpolate_matrix(4*n-1,:);
+interpolate_matrix(4*n, :) = interpolate_matrix(4*n-1,:) + ...
+    x(n)*interpolate_matrix(3*n-1,:) -x(n)*interpolate_matrix(3*n,:);
 
 return
 end

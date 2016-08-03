@@ -28,24 +28,12 @@ dp(1:n-1,n+1:2*n) = lambda*deriv_pressure;
 
 %also sets the M and P BC's inside p
 
-%scale = 12*(2*pi)^(3/2)/(8*pi)*Mload;
-
-%h_doubledash = scale - 2*lambda/(3*scale^2*x(n));
-
 %the P condition
-%p(2*n-1) = -Pload*(2*pi)^(3/2)/(8*pi) + 0.5*h_doubledash;
-%p(2*n) = h_doubledash;
-
-%the P condition
-adjust = 1-2*lambda/(3*x(n)) - 4*lambda^2 *log(x(n)) / x(n)^2 ;
-p(2*n-1) = 0.5*adjust;
-p(2*n) = adjust;
-
-%dp(2*n-1,n+1:2*n) = 0.5*lambda*d_adjust;
-%dp(2*n,n+1:2*n) = lambda*d_adjust;
 
 
+adjust= 1-2*lambda./(3*x) - 4*lambda^2 *log(x) ./ x.^2 ;
 
-
+p(2*n-1) = 0.5*adjust(n);
+p(2*n) = adjust(n-1);
 return
 end
