@@ -3,11 +3,11 @@
 % here numerically. 
 
 clear
-%nstr = '800';
-%xstr = '70';
-%file = strcat('n',nstr,'x',xstr);
-%load(file)
-load n1000x40
+nstr = '500';
+xstr = '20';
+file = strcat('n',nstr,'x',xstr,'-modified');
+load(file)
+%load n400x40
 
 
 s = 0.138673;
@@ -22,7 +22,7 @@ pc_er = abs(p1(2)-p2(3))/p1(2);
 fprintf('Approximate interpolation error = %.2e\n',er)
 fprintf('Approximate interpolation percentage error = %.2e%%\n',100*pc_er)
 
-figure('units','normalized','outerposition',[0 0 0.6 1]) % Makes figure fill 
+figure('units','normalized','outerposition',[0 0 0.5 1]) % Makes figure fill 
 % the whole screen. Needed when using export fig.
 %
 lx = [K.^u 0];

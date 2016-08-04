@@ -1,5 +1,5 @@
 clear
-load n1022x773
+load n273x778
 u = 4 - 6*s;
 
 K = 3*sqrt(2*pi)*KI;

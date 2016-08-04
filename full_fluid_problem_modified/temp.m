@@ -1,0 +1,6 @@
+clear 
+load n477x768
+plot((x),(hprime_data(n+1:end,8)-hprime_data(n+1,8)),'o-', ...
+    (x),(hprime_data(n+1:end,2)-hprime_data(n+1,2)),'o-',...
+    x,0.35*x.^(1/4),x,2*x.^(1/2),x,0.6*x.^(1/3),x,0.415*x.^(0.28))
+axis([0,0.045,0,0.18])

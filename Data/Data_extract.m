@@ -6,12 +6,16 @@ x_val = [20,30,40,50,60,70];
 for k = 1:numel(x_val)
     clearvars -except x_val k
 
-    n = 600;
+    n = 500;
+    t = 250;  
     xmax = x_val(k);
-    file = strcat('n',num2str(n),'x',num2str(xmax),'-tmp');
-    %load(file)
-    scaled_K_of_c_march
+    x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
     z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
+    %some values of lambda to try
+    lambda = 0.056:0.0004:0.0588;
+    file = strcat('n',num2str(n),'x',num2str(xmax),'-modified');
+    scaled_K_of_c_march
+
     s = 0.138673;
     %[kernel_matrix_s, ~] = pressure_shear_matrix_s(x,z,s);
 
