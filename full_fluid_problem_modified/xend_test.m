@@ -3,8 +3,8 @@ l0_est=[];
 D_est=[];
 n_used = [];
 %n_val = [120,160,250,310,150,200,250,300];
-n_val = [100,120,140,180,240,300, ...
-    300,360,420,500,600,700];
+n_val = [240,270,310,360,420,480,540 ,620 ,700,800 ...
+         600,660,720,790,860,940,1040,1160,1260,1400];
 flg=1;
 for m = n_val
     n=m;
@@ -74,7 +74,7 @@ p2 = polyfit(x_m1,l0,1);
 D_est(end+1) = p1(2);
 l0_est(end+1) = mean(l0);%p2(2);
 n_used(end+1) = n;
-%{
+%%{
 %%% Want to save:
 file = ['n' , num2str(n), 'x', num2str(round(x(n)))];
 D = D_est(end);
@@ -104,10 +104,10 @@ subplot(2,1,2)
 %%{
 hold on
 subplot(2,1,1)
-plot(n_used(1:end/2).^(-1),D_est(1:end/2),'o-',n_used(end/2+1:end).^(-1),D_est(end/2 + 1:end),'o-')
+plot(n_used(1:end/2).^(-2),D_est(1:end/2),'o-',n_used(end/2+1:end).^(-2),D_est(end/2 + 1:end),'o-')
 xlabel('n^{-2}')
 ylabel('D')
-%axis([0,0.005,-0.0085,-0.00835])
+axis([0,0.0016^2,-0.0082618,-0.0082604])
 %legend(['base = 150, total = ' num2str(n_used(1))] , ...
 %['base = 150, total = ' num2str(n_used(2))], ...
 %['base = 250, total = ' num2str(n_used(3))], ...
@@ -118,7 +118,7 @@ subplot(2,1,2)
 plot(n_used(1:end/2).^(-1),l0_est(1:end/2),'o-',n_used(end/2+1:end).^(-1),l0_est(end/2+1:end),'o-')
 xlabel('n^{-1}')
 ylabel('l0')
-%axis([0,0.005,0.0591,0.0594])
+axis([0,0.0016,0.05908,0.05918])
 %legend(['base = 150, total = ' num2str(n_used(1))] , ...
 %['base = 150, total = ' num2str(n_used(2))], ...
 %['base = 250, total = ' num2str(n_used(3))], ...
