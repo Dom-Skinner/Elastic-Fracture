@@ -16,9 +16,9 @@ R = zeros(2*(n-1),2*n);
 R(1:n-1,n+1:2*n) = lubrication_integral(x,z,n,t,h_coefficient_matrix,h0,h0_z,l0,s);
 
 %BT = kernel_matrix;
-
+rescale = diag([z.^(1-s), ones(1,n-1)]); % To account for singularity in p
 A = zeros(2*n,2*n);
-A(1:2*(n-1),:) = kernel_matrix-R;
+A(1:2*(n-1),:) = rescale*(kernel_matrix-R);
 %the limit of g' at infinity
 A(2*n-1,n) = 1;
 %the limit of h'' at infinity

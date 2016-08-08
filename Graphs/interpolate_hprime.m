@@ -16,13 +16,13 @@ pc_er = zeros(1,n);
 % First go at interpolation of hprime
 for l = 1:n
     p1 = polyfit(K(end-1:end).^u , hprime_data(n+l,end-1:end),1);
-    p2 = polyfit(K(end-2:end).^u , hprime_data(n+l,end-2:end),2);
+  %  p2 = polyfit(K(end-2:end).^u , hprime_data(n+l,end-2:end),2);
     interp1(l) = p1(2);
-    er(l)    = abs(p1(2)-p2(3));
-    pc_er(l) = abs(p1(2)-p2(3))/p1(2);
+   % er(l)    = abs(p1(2)-p2(3));
+   % pc_er(l) = abs(p1(2)-p2(3))/p1(2);
 end
 
-fprintf('Approximate interpolation error = %.2e%%\n',100*max(pc_er(40:end)))
+%fprintf('Approximate interpolation error = %.2e%%\n',100*max(pc_er(40:end)))
 % Now we correct for the LEFM boundary
 
 er = zeros(1,round(0.2*n));

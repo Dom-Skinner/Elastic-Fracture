@@ -1,10 +1,10 @@
 clear
-load n273x778
+load n1440x893
 u = 4 - 6*s;
 
 K = 3*sqrt(2*pi)*KI;
-p1 = polyfit(K(end-1:end).^u,lambda(end-1:end),1);
-l0 = 0.0591;
+%p1 = polyfit(K(end-1:end).^u,lambda(end-1:end),1);
+%l0 = 0.0591;
 %{
 z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
@@ -55,7 +55,7 @@ legend({'$H_0$ interpolated','$H_0$ with LEFM correction',...
     },'Interpreter','Latex'...
     ,'fontsize',20,'Location','southeast')
 
-axis([0,0.15,0.5,0.75])
+axis([0,0.15,0.5,0.95])
 %export_fig ('linear-perturbation', '-pdf', '-transparent')
 
 er = ones(1,round(0.2*n));
