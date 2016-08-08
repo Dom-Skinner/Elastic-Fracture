@@ -1,0 +1,211 @@
+\documentclass{beamer}
+\usepackage[orientation=portrait,size=a0,scale=1.4,debug]{beamerposter}
+\mode<presentation>{\usetheme{CAM}}
+\usepackage{chemformula}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx} %pretty measurement unit rendering
+\usepackage{hyperref} %enable hyperlink for urls
+\usepackage{ragged2e}
+\usepackage{calc}
+\newlength{\mylength}
+
+\usepackage{array,booktabs,tabularx}
+\newcommand{\cE}{\mathcal{E}}                               %
+\newcolumntype{Z}{>{\centering\arraybackslash}X} % centered tabularx columns
+
+\title{\huge Viscous Control Of Shallow Elastic Fracture}
+\author{Dominic Skinner, Tim Large}
+\institute[Univerity of Cambridge]
+{DAMTP, University of Cambridge}
+\date{\today}
+
+\newlength{\columnheight}
+\setlength{\columnheight}{105cm}
+
+\begin{document}
+\begin{frame}
+\begin{columns}
+	\begin{column}{.43\textwidth}
+		\begin{beamercolorbox}[center]{postercolumn}
+			\begin{minipage}{.98\textwidth}  % tweaks the width, 
+							%makes a new \textwidth
+				\parbox[t][\columnheight]{\textwidth}{ % must bei
+% some better way to set the the height, width and textwidth simultaneously
+\begin{myblock}{Introduction}
+Consider a semi-infinite elastic solid with a thin strip peeled off, and the
+resulting crack filled with an incompressible fluid. The motion is driven
+by a bending moment applied to the ``arm'' of the solid. The aim is to be
+able to write down a set of equations governing the dynamics, in particular
+it is of interest to examine the relationship between the speed of traveling
+wave solutions $c$, the magnitude of the bending moment $M$, and the toughness 
+of the solid $K_I$. 
+
+Relevant physical problems include both igneous intrusions beneath a volcano,
+and the formation of hydrofractures in an oil
+reservoir, since both involve the propagation of a crack through a brittle 
+elastic solid driven by fluid injection.
+
+\begin{figure}
+\centering\includegraphics[width=0.85\textwidth]{Fig1.pdf}
+\caption{Diagram to show the geometry of the problem. $q(x)$ is the flux,
+$g(x)$ the horizontal displacement, $h(x)$ the vertical displacement, and
+$\ell$ is the thickness of the arm.}
+\end{figure}
+\end{myblock}\vfill
+\begin{myblock}{Governing Equations}
+We assume that the flow everywhere satisfies the lubrication equations. From 
+fluid mechanics, we then get the equation
+\[12\mu c = h(x)^2 \frac{dp}{dx}\]
+Where $p(x)$ is the pressure, and $\mu$ the viscosity.
+
+From elasticity, using Muskhelishiveli methods, we can derive the equation
+\[
+\left( \begin{array}{c} p \\ 0 \end{array} \right)   =
+\frac{E}{4\pi (1-\nu^2)} \int_0^{\infty}
+\left(\begin{array}{cc} K_{11}(x-\tilde{x}) & K_{12}(x-\tilde{x}) \\ 
+K_{21}(x-\tilde{x}) & K_{22}(x-\tilde{x}) \end{array} \right)
+\left( \begin{array}{c} g'(\tilde{x}) \\ h'(\tilde{x}) \end{array} 
+\right)d\tilde{x}  \]
+Where $K_{ij}$ is the integral kernel specific to this geometry, $E$ is the
+Young's modulus, $\nu$ is Poisson's ratio. The kernel terms are
+\[ \begin{array}{lcl}
+\displaystyle K_{11}(z) = \frac{32-24z^2}{(z^2+4)^3} & ~\hspace{2pt} &
+\displaystyle K_{12}(z) = \frac{48z^2-64}{z(z^2+4)^3} \\[19pt]
+\displaystyle K_{21}(z) = -\frac{(16z^3+16z^2+4)}{z(z^2+4)^3} & ~\quad\qquad &
+\displaystyle K_{22}(z) = -\frac{(32-24z^2)}{(z^2+4)^3} 
+\end{array} \] 
+Note that some terms are singular, so the integral is really a Cauchy Principal
+value integral.
+\begin{itemize}
+\item Boundary conditions as $x\to\infty$ are governed by the bending moment.
+      For large $x$ the geometry is well approximated by beam theory. This 
+      gives the equation 
+      \[ M(x) = \frac{E\ell^3}{12(1-\nu^2)}\frac{d^2h}{dx^2} \]
+      Where $M(x)$ tends to a constant bending moment as $x\to \infty$.
+\item The boundary conditions as $x\to0$ are governed by ``\emph{Linear Elastic
+      Fracture Mechanics}'', (LEFM). This gives the condition
+      \[K_I = \lim_{x\to 0} \; \frac{E}{1-\nu^2}\sqrt{\frac{\pi}{8}} \sqrt{x}
+      h'(x) \]
+\end{itemize}
+\end{myblock}\vfill
+\begin{myblock}{Zero Toughness Solution}
+Instead of tackling the general problem, (which we expect to not have an
+analytic solution) we investigate the case where $K_I \ll M \ell^{-3/2}$,
+the ``small toughness solution.'' Perhaps an even simpler problem to consider
+is the ``zero toughness solution'' for $K_I=0$. However, we have the following
+dichotomy,
+\begin{itemize}
+\item For $K_I=0$, one can show that the leading order behaviour
+      as $x\to 0$ is $h(x) \sim x^{2/3}$
+\item For any $K_I > 0$, no matter how small, near $x=0$, $h(x)\sim x^{1/2}$
+\end{itemize}
+\end{myblock}\vfill
+}\end{minipage}\end{beamercolorbox}
+\end{column}
+%%%
+\begin{column}{.57\textwidth}
+\begin{beamercolorbox}[center]{postercolumn}
+\begin{minipage}{.98\textwidth} % tweaks the width, makes a new \textwidth
+\parbox[t][\columnheight]{\textwidth}{ % must be some better way to set the 
+%the height, width and textwidth simultaneously
+\begin{myblock}{Small Toughness Solution}
+Here we take after Garagash and Detournay \cite{GandD}. Their paper examines
+a similar problem of fluid driven fracture in a different geometry, with the
+propagation being driven by fluid injection. They construct a small toughness
+solution in the following way:
+\begin{itemize}
+\item Near the tip there is the ``LEFM boundary layer'' which accounts for the
+      $h \sim x^{1/2}$ behaviour, and does not resemble the zero toughness 
+     solution.
+\item Away from the tip, the solution behaves as 
+      \[h(x) = h_0(x) + \cE(K_I)h_1(x)+o(\cE)\]
+      where $h_0$ is  the zero toughness solution, and $\cE(K_I)$ is an
+      as yet unknown function of $K_I$. (Similar for $p$,$g$).
+\end{itemize}
+We can do a similar construction, after moving into dimensionless variables:
+\[(x,h,g,p,K_I,K_{ij}) \to (\xi, H,G,\Pi, \kappa, \Lambda_{ij}) \]
+Where the new equations and boundary conditions become
+\[(\Pi,0) = \int \Lambda \cdot (G',H') d\xi, \quad H^2\Pi' = \lambda, \quad
+\lim_{\xi \to \infty} H'' = 1, \quad \lim_{\xi \to 0} 3\sqrt{2\pi}H' = \kappa \]
+We look for a solution like $H(\xi) = H_0(\xi) + \cE(\kappa)
+H_1(\xi)+o(\cE)$ (and again similar for $\Pi$,$G$).
+\begin{figure}
+\begin{minipage}{.52\textwidth}
+%\scriptsize
+%\begin{tabular}{@{} p{.1\linewidth} r r @{}}
+%\toprule
+%Direction  &      \multicolumn{2}{c @{}}{Target Construct}      \\
+%\cmidrule(l){2-3}
+%	&   Cre       & GAPDH  \\
+%\cmidrule(lr){1-3}
+%fw   & \texttt{ACCAGCCAGCTATCAACTCG}  & \texttt{CTCCATTTCCCCTGTTCTCC}  \\
+%rv &   \texttt{TTGCCCCTGTTTCACTATCC}  & \texttt{GAGACCTGAATGCTGCTTCC}  \\
+%\bottomrule
+%\end{tabular}
+By matching the outer asymptotics of the LEFM boundary layer solution, and
+the inner asymptotics of the expansion in $\cE$, in a region that they overlap,
+one can show that $\cE = C \kappa^{4-6s}\lambda_0^{2s-1}$. $s \approx 0.1386$
+comes from solving a transcendental equation, $C$ can be determined numerically,
+and $\lambda_0$ is the value of $\lambda$ when $\kappa=0$, also determined
+numerically.
+\end{minipage}
+\begin{minipage}{.45\textwidth}
+\centering\includegraphics[width=0.9\textwidth]{Fig7.pdf}
+\caption{Matching region of outer and inner asymptotics.}
+\end{minipage}
+\end{figure}
+An additional problem not present in \cite{GandD} is the asymptotic region
+as $\xi\to \infty$, but it can be shown that with our rescaling, this does
+not affect the near tip behaviour.
+\end{myblock}\vfill
+\begin{myblock}{Numerical Solution of Equations}
+The set of scaled equations can be discritized, and then solved numerically
+as follows. We choose a set of points $\xi$ to measure $G,H$, and an 
+intermediate set of points $z$ to measure $\Pi$, so $\xi_1 < z_1 < \xi_2 <
+\dots < z_{n-1} < \xi_n$.
+The simplest thing to do, would be to approximate $H',G'$ as piecewise linear
+functions. However, since both $H'$,$G'$ are singular near the origin, they
+are badly approximated by linear functions.
+
+We can rewrite the lubrication integral as
+$\Pi(z) = \int_{z}^{\infty} \lambda/H^2 d\xi$
+\begin{figure}
+\begin{minipage}{0.85\textwidth}
+\centering\includegraphics[width=0.75\textwidth, height=0.2\textwidth]
+{Fig7.pdf}
+\caption{Contrast for all stimulation train parameter estimates for the 
+pre-drug-administration session (red) and the acute fluoxetine administration 
+session (green). Note the considerably different scales.}
+\label{fig:fail}
+\end{minipage}
+\end{figure}
+\end{myblock}\vfill
+\begin{myblock}{References}
+\footnotesize
+\begin{thebibliography}{9}  
+%
+\bibitem{GandD}
+Garagash, D.I., Detournay, E.,
+\emph{Plane-Strain Propagation of a Fluid-Driven Fracture: Small Toughness
+Solution,}
+Journal of Applied Mechanics,
+2005.
+%
+\bibitem{Oegren2008}%{GandD}
+Garagash, D.I., Detournay, E.,
+\emph{Plane-Strain Propagation of a Fluid-Driven Fracture: Small Toughness
+Solution,}
+Journal of Applied Mechanics,
+2005.
+%
+%
+\end{thebibliography}
+%\bibliographystyle{unsrt}
+%\bibliography{./bib}
+\end{myblock}\vfill
+}\end{minipage}\end{beamercolorbox}
+\end{column}
+\end{columns}
+\end{frame}
+\end{document}
+
