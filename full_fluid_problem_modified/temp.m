@@ -1,10 +1,10 @@
 %n_val = [639, 720, 830, 962, 1124, 1286, 1440 ];
 %x_val = [893, 906, 946, 921, 934, 944, 893 ];
-%%{  300,350,400,450,700]; %520, 600
+%{  
 n_val = [350,407,465,524,815];
 x_val = [873,822,819,846,846];
 s = 0.138673;
-l0 = 0.591;
+l0 = 0.0591;
 
 for k = 1:numel(n_val)
     file = strcat('n', num2str(n_val(k)), 'x', num2str(x_val(k)));
@@ -37,3 +37,15 @@ x_639 = x;
 load n698x832
 plot(x,h0_LEFM_23,x_639,n639_h0,'o-',x_605,n605_h0,'o-')
 %}
+clear 
+load n605x833
+xmax = x(n);
+%some values of lambda to try
+lambda =0:0.0012:0.0588;
+scaled_K_of_c_march
+s = 0.138673;
+l0 = 0.0591;
+K = 3*sqrt(2*pi)*KI;
+u = 4-6*s;
+p3 = polyfit(K.^(1.5*u),lambda-l0-D*K.^u ,1);
+plot(K.^u,lambda,'o-')

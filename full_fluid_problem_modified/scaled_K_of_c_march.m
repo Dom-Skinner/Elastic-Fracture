@@ -2,12 +2,12 @@
 %{
 n = 500;
 t = 250;
-xmax = 40;
+xmax = 50;
 
 x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
 z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 %some values of lambda to try
-lambda = 0.056:0.0004:0.0588;
+lambda =0:0.0012:0.0588;
 %}
 
 %lambda = 0.0584:0.0004:0.0588;
