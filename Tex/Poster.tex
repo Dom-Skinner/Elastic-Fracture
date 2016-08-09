@@ -1,9 +1,8 @@
 \documentclass{beamer}
 \usepackage[orientation=portrait,size=a0,scale=1.4,debug]{beamerposter}
 \mode<presentation>{\usetheme{CAM}}
-\usepackage{chemformula}
 \usepackage[utf8]{inputenc}
-\usepackage{siunitx} %pretty measurement unit rendering
+%\usepackage{siunitx} %pretty measurement unit rendering
 \usepackage{hyperref} %enable hyperlink for urls
 \usepackage{ragged2e}
 \usepackage{calc}
@@ -46,7 +45,7 @@ reservoir, since both involve the propagation of a crack through a brittle
 elastic solid driven by fluid injection.
 
 \begin{figure}
-\centering\includegraphics[width=0.85\textwidth]{Fig1.pdf}
+\centering\includegraphics[width=0.8\textwidth]{Fig10.pdf}
 \caption{Diagram to show the geometry of the problem. $q(x)$ is the flux,
 $g(x)$ the horizontal displacement, $h(x)$ the vertical displacement, and
 $\ell$ is the thickness of the arm.}
@@ -67,15 +66,7 @@ K_{21}(x-\tilde{x}) & K_{22}(x-\tilde{x}) \end{array} \right)
 \left( \begin{array}{c} g'(\tilde{x}) \\ h'(\tilde{x}) \end{array} 
 \right)d\tilde{x}  \]
 Where $K_{ij}$ is the integral kernel specific to this geometry, $E$ is the
-Young's modulus, $\nu$ is Poisson's ratio. The kernel terms are
-\[ \begin{array}{lcl}
-\displaystyle K_{11}(z) = \frac{32-24z^2}{(z^2+4)^3} & ~\hspace{2pt} &
-\displaystyle K_{12}(z) = \frac{48z^2-64}{z(z^2+4)^3} \\[19pt]
-\displaystyle K_{21}(z) = -\frac{(16z^3+16z^2+4)}{z(z^2+4)^3} & ~\quad\qquad &
-\displaystyle K_{22}(z) = -\frac{(32-24z^2)}{(z^2+4)^3} 
-\end{array} \] 
-Note that some terms are singular, so the integral is really a Cauchy Principal
-value integral.
+Young's modulus, $\nu$ is Poisson's ratio. 
 \begin{itemize}
 \item Boundary conditions as $x\to\infty$ are governed by the bending moment.
       For large $x$ the geometry is well approximated by beam theory. This 
@@ -87,17 +78,24 @@ value integral.
       \[K_I = \lim_{x\to 0} \; \frac{E}{1-\nu^2}\sqrt{\frac{\pi}{8}} \sqrt{x}
       h'(x) \]
 \end{itemize}
+We move into dimensionless variables now
+\[(x,h,g,p,K_I,K_{ij}) \to (\xi, H,G,\Pi, \kappa, \Lambda_{ij}) \]
+Where the new equations and boundary conditions become
+\[(\Pi,0) = \int \Lambda \cdot (G',H') d\xi, \quad H^2\Pi' = \lambda\]
+\[\lim_{\xi \to \infty} H'' = 1, \quad \lim_{\xi \to 0} 3\sqrt{2\pi}H' 
+= \kappa \]
 \end{myblock}\vfill
 \begin{myblock}{Zero Toughness Solution}
 Instead of tackling the general problem, (which we expect to not have an
-analytic solution) we investigate the case where $K_I \ll M \ell^{-3/2}$,
-the ``small toughness solution.'' Perhaps an even simpler problem to consider
-is the ``zero toughness solution'' for $K_I=0$. However, we have the following
-dichotomy,
+analytic solution) we investigate the case where $\kappa \ll 1$,
+the ``\emph{small toughness solution}.'' Perhaps an even simpler problem to 
+consider is the ``\emph{zero toughness solution}'' for $\kappa=0$. 
+However, we have the following dichotomy,
 \begin{itemize}
-\item For $K_I=0$, one can show that the leading order behaviour
-      as $x\to 0$ is $h(x) \sim x^{2/3}$
-\item For any $K_I > 0$, no matter how small, near $x=0$, $h(x)\sim x^{1/2}$
+\item For $\kappa=0$, one can show that the leading order behaviour
+      as $\xi\to 0$ is $H(\xi) \sim \xi^{2/3}$
+\item For any $\kappa > 0$, no matter how small, near 
+      $\xi=0$, $H(\xi)\sim \xi^{1/2}$
 \end{itemize}
 \end{myblock}\vfill
 }\end{minipage}\end{beamercolorbox}
@@ -166,17 +164,48 @@ intermediate set of points $z$ to measure $\Pi$, so $\xi_1 < z_1 < \xi_2 <
 The simplest thing to do, would be to approximate $H',G'$ as piecewise linear
 functions. However, since both $H'$,$G'$ are singular near the origin, they
 are badly approximated by linear functions.
-
-We can rewrite the lubrication integral as
-$\Pi(z) = \int_{z}^{\infty} \lambda/H^2 d\xi$
+The solution is to approximate $G'(\xi) = \frac{1}{\sqrt{\xi}}(a_i \xi + b_i)$
+near the tip and to approximate $G'(\xi) = a_i \xi + b_i$ away from the tip 
+for $\xi_i < \xi < \xi_{i+1}$ (similar with $H'$). We store the values 
+$\theta = (a_1 \xi_1 + b_1, \dots , a_n \xi_n +b_n)$.
 \begin{figure}
-\begin{minipage}{0.85\textwidth}
-\centering\includegraphics[width=0.75\textwidth, height=0.2\textwidth]
-{Fig7.pdf}
-\caption{Contrast for all stimulation train parameter estimates for the 
-pre-drug-administration session (red) and the acute fluoxetine administration 
-session (green). Note the considerably different scales.}
-\label{fig:fail}
+\begin{minipage}{0.9\textwidth}
+\centering\includegraphics[width=0.75\textwidth]{Fig9.pdf}
+\caption{Relative improvement in interpolation for a given number of points,
+once known singular behaviour is accounted for.}
+\end{minipage}
+\end{figure}
+Once we have the values $\theta$, it is possible to linearly recover
+the coefficients, i.e. $(a_1,\dots, a_n,b_1,\dots , b_n) = T \theta$ where
+$T$ is some matrix. It is clear, given this interpolation, the elasticity
+integral depends linearly on the $\theta$ values.
+We can rewrite the lubrication integral as  
+$\Pi(z) = \int_{z}^{\infty} \lambda/H^2 d\xi$. This depends non-linearly
+on the $\theta$ values. 
+
+There are now two different expressions for $(\Pi(z_1) , \dots , \Pi(z_{n-1}))$,
+so $n-1$ equations. There
+are an additional $n-1$ equations from the elasticity integral. We can get
+another two equations from the boundary conditions as $\xi\to\infty$.
+This gives $2n$ equations for $2n$ unknowns ($\theta$ and $H'$ equivalent).
+This is enough to solve the problem using Newton's method, to give $G',H'$.
+We use $\lambda$ as an input parameter and solve for $\kappa$, although in
+the physical problem we think of $\kappa$ as the independent variable.
+\end{myblock}\vfill
+\begin{myblock}{Results}
+\begin{figure}
+\begin{minipage}{0.55\textwidth}
+The relationship $\lambda = \lambda_0 + \cE(\kappa) \lambda_1$ holds
+well in practice. It has been calculated that $\lambda_0 \approx 0.0591$,
+To calculate $\lambda_1,C$ is harder, since the linear perturbation problem
+must be solved (linearise and  work only to first order in $\cE$). We found
+$C \approx 5.8 \times 10^{-3}$, $\lambda_1 \approx -0.31$. Redimensionalising
+\[ c = \frac{36(1-\nu^2)^2M^3}{\pi \mu E^2 \ell^5}\left(\lambda_0 + C 
+\lambda_0^{2s-1}\lambda_1 (\ell^{3/2}K_I/M)^{4-6s} \right) \]
+
+\end{minipage}
+\begin{minipage}{0.37\textwidth}
+\centering\includegraphics[width=0.85\textwidth]{./../Graphs/l0.pdf}
 \end{minipage}
 \end{figure}
 \end{myblock}\vfill
@@ -185,13 +214,6 @@ session (green). Note the considerably different scales.}
 \begin{thebibliography}{9}  
 %
 \bibitem{GandD}
-Garagash, D.I., Detournay, E.,
-\emph{Plane-Strain Propagation of a Fluid-Driven Fracture: Small Toughness
-Solution,}
-Journal of Applied Mechanics,
-2005.
-%
-\bibitem{Oegren2008}%{GandD}
 Garagash, D.I., Detournay, E.,
 \emph{Plane-Strain Propagation of a Fluid-Driven Fracture: Small Toughness
 Solution,}

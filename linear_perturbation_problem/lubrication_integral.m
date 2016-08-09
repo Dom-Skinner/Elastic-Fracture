@@ -14,7 +14,7 @@ for k = t:n-1
         get_integral_coeff(x(k),x(k+1),h0(k),h0(k+1),1,2,l0);
 end
 
-Infty = 200;
+Infty = 8000;
 [W_co(n),E_co(n),R_co(n) ] = ...
         get_integral_coeff(x(n),Infty,h0(n),0.5*Infty^2,1,2,l0);
 

@@ -1,5 +1,8 @@
-n_val = [639, 720, 830, 962, 1124, 1286, 1440 ];
-x_val = [893, 906, 946, 921, 934, 944, 893 ];
+%n_val = [639, 720, 830, 962, 1124, 1286, 1440 ];
+%x_val = [893, 906, 946, 921, 934, 944, 893 ];
+%%{  300,350,400,450,700]; %520, 600
+n_val = [350,407,465,524,815];
+x_val = [873,822,819,846,846];
 s = 0.138673;
 l0 = 0.591;
 
@@ -18,7 +21,19 @@ for k = 1:numel(n_val)
     h0_LEFM_23_z = h_integrate(h0_prime_LEFM_23,z,n-1,t, ...
     h_coefficient_matrix_23,2/3);
 
-    plot(x,h0_LEFM_23,'o-',z,h0_LEFM_23_z);
-    %[kernel_matrix, ~] = pressure_shear_matrix_s(x,z,s,t);
-    save(file, '-append', 'h0_LEFM_23','h0_LEFM_23_z','l0');
+    %plot(x,h0_LEFM_23,'o-',z,h0_LEFM_23_z);
+   [kernel_matrix, ~] = pressure_shear_matrix_s(x,z,s,t);
+    save(file, '-append', 'h0_LEFM_23','h0_LEFM_23_z','l0','kernel_matrix');
 end
+%}
+%{
+clear 
+load n605x833
+n605_h0 = h0_LEFM_23;
+x_605 = x;
+load n639x893
+n639_h0 = h0_LEFM_23;
+x_639 = x;
+load n698x832
+plot(x,h0_LEFM_23,x_639,n639_h0,'o-',x_605,n605_h0,'o-')
+%}
