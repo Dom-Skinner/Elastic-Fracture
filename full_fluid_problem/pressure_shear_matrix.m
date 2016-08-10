@@ -171,11 +171,13 @@ for i=1:n-1
     
     K11sqrtx1_store = K11sqrtx1(x_t,z(i),atan_store_1,atan_store_2); 
     K11sqrtx0_store = K11sqrtx0(x_t,z(i),atan_store_1,atan_store_2); 
-    K12sqrtx1_store = K12sqrtx1(x_t,z(i),atan_store_1,atanh_store_1,atanh_store_2);
+    %K12sqrtx1_store = K12sqrtx1(x_t,z(i),atan_store_1,atanh_store_1,atanh_store_2);
+    K12x0_store = K12x0(x_t,z(i));
     K12sqrtx0_store = K12sqrtx0(x_t,z(i),atan_store_1,atanh_store_1,atanh_store_2);
     K21sqrtx1_store = K21sqrtx1(x_t,z(i),atan_store_1,atanh_store_1,atanh_store_2);
     K21sqrtx0_store = K21sqrtx0(x_t,z(i),atan_store_1,atanh_store_1,atanh_store_2);
-    K22sqrtx1_store = K22sqrtx1(x_t,z(i),atan_store_1,atan_store_2);
+    %K22sqrtx1_store = K22sqrtx1(x_t,z(i),atan_store_1,atan_store_2);
+    K22x0_store = K22x0(x_t,z(i));
     K22sqrtx0_store = K22sqrtx0(x_t,z(i),atan_store_1,atan_store_2);
     
     j=1:t-1;
@@ -183,13 +185,15 @@ for i=1:n-1
     function_matrix(i,j)         = K11sqrtx1_store(j+1)-K11sqrtx1_store(j);
     function_matrix(i,n+j)       = K11sqrtx0_store(j+1)-K11sqrtx0_store(j);
     %for K12
-    function_matrix(i,2*n+j)     = K12sqrtx1_store(j+1)-K12sqrtx1_store(j);
+    %function_matrix(i,2*n+j)    = K12sqrtx1_store(j+1)-K12sqrtx1_store(j);
+    function_matrix(i,2*n+j)     = K12x0_store(j+1)-K12x0_store(j);
     function_matrix(i,3*n+j)     = K12sqrtx0_store(j+1)-K12sqrtx0_store(j);
     %for K21
     function_matrix(n-1+i,j)     = K21sqrtx1_store(j+1)-K21sqrtx1_store(j);
     function_matrix(n-1+i,n+j)   = K21sqrtx0_store(j+1)-K21sqrtx0_store(j);
     %for K22
-    function_matrix(n-1+i,2*n+j) = K22sqrtx1_store(j+1)-K22sqrtx1_store(j);
+    %function_matrix(n-1+i,2*n+j)= K22sqrtx1_store(j+1)-K22sqrtx1_store(j);
+    function_matrix(n-1+i,2*n+j) = K22x0_store(j+1)-K22x0_store(j);
     function_matrix(n-1+i,3*n+j) = K22sqrtx0_store(j+1)-K22sqrtx0_store(j);
    
     %goes over the linear panels including infinity
@@ -229,7 +233,7 @@ kernel_matrix = zeros(2*n-2,2*n);
 for m = [0,n]
 kernel_matrix(:,1+m) = ...
     interpolate_matrix(1+2*m,1+m)*function_matrix(:,1+2*m)+...
-    + interpolate_matrix(n+1,1)*function_matrix(:,n+1+2*m);
+    + interpolate_matrix(n+1+2*m,1+m)*function_matrix(:,n+1+2*m);
 for k = 2:n-2
     kernel_matrix(:,k+m) = ...
         interpolate_matrix(k+2*m,k+m)    *function_matrix(:,k+2*m)   + ...

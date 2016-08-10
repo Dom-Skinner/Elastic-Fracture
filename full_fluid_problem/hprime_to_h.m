@@ -18,7 +18,7 @@ h_coefficient_matrix = zeros(3*n,2*n);
 %gets the a and b coefficients - easy
 for j=1:n
     if j <= t-1
-        h_coefficient_matrix(3*(j-1)+1,j) = 2/3;
+        h_coefficient_matrix(3*(j-1)+1,j) = 1;
         h_coefficient_matrix(3*(j-1)+2,n+j) = 2;
     else
         h_coefficient_matrix(3*(j-1)+1,j) = 1/2;
@@ -27,24 +27,24 @@ for j=1:n
 end
 %gets the c coefficients.
 % now vectorised for speed at some readibility cost...
-x_diff_save_sqrt_1 = (2/3)*(x(2:t).^(3/2) - x(1:t-1).^(3/2));
-x_diff_save_sqrt_2 = 2*(x(2:t).^(1/2) - x(1:t-1).^(1/2));
+x_diff_save_1 = x(2:t) - x(1:t-1);
+x_diff_save_2 = 2*(x(2:t).^(1/2) - x(1:t-1).^(1/2));
 
 for j = 2:t-1
-     h_coefficient_matrix(3*j,j) = -(2/3)*x(j)^(3/2);
+     h_coefficient_matrix(3*j,j) = -x(j);
      h_coefficient_matrix(3*j,n+j) = -2*x(j)^(1/2);
      %
      i = 1:j-1;
-     h_coefficient_matrix(3*j,i) = x_diff_save_sqrt_1(i);
-     h_coefficient_matrix(3*j,n+i) = x_diff_save_sqrt_2(i);
+     h_coefficient_matrix(3*j,i) = x_diff_save_1(i);
+     h_coefficient_matrix(3*j,n+i) = x_diff_save_2(i);
     
 end
 for j = t:n
       h_coefficient_matrix(3*j,j) = -(1/2)*x(j)^2;
       h_coefficient_matrix(3*j,n+j) = -x(j);
    
-      h_coefficient_matrix(3*j,1:t-1) = x_diff_save_sqrt_1;
-      h_coefficient_matrix(3*j,n+1:t-1+n) = x_diff_save_sqrt_2;
+      h_coefficient_matrix(3*j,1:t-1) = x_diff_save_1;
+      h_coefficient_matrix(3*j,n+1:t-1+n) = x_diff_save_2;
       if j > t
           i = t:j-1;
           h_coefficient_matrix(3*j,i) = (1/2)*(x(i+1).^2 - x(i).^2);

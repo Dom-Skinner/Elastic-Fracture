@@ -10,13 +10,13 @@ for i = 1:t-2
     %to find the gradients
     interpolate_matrix(i,i) = -1/(x(i+1)-x(i));
     interpolate_matrix(i,i+1) = 1/(x(i+1)-x(i));
-    interpolate_matrix(2*n+i,n+i) = -1/(x(i+1)-x(i));
-    interpolate_matrix(2*n+i,n+i+1) = 1/(x(i+1)-x(i));
+    interpolate_matrix(2*n+i,n+i) = -1/(sqrt(x(i+1))-sqrt(x(i)));
+    interpolate_matrix(2*n+i,n+i+1) = 1/(sqrt(x(i+1))-sqrt(x(i)));
     %to find the constant terms
     interpolate_matrix(n+i,i) = x(i+1)/(x(i+1)-x(i));
     interpolate_matrix(n+i,i+1) = -x(i)/(x(i+1)-x(i));
-    interpolate_matrix(3*n+i,n+i) = x(i+1)/(x(i+1)-x(i));
-    interpolate_matrix(3*n+i,n+i+1) = -x(i)/(x(i+1)-x(i));
+    interpolate_matrix(3*n+i,n+i) = sqrt(x(i+1))/(sqrt(x(i+1))-sqrt(x(i)));
+    interpolate_matrix(3*n+i,n+i+1) = -sqrt(x(i))/(sqrt(x(i+1))-sqrt(x(i)));
     
 end
 
@@ -25,14 +25,14 @@ end
 %to find the gradients
 interpolate_matrix(t-1,t-1) = -1/(x(t)-x(t-1));
 interpolate_matrix(t-1,t) = sqrt(x(t))/(x(t)-x(t-1));
-interpolate_matrix(2*n+t-1,n+t-1) = -1/(x(t)-x(t-1));
-interpolate_matrix(2*n+t-1,n+t) = sqrt(x(t))/(x(t)-x(t-1));
+interpolate_matrix(2*n+t-1,n+t-1) = -1/(sqrt(x(t))-sqrt(x(t-1)));
+interpolate_matrix(2*n+t-1,n+t) = sqrt(x(t))/(sqrt(x(t))-sqrt(x(t-1)));
 
 %to find the constant terms
 interpolate_matrix(n+t-1,t-1) = x(t)/(x(t)-x(t-1));
 interpolate_matrix(n+t-1,t) = -x(t-1)*sqrt(x(t))/(x(t)-x(t-1));
-interpolate_matrix(3*n+t-1,n+t-1) = x(t)/(x(t)-x(t-1));
-interpolate_matrix(3*n+t-1,n+t) = -x(t-1)*sqrt(x(t))/(x(t)-x(t-1));
+interpolate_matrix(3*n+t-1,n+t-1) = sqrt(x(t))/(sqrt(x(t))-sqrt(x(t-1)));
+interpolate_matrix(3*n+t-1,n+t) = -sqrt(x(t-1))*sqrt(x(t))/(sqrt(x(t))-sqrt(x(t-1)));
 
 %for the purely linear part
 for i = t:n-1

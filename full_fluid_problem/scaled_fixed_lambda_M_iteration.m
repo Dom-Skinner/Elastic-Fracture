@@ -29,7 +29,6 @@ A(1:2*(n-1),:) = kernel_matrix;
 
 A(2*n-1,n) = 1;
 A(2*n,:) = interpolate_matrix(3*n-1,:);
-
 conditioning = rcond(A);
 
 %saves a matrix to convert h' to h
@@ -63,7 +62,7 @@ end
 
 KI = K_new;
 if iteration_number == 13
-    fprintf('Failure to coverge');
+    fprintf('Failure to coverge\n');
     KI=-1;
 end
 
