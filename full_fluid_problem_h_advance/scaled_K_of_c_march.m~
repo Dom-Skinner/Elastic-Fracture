@@ -63,18 +63,20 @@ p2 = polyfit(lambda(end-2:end)',KII(end-2:end,j),2);
 KII0(j) = p2(1)*l0(j)*l0(j)+p2(2)*l0(j)+p2(3);
 for k = 1:t+r-1;
 p3 = polyfit(KI(end-2:end,j).^2,hprime_data(k,end-2:end,j)',1);
-hprime_l0(k,j) = p3(2);
+hprime_l0(k,j) = p3(2);hold on
+    plot(v(1:r+t-1),hprime_l0(:,j));
 end
-hold on
-plot(v(1:r+t-1)-L(j),v(1:r+t-1).^(-0.5)'.*hprime_l0(:,j));
+
 end
 i = length(lambda); 
 j = length(L); 
 %plot(l0,KII0.^2,'o-')
 
-
+for j = 1:length(l0)
+    
+end
 legend({num2str(l0(1)),num2str(l0(2)),num2str(l0(3)),num2str(l0(4)) ...
   },'Location','NorthWest')
 %text(0.3,0.2,'Typical variation between L=1 and L=2 is ~1%')
 xlabel('x')
-ylabel('sqrt(x)g''')
+ylabel('sqrt(x)h''')

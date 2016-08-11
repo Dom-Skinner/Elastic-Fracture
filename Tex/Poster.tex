@@ -107,28 +107,19 @@ However, we have the following dichotomy,
 \parbox[t][\columnheight]{\textwidth}{ % must be some better way to set the 
 %the height, width and textwidth simultaneously
 \begin{myblock}{Small Toughness Solution}
-Here we take after Garagash and Detournay \cite{GandD}. Their paper examines
+Here we take after Garagash and Detournay \cite{GandD}. They consider
 a similar problem of fluid driven fracture in a different geometry, with the
 propagation being driven by fluid injection. They construct a small toughness
 solution in the following way:
 \begin{itemize}
 \item Near the tip there is the ``LEFM boundary layer'' which accounts for the
-      $h \sim x^{1/2}$ behaviour, and does not resemble the zero toughness 
+      $H \sim \xi^{1/2}$ behaviour, and does not resemble the zero toughness 
      solution.
 \item Away from the tip, the solution behaves as 
-      \[h(x) = h_0(x) + \cE(K_I)h_1(x)+o(\cE)\]
-      where $h_0$ is  the zero toughness solution, and $\cE(K_I)$ is an
-      as yet unknown function of $K_I$. (Similar for $p$,$g$).
+      \[H(\xi) = H_0(x) + \cE(\kappa)H_1(\xi)+o(\cE)\]
+      where $H_0$ is  the zero toughness solution, and $\cE(\kappa)$ is an
+      as yet unknown function of $\kappa$. (Similar for $G$,$\Pi$,$\lambda$).
 \end{itemize}
-We can do a similar construction, after moving into dimensionless variables:
-\[(x,h,g,p,K_I,K_{ij}) \to (\xi, H,G,\Pi, \kappa, \Lambda_{ij}) \]
-Where the new equations and boundary conditions become
-\[(\Pi,0) = \int \Lambda \cdot (G',H') d\xi, \quad H^2\Pi' = \lambda, \quad
-\lim_{\xi \to \infty} H'' = 1, \quad \lim_{\xi \to 0} 3\sqrt{2\pi}H' = \kappa \]
-We look for a solution like $H(\xi) = H_0(\xi) + \cE(\kappa)
-H_1(\xi)+o(\cE)$ (and again similar for $\Pi$,$G$).
-\begin{figure}
-\begin{minipage}{.52\textwidth}
 %\scriptsize
 %\begin{tabular}{@{} p{.1\linewidth} r r @{}}
 %\toprule
@@ -140,29 +131,33 @@ H_1(\xi)+o(\cE)$ (and again similar for $\Pi$,$G$).
 %rv &   \texttt{TTGCCCCTGTTTCACTATCC}  & \texttt{GAGACCTGAATGCTGCTTCC}  \\
 %\bottomrule
 %\end{tabular}
+\begin{figure}
+\begin{minipage}{0.5\textwidth}
 By matching the outer asymptotics of the LEFM boundary layer solution, and
-the inner asymptotics of the expansion in $\cE$, in a region that they overlap,
-one can show that $\cE = C \kappa^{4-6s}\lambda_0^{2s-1}$. $s \approx 0.1386$
-comes from solving a transcendental equation, $C$ can be determined numerically,
-and $\lambda_0$ is the value of $\lambda$ when $\kappa=0$, also determined
+the inner asymptotics of the expansion in $\cE$,
+one can show that $\cE = C \kappa^{4-6s}\lambda_0^{2s-1}$. Where 
+$s \approx 0.1386$ comes from solving a transcendental equation, 
+$C$ can be determined numerically,
+and $\lambda_0 = \lambda(\kappa=0)$ is also determined
 numerically.
+
 \end{minipage}
-\begin{minipage}{.45\textwidth}
-\centering\includegraphics[width=0.9\textwidth]{Fig7.pdf}
-\caption{Matching region of outer and inner asymptotics.}
+\begin{minipage}{0.05\textwidth}
+~
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\centering\includegraphics[width=0.85\textwidth]{./../Graphs/l0.pdf}
+\caption{Close numerical agreement with the $\lambda = \lambda_0 + \cE 
+\lambda_1$ approximation.}
 \end{minipage}
 \end{figure}
-An additional problem not present in \cite{GandD} is the asymptotic region
-as $\xi\to \infty$, but it can be shown that with our rescaling, this does
-not affect the near tip behaviour.
 \end{myblock}\vfill
 \begin{myblock}{Numerical Solution of Equations}
 The set of scaled equations can be discritized, and then solved numerically
 as follows. We choose a set of points $\xi$ to measure $G,H$, and an 
 intermediate set of points $z$ to measure $\Pi$, so $\xi_1 < z_1 < \xi_2 <
 \dots < z_{n-1} < \xi_n$.
-The simplest thing to do, would be to approximate $H',G'$ as piecewise linear
-functions. However, since both $H'$,$G'$ are singular near the origin, they
+Since both $H'$,$G'$ are singular near the origin, they
 are badly approximated by linear functions.
 The solution is to approximate $G'(\xi) = \frac{1}{\sqrt{\xi}}(a_i \xi + b_i)$
 near the tip and to approximate $G'(\xi) = a_i \xi + b_i$ away from the tip 
@@ -195,8 +190,7 @@ the physical problem we think of $\kappa$ as the independent variable.
 \begin{myblock}{Results}
 \begin{figure}
 \begin{minipage}{0.55\textwidth}
-The relationship $\lambda = \lambda_0 + \cE(\kappa) \lambda_1$ holds
-well in practice. It has been calculated that $\lambda_0 \approx 0.0591$,
+It has been calculated that $\lambda_0 \approx 0.0591$,
 To calculate $\lambda_1,C$ is harder, since the linear perturbation problem
 must be solved (linearise and  work only to first order in $\cE$). We found
 $C \approx 5.8 \times 10^{-3}$, $\lambda_1 \approx -0.31$. Redimensionalising
