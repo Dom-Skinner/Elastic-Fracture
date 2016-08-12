@@ -1,17 +1,15 @@
 %sets easy geometric parameters
 %%{
-n = 400;
-t = 200;
-r = 60;
+n = 350;
+t = 170;
+r = 50;
 xmax = 50;
 
 x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
 z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
 
-L = 0.6:0.4:2;%[0.1,0.3,0.5,1, 1.5,2.1,2.6];
-
-
+L = 1:0.1:2;%[0.1,0.3,0.5,1, 1.5,2.1,2.6];
 
 
 
@@ -55,28 +53,29 @@ for i=1:length(lambda)
         scaled_fixed_lambda_M_iteration(x,z,v,w,t,xmax,lambda(i),tol,hprime_start);
     hprime_data(:,i,j) = hprime_new;
 end
+
+
 s = 0.138673;
 u = 4-6*s;
 p1 = polyfit(KI(end-2:end,j).^u,lambda(end-2:end)',1);
 l0(j) = p1(2);
 p2 = polyfit(lambda(end-2:end)',KII(end-2:end,j),2);
 KII0(j) = p2(1)*l0(j)*l0(j)+p2(2)*l0(j)+p2(3);
-for k = 1:t+r-1;
-p3 = polyfit(KI(end-2:end,j).^2,hprime_data(k,end-2:end,j)',1);
-hprime_l0(k,j) = p3(2);hold on
-    plot(v(1:r+t-1),hprime_l0(:,j));
 end
 
-end
-i = length(lambda); 
-j = length(L); 
-%plot(l0,KII0.^2,'o-')
 
-for j = 1:length(l0)
-    
-end
-legend({num2str(l0(1)),num2str(l0(2)),num2str(l0(3)),num2str(l0(4)) ...
-  },'Location','NorthWest')
-%text(0.3,0.2,'Typical variation between L=1 and L=2 is ~1%')
-xlabel('x')
-ylabel('sqrt(x)h''')
+p3 = polyfit(KII0.^2,l0,1);
+l00 = p3(2);
+c1 = p3(1);
+% If in doubt about accuracy:
+% plot(KII0.^2,l0,'o-',KII0.^2,KII0.^2 *c1+l00,'+-')
+p4 = polyfit((l00-l0).^(1/6),L,1);
+L0 = p4(2);
+c2 = - (-1/p4(1))^6;
+% If in doubt about accuracy:
+% plot(L,l0,L,l00 +c2*(L0-L).^6)
+c3 = sqrt(abs(c2/c1));
+
+%plot(L,(lambda(1) - l00 - c2*(L0-L).^6)./(KI(1,:).^u))
+c4 = mean((lambda(:) - l00 - c2*(L0-L(end)).^6)./(KI(:,end).^u));
+% A bit of a rough approximation...
