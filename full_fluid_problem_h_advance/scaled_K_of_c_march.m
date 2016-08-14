@@ -1,15 +1,16 @@
 %sets easy geometric parameters
 %%{
-n = 350;
-t = 170;
-r = 50;
-xmax = 50;
 
-x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
-z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
+%n = 350;
+%t = 170;
+r = 400;
+%xmax = 50;
+xmax = x(n);
+%x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
+%z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
 
-L = [0.6:0.3:2.4, 4:3:70];%[0.1,0.3,0.5,1, 1.5,2.1,2.6];
+L = [0.6:0.3:2.4, 4:3:80];%[0.1,0.3,0.5,1, 1.5,2.1,2.6];
 
 
 
@@ -17,7 +18,7 @@ L = [0.6:0.3:2.4, 4:3:70];%[0.1,0.3,0.5,1, 1.5,2.1,2.6];
 lambda =0.04:0.02:0.08;
 %}
 
-%lambda = 0.0584:0.0004:0.0588;
+
 
 hprime_data = zeros(2*n+r,length(lambda),length(L));
 
@@ -63,15 +64,19 @@ l0(j) = p1(2);
 p2 = polyfit(lambda(end-2:end)',KII(end-2:end,j),2);
 KII0(j) = p2(1)*l0(j)*l0(j)+p2(2)*l0(j)+p2(3);
 
+end
 subplot(1,3,1)
+hold on
 plot(l0,KII0.^2,'o-')
 xlabel('\lambda_0')
 ylabel('K_{II}')
 subplot(1,3,2)
+hold on
 plot(L,l0,'o-')
 xlabel('L')
 ylabel('\lambda_0')
 subplot(1,3,3)
+hold on
 plot(L,KII0,'o-')
 xlabel('L')
 ylabel('K_{II}')
@@ -84,4 +89,3 @@ end
 hold on
 plot(v(1:r+t-1)-L(j),v(1:r+t-1).^(-0.5)'.*hprime_l0(:,j));
 %}
-end

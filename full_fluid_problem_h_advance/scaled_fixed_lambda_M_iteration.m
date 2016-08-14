@@ -86,7 +86,6 @@ KI  = KI_new;
 KII = KII_new;
 if iteration_number == 20
     fprintf('Failure to coverge\n');
-    KI=-1;
 end
 
 return
