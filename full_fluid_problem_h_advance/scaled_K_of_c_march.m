@@ -3,19 +3,19 @@
 
 %n = 350;
 %t = 170;
-r = 400;
+r = 100;
 %xmax = 50;
 xmax = x(n);
 %x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
 %z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
 
-L = [0.6:0.3:2.4, 4:3:80];%[0.1,0.3,0.5,1, 1.5,2.1,2.6];
+L = 1:0.2:3.4;%[0.6:0.3:5];%[0.1,0.3,0.5,1, 1.5,2.1,2.6];
 
 
 
 %some values of lambda to try
-lambda =0.04:0.02:0.08;
+lambda =0.07:0.01:0.09;
 %}
 
 
@@ -33,10 +33,7 @@ hprime_l0 = zeros(t-1,length(L));
 
 for j = 1:length(L)
 
-v = [tan((0:r)*atan(sqrt(L(j)))/r).^2 , x+L(j)] ;
-w = [tan((0.5:1:r-0.5)*atan(sqrt(L(j)))/r).^2 - L(j) , 0.5*v(r) z]+L(j);
-v(r+1)=[];
-w(r+1)=[];
+[v,w] = spacing(x,z,L(j),r);
 
 hprime_start = zeros(2*n+r,1);
 hprime_start(1:n+r) = ones(n+r,1);

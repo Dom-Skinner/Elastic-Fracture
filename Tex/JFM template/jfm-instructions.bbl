@@ -1,0 +1,75 @@
+\begin{thebibliography}{14}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\def\au#1{#1} \def\ed#1{#1} \def\yr#1{#1}\def\at#1{#1}\def\jt#1{\textit{#1}}
+  \def\bt#1{#1}\def\bvol#1{\textbf{#1}} \def\vol#1{#1} \def\pg#1{#1}
+  \def\publ#1{#1}\def\arxiv#1{#1}\def\org#1{#1}\def\st#1{\textit{#1}}
+
+\bibitem[Batchelor(1971)]{Batchelor59}
+{\sc \au{Batchelor, G.~K.}} \yr{1971}  \at{Small-scale variation of convected
+  quantities like temperature in turbulent fluid. part 1. general discussion
+  and the case of small conductivity.}  \jt{J.~Fluid Mech.}  \bvol{5},
+  \pg{113--133}.
+
+\bibitem[Brownell \& Su(2004)]{Brownell04}
+{\sc \au{Brownell, C.~J.} \& \au{Su, L.~K.}} \yr{2004}  \at{Planar measurements
+  of differential diffusion in turbulent jets}.  \jt{AIAA Paper 2004-2335} .
+
+\bibitem[Brownell \& Su(2007)]{Brownell07}
+{\sc \au{Brownell, C.~J.} \& \au{Su, L.~K.}} \yr{2007}  \at{Scale relations and
+  spatial spectra in a differentially diffusing jet}.  \jt{AIAA Paper
+  2007-1314} .
+
+\bibitem[Dennis(1985)]{Dennis85}
+{\sc \au{Dennis, S. C.~R.}} \yr{1985}  \at{{Compact explicit finite difference
+  approximations to the Navier--Stokes equation}}.  \bt{In {\em Ninth Intl
+  Conf. on Numerical Methods in Fluid Dynamics\/} (ed. \ed{Soubbaramayer \&
+  J.~P. Boujot})},  \st{Lecture Notes in Physics},  \vol{vol. 218},  \pg{pp.
+  23--51}.  \publ{Springer}.
+
+\bibitem[Hwang \& Tuck(1970)]{Hwang70}
+{\sc \au{Hwang, L.-S.} \& \au{Tuck, E.~O.}} \yr{1970}  \at{On the oscillations
+  of harbours of arbitrary shape}.  \jt{J.~Fluid Mech.}  \bvol{42},
+  \pg{447--464}.
+
+\bibitem[Koch(1983)]{Koch83}
+{\sc \au{Koch, W.}} \yr{1983}  \at{Resonant acoustic frequencies of flat plate
+  cascades}.  \jt{J.~Sound Vib.}  \bvol{88},  \pg{233--242}.
+
+\bibitem[Lee(1971)]{Lee71}
+{\sc \au{Lee, J.-J.}} \yr{1971}  \at{Wave-induced oscillations in harbours of
+  arbitrary geometry}.  \jt{J.~Fluid Mech.}  \bvol{45},  \pg{375--394}.
+
+\bibitem[Linton \& Evans(1992)]{Linton92}
+{\sc \au{Linton, C.~M.} \& \au{Evans, D.~V.}} \yr{1992}  \at{The radiation and
+  scattering of surface waves by a vertical circular cylinder in a channel}.
+  \jt{Phil.\ Trans.\ R. Soc.\ Lond.}  \bvol{338},  \pg{325--357}.
+
+\bibitem[Martin(1980)]{Martin80}
+{\sc \au{Martin, P.~A.}} \yr{1980}  \at{On the null-field equations for the
+  exterior problems of acoustics}.  \jt{Q.~J. Mech.\ Appl.\ Maths}  \bvol{33},
+  \pg{385--396}.
+
+\bibitem[Miller(1991)]{Miller91}
+{\sc \au{Miller, P.~L.}} \yr{1991}  \at{Mixing in high schmidt number turbulent
+  jets}. PhD thesis, California Institute of Technology.
+
+\bibitem[Rogallo(1981)]{Rogallo81}
+{\sc \au{Rogallo, R.~S.}} \yr{1981}  \bt{Numerical experiments in homogeneous
+  turbulence}. {\em Tech. Rep.\/} 81835.  \org{NASA Tech.\ Mem.}
+
+\bibitem[Ursell(1950)]{Ursell50}
+{\sc \au{Ursell, F.}} \yr{1950}  \at{Surface waves on deep water in the
+  presence of a submerged cylinder i}.  \jt{Proc.\ Camb.\ Phil.\ Soc.}
+  \bvol{46},  \pg{141--152}.
+
+\bibitem[{van Wijngaarden}(1968)]{Wijngaarden68}
+{\sc \au{{van Wijngaarden}, L.}} \yr{1968}  \at{On the oscillations near and at
+  resonance in open pipes}.  \jt{J.~Engng Maths}  \bvol{2},  \pg{225--240}.
+
+\bibitem[Worster(1992)]{Worster92}
+{\sc \au{Worster, M.~G.}} \yr{1992}  \at{{The dynamics of mushy layers}}.
+  \bt{In {\em In Interactive dynamics of convection and solidification\/} (ed.
+  \ed{S.~H. Davis, H.~E. Huppert, W.~Muller \& M.~G. Worster})},  \pg{pp.
+  113--138}.  \publ{Kluwer}.
+
+\end{thebibliography}
