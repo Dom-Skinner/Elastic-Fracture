@@ -15,20 +15,19 @@
 \newtheorem{lemma}{Lemma}
 \newtheorem{corollary}{Corollary}
 
-\shorttitle{Guidelines for authors}
-\shortauthor{A. N. Other, H.-C. Smith and J. Q. Public}
+\shorttitle{Viscous elastic fracture}
+\shortauthor{T. Large, J. Lister and D. Skinner}
 
 \title{Viscous control of shallow elastic fracture}
 
-\author{Alan N. Other\aff{1}
-  \corresp{\email{jfm@damtp.cam.ac.uk}},
-  H. - C. Smith\aff{1}
- \and J. Q.  Public\aff{2}}
+\author{Tim Large\aff{1},
+  John Lister\aff{2},
+ \and Dominic Skinner\aff{2}}
+  %\corresp{\email{jfm@damtp.cam.ac.uk}}
 
-\affiliation{\aff{1}Department of Chemical Engineering, University of America,
-Somewhere, IN 12345, USA
-\aff{2}Department of Aerospace and Mechanical Engineering, University of
-Camford, Academic Street, Camford CF3 5QL, UK}
+\affiliation{\aff{1} M.I.T., USA
+\aff{2}Department of Applied Mathematics and Theoretical Physics, University of
+Cambridge, UK}
 
 \begin{document}
 
@@ -110,7 +109,8 @@ g = \alpha l G(\xi), \quad p = \beta p^* \Pi(\xi)
 \end{equation}
 The preferred scalings to be used in this paper are $\alpha = \upi \beta /3
 = \mathcal{M}$, $\lambda = \upi\mathcal{C}/3\mathcal{M}^2$, which give
-\begin{equation}
+\refstepcounter{equation}
+$$
 \setlength{\arraycolsep}{2pt}
 \left[ \begin{array}{c} 
 \Pi \\ 0
@@ -121,58 +121,284 @@ G'(\tilde{\xi}) \\ H'(\tilde{\xi})
 \end{array} \right]
 \mrd \tilde{\xi}, \qquad
 H^2 \frac{\mrd \Pi}{\mrd \xi} = \lambda
-\end{equation}
-\begin{equation}
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:govern}
+$$
+%
+\refstepcounter{equation}
+$$
 \lim_{\xi \to \infty} H'' = 1 , \quad \lim_{\xi \to \infty} G' = \frac{1}{2}
-\end{equation}
-\begin{equation}
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:bc-at-0}
+$$
+%
+\refstepcounter{equation}
+$$
 \lim_{\xi \to 0} 3\sqrt{2\pi \xi} H' = \frac{K_I}{M l^{-3/2}} \equiv \kappa_I , 
 \quad
 \lim_{\xi \to 0} 3\sqrt{2\pi \xi} G' = \frac{K_{II}}{M l^{-3/2}} 
 \equiv \kappa_{II} , 
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:by-at-inf}
+$$
+
+These shall be the governing equations for the rest of this paper, athough
+we will often rewrite equation \ref{eq:govern}b as an integral, choosing
+$\Pi \to 0$ as $\xi \to \infty$,
+\begin{equation}\label{eq:lub-int}
+\Pi(\xi) = \int_{\xi}^{\infty} \lambda / H(\tilde{\xi})^2 \mrd \tilde{\xi}
 \end{equation}
-These shall be the governing equations for the rest of this paper.
+%
+%
 \section{Numerical scheme}\label{sec:numerical_scheme}
+%
+%
 \subsection{Single Tip}
 We discretize the problem by taking n points $\boldsymbol{\xi} = (\xi_1, \dots
 ,\xi_n)$ at which we measure $H'$, $G'$, and $n-1$ intermediate points 
 $\boldsymbol{\zeta} = (\zeta_1, \dots , \zeta_{n-1})$ at which to measure
 $\Pi$, so that $\xi_1 < \zeta_1 < \dots < \zeta_{n-1} < \xi_n$. We take
 $\xi_1 = 0$, where the crack tip is situated.
-Linear interpolation of $G'$,$H'$ would work poorly near the crack tip, since
+Linear interpolation of $G'$, $H'$ would work poorly near the crack tip, since
 both functions are singular there. However, both $\sqrt{\xi}G'(\xi)$, and
 $\sqrt{\xi}H'(\xi)$ are regular functions, so we work with these instead,
-near the tip.
+near the tip. Away from the tip, we treat $H'$, $G'$ as linear. So for 
+$\xi_{i} < \xi < \xi_{i+1}$ we have that
+\begin{equation}
+\setlength{\arraycolsep}{2pt}
+G'(\xi) = \left\{ \begin{array}{l}  
+\xi^{-1/2}(a_i \xi + b_i) \\[4pt]
+a_i \xi + b_i
+ \end{array}\right., \quad
+H'(\xi) = \left\{ \begin{array}{l}  
+\xi^{-1/2}(c_i \xi^{1/2} + d_i) \\[4pt]
+c_i \xi + d_i
+ \end{array}\right. , \quad
+\; \mbox{for\ } \left\{ \begin{array}{l}  
+i<t\\[4pt]
+i\geq t
+\end{array}\right.
+\end{equation}
+Where $1 < t < n$ is just a number governing where to interpolate as linear, and
+where not to; typically $t = n/2$ was used. Note that $H'$, $G$ are interpolated
+slightly differently near the tip, here the interpolating function was simply 
+based on the appearance of $\sqrt{\xi}G'(\xi)$,$\sqrt{\xi}H'(\xi)$, near the 
+tip. We will also define $a_n,b_n,c_n,d_n$ for interpolation beyond $\xi_n$.
+We will define $\boldsymbol{a} = [a_1,\dots ,a_n]$, and similarly with 
+$\boldsymbol{b}$, $\boldsymbol{c}$, $\boldsymbol{d}$, we will also define,
+for convenience, the column vector $\boldsymbol{\gamma}=[\boldsymbol{a},
+\boldsymbol{b},\boldsymbol{c},\boldsymbol{d}]$.
+
+Now given this interpolation, suppose that we know $\boldsymbol{\gamma}$.
+Then the elasticity integral (\ref{eq:govern}a), is exact, 
+that is to say there is an known analytic expression for $\Pi(\xi)$, given 
+our choice of interpolation.
+We also have a different expression for $\Pi$, due to the lubrication integral
+(\ref{eq:lub-int}).
+As before, given the interpolation, this integral becomes an analytic
+expression.
+
+We see that in equation \ref{eq:govern}a, the integral depends linearly
+on $\boldsymbol{\gamma}$. Therefore, we can write
+\begin{equation}
+[ \Pi(\zeta_{1}) , \dots , \Pi(\zeta_{n-1}), \, \underbrace{0 \, , \, \dots \, 
+,\, 0 }_{n-1} \, ] = \mathsfbi{J} \boldsymbol{\gamma}
+\end{equation}
+where $\mathsfbi{J}$ is a matrix in lieu of the integral kernel. We also know
+that $[ \Pi(\zeta_{1}) , \dots , \Pi(\zeta_{n-1})] = 
+f_1( \boldsymbol{c},\boldsymbol{d})$, from the lubrication integral. This time,
+$\Pi$ does not depend linearly on $\boldsymbol{\gamma}$.
+
+We define $\boldsymbol{\theta}_G = [a_1 \xi_1 + b_1, \dots , a_n \xi_n + b_n]$,
+$\boldsymbol{\theta}_H = [c_1 \xi_1^{1/2} + d_1, \dots , 
+c_n \xi_n^{1/2} + d_n]$, as well as $\boldsymbol{\theta} = 
+[\boldsymbol{\theta}_G, \boldsymbol{\theta}_H] $. 
+We would prefer to work with $\boldsymbol{\theta}$ over $\boldsymbol{\gamma}$,
+since it contains half as many elements. Continuity of $G'$, $H'$ impose 
+$2(n-1)$ equations, which are typically of the form
+\begin{equation}
+\setlength{\arraycolsep}{1pt}
+\begin{array}{rl}
+a_i \xi_{i+1} + b_i~ &= a_{i+1} \xi_{i+1} + b_{i+1},\mbox{ for } i<n,
+\,i\neq t -1 \\[4pt]
+\xi^{-1/2}(a_i \xi_{i+1} + b_i) &= a_{i+1} \xi_{i+1} + b_{i+1},
+\mbox{ for } i = t -1
+\end{array}
+\end{equation}
+with a slightly modified equation to account for the different interpolation
+in $H'$. We can also introduce some boundary conditions here to get another 
+two equations. We know $G'(\xi_n)$ from our asymptotic expansion and beam
+theory, and we also know $G'(\xi_{n-1})$ (provided $\xi_{n-1}$, $\xi_n$ are
+suitably large). Therefore we know $G'(\xi_n)/G'(\xi_{n-1})$, which provides
+a linear constraint on $\boldsymbol{a}$, $\boldsymbol{b}$ (not similar for $H'$).
+We have enough equations here to calculate a matrix $\mathsfbi{T}$, so that
+\begin{equation}
+\boldsymbol{\gamma} = \mathsfbi{T} \boldsymbol{\theta}
+\end{equation}
+Although, since this matrix is fairly sparse, with a known structure, it is not
+ever actually calculated in the program. To recap, we now have that
+\begin{equation}
+\mathsfbi{JT}\boldsymbol{\theta} = f_2(\boldsymbol{\theta}) 
+\end{equation}
+With $\mathsfbi{JT}$ a $2(n-1) \times 2n$ matrix, and $f_2$ a function of 
+$\boldsymbol{\theta}$ (really just of $\boldsymbol{\theta}_H$), with
+the first $n-1$ components calculating $\Pi$, and the last $n-1$ components
+set to $0$. We add another two rows to $\mathsfbi{JT}$, to make it a square
+matrix. Since we know $G'(\xi_n)$, and $H''(\xi_n) \approx 
+(H'(\xi_n)-H'(\xi_{n-1}))/(\xi_n-\xi_{n-1}) = (\boldsymbol{\theta}_{2n}-
+\boldsymbol{\theta}_{2n-1})/(\xi_n-\xi_{n-1}) $, we can replace $f_2$ with
+$f = [f_2, G'(\xi_n), H''(\xi_n)]$. The two rows added have the property that
+when multiplied by $\boldsymbol{\theta}$ equal $\boldsymbol{\theta}_{n}$, and
+$(\boldsymbol{\theta}_{2n}-\boldsymbol{\theta}_{2n-1})/(\xi_n-\xi_{n-1}) $
+respectively. Let the enlarged matrix be called $\mathsfbi{A}$. Then
+\begin{equation}
+\mathsfbi{A}\boldsymbol{\theta} = f(\boldsymbol{\theta})
+\end{equation}
+This can be solved by Newton's method; if $\mathsfbi{A}\boldsymbol{\theta} 
+\approx f(\boldsymbol{\theta})$ and $ \mathsfbi{A}(\boldsymbol{\theta+\delta}) 
+= f(\boldsymbol{\theta + \delta})$, so to leading order in 
+$\boldsymbol{\delta}$, we have that 
+\begin{equation}
+\boldsymbol{\delta} = \left(\mathsfbi{A} - D_{\boldsymbol{\theta}}f \right)^{-1}
+\left( f(\boldsymbol{\theta}) - A \boldsymbol{\theta} \right)
+\end{equation}
 \subsection{Double Tip}
 Here we mention details specific to the problem with both a fluid
 and a dry tip. Perhaps details of the $\sin^2$ spacing or the interpolation
 to $K_I=0$ should be mentioned here.
- 
+%
+%
+% 
 \section{Results}\label{sec:Results}
-Here we put the majority of the graphs which show the results of the numerics.
+%
+%
+%
+\subsection{Single tip}
+Start off with some of the basic graphs showing $H'$,$G'$, and $\Pi$ against
+$\xi$.
+\begin{figure}
+  \centerline{\includegraphics[scale=0.3]{./../../Graphs/hprime-x.pdf}}
+  \caption{This shows some evidence of the LEFM boundary layer}
+\end{figure}
+\begin{figure}
+  \centerline{\includegraphics[scale=0.3]{./../../Graphs/pprime-x.pdf}}
+  \caption{This also shows some evidence of the LEFM boundary layer}
+\end{figure}
+\begin{figure}
+  \centerline{\includegraphics[scale=0.3]{./../../Graphs/l0.pdf}}
+  \caption{Good agreement between theory and numerics here}
+\end{figure}
+
+Obvious questions to ask at this point are: How are you sure this is the right
+answer, what is the effect of $n$, $t$, $\xi_{\mathrm{end}}$? Well $t$ really
+doesn't have too much of an effect. This is not unexpected, in a region away
+from zero, interpolating with base functions $\xi$, $1$ is similar to 
+interpolating with $\xi^{-1/2}$, $\xi^{1/2}$, as both are smooth, regular 
+functions. So as long as $t > O(10)$ the difference is not too noticable.
+In the next graph, we determine the effect of extending $\xi_{\mathrm{end}}$,
+by adding on extra points (so maintaining the same resolution near the tip).
+There is a satisfactory demonstration of convergence.
+\begin{figure}
+  \centerline{\includegraphics[scale=0.3]{./../../Graphs/xend-march.png}}
+  \caption{Satisfactory convergence as $\xi_{\mathrm{end}} \to \infty$}
+\end{figure}
+
+By adding points on in a geometric progression, it becomes quite cheap to
+extend out to $\xi_{\mbox{end}} \approx 800$ or so. Once one has done this,
+it is apparent that the effect of the tip resolution dominates the effect
+of finite truncation, as the following figure shows.
+\begin{figure}
+  \centerline{\includegraphics[scale=0.3]{./../../Graphs/xend-effect-l0-D.png}}
+  \caption{Shows the relatively small effect that $\xi_{\mathrm{end}}$ has
+compared to the tip resolution, once $\xi_{\mathrm{end}}$ has become large
+enough}
+\end{figure}
+
+By increasing $n$ (for large $\xi_{\mathrm{end}}$), we have been able to 
+determine $\lambda_0$ and $D$
+\begin{figure}
+  \centerline{\includegraphics[scale=0.3]{./../../Graphs/l0-D-too-far.png}}
+  \caption{Our best guess at $\lambda_0$ and $D$, and the approximate error
+one can expect in them}
+\end{figure}
+\subsection{Linear perturbation problem}
+We solve the linear perturbation problem. All that we really want to know
+is that we see the $\xi^{s-1}$ behaviour that we expect, and we ask what the
+intercept of $\tilde{H}_1$ is. It is perhaps worth mentioning the difficulties
+in measuring the intercept and perhaps a notion of the sensitivity of the 
+result on the estimate provided for $H_0$. Illustrating that is the next
+figure 
+\begin{figure}
+ \centerline{\includegraphics[scale=0.3]{./../../Graphs/linear-perturbation.pdf}}
+  \caption{Sensitivity of linear perturbation problem on $H_0$}
+\end{figure}
+
+Then we include the figure that shows convergence with different $n$ values
+to something approaching the right answer.
+\begin{figure}
+ \centerline{
+\includegraphics[scale=0.2]{./../../Graphs/linear-perturbation-new.png}}
+  \caption{Sensitivity of linear perturbation problem on $H_0$}
+\end{figure}
+
+\subsection{Two tips}
+After the success of the linear perturbation problem, we move on to the two tip
+problem. Perhaps some graphs that show an outline of the full numerical problem
+with non-zero $\kappa_I$ and $\kappa_{II}$, although these are not physical.
+\begin{figure}
+ \centerline{
+\includegraphics[scale=0.3]{./../../Graphs/KI-KII-L.png}}
+  \caption{Different colours indicate different $\lambda$ values}
+\end{figure}
+
+\begin{figure}
+ \centerline{
+\includegraphics[scale=0.3]{./../../Graphs/KI-KII-lambda.png}}
+  \caption{Different colours indicate different $L$ values}
+\end{figure}
+
+What would be nice, although it doesn't exist yet, is some sort of record of
+how we now extrapolate to $\kappa_I=0$. This is certainly a plot that needs to 
+be made.
+We now move on to the $\kappa_I=0$ set of relations.
+\begin{figure}
+ \centerline{
+\includegraphics[scale=0.5]{./../../Graphs/KI-0.png}}
+  \caption{The results of extrapolating to $\kappa_I = 0$}
+\end{figure}
 \section{Discussion}
 This is where we discuss the figures, possibly include more figures, and draw
 the results and conclusions of this paper.
-\subsection{Figures}
 
+Perhaps the first thing worth mentioning is the somewhat contrived, but pretty
+accurate formulae for $\lambda$ in terms of $\kappa_I$. This holds for any 
+toughness in the single tip case.
 \begin{figure}
-  \centerline{\includegraphics{trapped}}% Images in 100% size
-  \caption{Trapped-mode wavenumbers, $kd$, plotted against $a/d$ for
-    three ellipses:\protect\\
-    ---$\!$---,
-    $b/a=1$; $\cdots$\,$\cdots$, $b/a=1.5$.}
-\label{fig:ka}
+ \centerline{
+\includegraphics[scale=0.3]{./../../Graphs/full-relation.png}}
+  \caption{The formula valid for all $\kappa_I$}
 \end{figure}
 
-\begin{figure}
-  \centerline{\includegraphics{modes}}
-  \caption{The features of the four possible modes corresponding to
-  (\textit{a}) periodic\protect\\ and (\textit{b}) half-periodic solutions.}
-\label{fig:kd}
-\end{figure}
+Then we could move on to talk about the decoupling between the fluid problem
+and the dry fracture problem. Relavent graphs to include would show that
+$H$ really doesn't vary much with $\lambda_0$, and that given a reference
+$H'$, one can construct $G'$ with relative ease.
 
-\subsection{Tables}
-Tables, however small, must be numbered sequentially in the order in which they are mentioned in the text. The word \textit {table} is only capitalized at the start of a sentence. See table \ref{tab:kd} for an example.
+\begin{figure}
+ \centerline{
+\includegraphics[scale=0.4]{./../../Graphs/hprime-variation.png}}
+  \caption{Demonstrating the decoupling of fluid and solid fracture}
+\end{figure}
+%
+\begin{figure}
+ \centerline{
+\includegraphics[scale=0.4]{./../../Graphs/fixed-fluid.png}}
+  \caption{Reconstructing the full solution given a reference $H'$}
+\end{figure}
+At this point, I would like to construct another contrived formulae for the
+two tip problem. Then I would like to plot a graph of $\kappa_I$ against
+$\kappa_{II}$ in the full fluid problem. This provides a guide of when it
+is appropriate to take the single tip, and when it is appropriate to take
+the double tip asymptotics.
+
+\clearpage
 
 \begin{table}
   \begin{center}
@@ -189,28 +415,6 @@ Tables, however small, must be numbered sequentially in the order in which they 
   \label{tab:kd}
   \end{center}
 \end{table}
-
-\subsection{Mathematical notation}
-\subsubsection{Setting variables, functions, vectors, matrices etc}
-{\bf Italic font} should be used for denoting variables, with multiple-letter symbols avoided except in the case of dimensionless numbers such as $\Rey$, $\Pran$ and $\Pen$ (Reynolds, Prandtl, and P\'eclet numbers respectively, which are defined as \verb}\Rey}, \verb}\Pran} and {\verb}\Pen} in the template).\\
-{\bf Upright Roman font} (or upright Greek where appropriate) should be used for:\\
-Operators: sin, log, d, $\Delta$, e etc.\\
-Constants: i ($\sqrt{-1}$), $\upi$ (defined as \verb}\upi}), etc.\\
-Functions: $\Ai$, $\Bi$ (Airy functions, defined as \verb}\Ai} and \verb}\Bi}), $\Real$ (real part, defined as \verb}\Real}), $\Imag$ (imaginary part, defined as \verb}\Imag}), etc.\\
-Physical units: cm, s, etc\\
-Abbreviations: c.c. (complex conjugate), h.o.t. (higher-order terms), DNS, etc.\\
-{\bf Bold italic font} (or bold sloping Greek) should be used for:\\
-Vectors (with the centred dot for a scalar product also in bold): $\boldsymbol{i \cdot j}$\\
-{\bf Bold sloping sans serif font}, defined by the \verb}\mathsfbi} macro, should be used for:\\
-Tensors and matrices: $\mathsfbi{D}$ \\
-{\bf Script font} (for example $\mathcal{G}$, $\mathcal{R}$) can be used as an alternative to italic when the same letter denotes a different quantity (use \verb}\mathcal} in \LaTeX)\\
-The product symbol ($\times$) should only be used to denote multiplication where an equation is broken over more than one line, to denote a cross product, or between numbers (the $\cdot$ symbol should not be used, except to denote a scalar product specifically).\\ 
-
-\subsubsection{Other symbols}
-A centred point should be used only for the scalar product of vectors.
-Large numbers that are not scientific powers should not include commas, but have the
-form 1600 or 16 000 or 160 000.
-Use \textit{O} to denote `of the order of', not the \LaTeX\ $\mathcal{O}$.
 
 \section{Citations and references}
 All papers included in the References section must be cited in the article, and vice versa. Citations should be included as, for example ``It has been shown \citep{Rogallo81} that...'' (using the {\verb}\citep} command, part of the natbib package) ``recent work by \citet{Dennis85}...'' (using {\verb}\citet}).
@@ -452,6 +656,6 @@ $f(0)=f(1)=0$ always satisfies
 
 \bibliographystyle{jfm}
 % Note the spaces between the initials
-\bibliography{jfm-instructions}
+\bibliography{elastic-fracture}
 
 \end{document}
