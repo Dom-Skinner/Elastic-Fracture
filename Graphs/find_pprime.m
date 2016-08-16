@@ -1,5 +1,5 @@
 function pprime_data = find_pprime(lambda,x,hprime_data,n,t)
-h_coefficient_matrix = hprime_to_h_s(x,0.5);
+h_coefficient_matrix = hprime_to_h_s(x,0.5,t);
 
 h_data = zeros(n,numel(lambda));
 pprime_data = zeros(n,numel(lambda));

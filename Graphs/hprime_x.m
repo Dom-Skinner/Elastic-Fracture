@@ -6,7 +6,7 @@ ax = gca;
 hold on
 
 clear data
-load n273x778
+load n500x50-modified
 dat = 1:80;
 s = 0.138673;
 u = 4 - 6*s;

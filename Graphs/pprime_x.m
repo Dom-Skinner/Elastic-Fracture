@@ -6,7 +6,7 @@ ax = gca;
 hold on
 
 clear data
-load n400x50-extended.mat
+load n500x50-modified
 dat = 1:80;
 K_val=[1, 4, 8];
 s = 0.138673;
@@ -43,4 +43,4 @@ s3 = strcat(s, num2str(K(K_val(3))));
 legend({s1,s2,s3,'Interpolated'}...
     ,'Interpreter','latex')
 
-clear
+%clear

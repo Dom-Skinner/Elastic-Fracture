@@ -34,12 +34,12 @@ end
 figure('units','normalized','outerposition',[0 0 1 1])
 
 hold on
-%%{
+%{
 plot(xend_val.^(-1),D_save(:,1),'o-',xend_val.^(-1),D_save(:,2),'+-',...
     xend_val.^(-1),D_save(:,3),'*-',xend_val.^(-1),D_save(:,4),'^-',...
     xend_val.^(-1),D_save(:,5),'o-')
 %}
-%{
+%%{
 plot(xend_val.^(-2),l0_save(:,1),'o-',xend_val.^(-2),l0_save(:,2),'o-',...
     xend_val.^(-2),l0_save(:,3),'o-',xend_val.^(-2),l0_save(:,4),'o-',...
     xend_val.^(-2),l0_save(:,5),'o-')

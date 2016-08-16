@@ -4,7 +4,7 @@ D_est=[];
 n_used = [];
 %n_val = [120,160,250,310,150,200,250,300];
 n_val = [...240,270,310,360,420,480,540 ,620 , ...
-         300,350,400,450,700]; %520, 600
+         200,300,400,500,600]; %520, 600
 flg=1;
 for m = n_val
     n=m;
@@ -32,7 +32,7 @@ D=[];
 %}    
 
 
-while x(n) < 500
+while x(n) < 400
     x(n+1) = x(n) * scale;
     z(n) = z(n-1) * scale;
     n = n+1;
@@ -40,8 +40,9 @@ while x(n) < 500
 end
 xmax = x(n);
 
-while xmax < 950
-    if x(n) * scale^(n_increase) <950
+upper_lim = 1000;
+while xmax < upper_lim
+    if x(n) * scale^(n_increase) < upper_lim
         lambda = 0.0584:0.0004:0.0588;
     else
         %lambda = 0.056:0.0004:0.0588;
@@ -53,7 +54,7 @@ while xmax < 950
     D(end+1) = p1(1);
     x_val(end+1) = xmax;
 
-    if x(n) * scale^(n_increase) <950
+    if x(n) * scale^(n_increase) < upper_lim
         for k = 1:n_increase
             x(n+k) = x(n) * scale^(k);
             z(n+k-1) = z(n-1) * scale^(k);
@@ -74,14 +75,14 @@ p2 = polyfit(x_m1,l0,1);
 D_est(end+1) = p1(2);
 l0_est(end+1) = mean(l0);%p2(2);
 n_used(end+1) = n;
-%%{
+%{
 %%% Want to save:
 file = ['n' , num2str(n), 'x', num2str(round(x(n)))];
 D = D_est(end);
 l0 = l0_est(end);
 save(file,'D','l0','n','hprime_data','lambda','KI','t','x','z')
 %}
-%{
+%%{
 hold on
 subplot(2,1,1)
 plot(x_m1, D,'o-',[x_m1 0],[x_m1 0]*p1(1) +p1(2),':')  
