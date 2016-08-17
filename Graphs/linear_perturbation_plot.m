@@ -78,7 +78,7 @@ p3 = polyfit(x(I:I+3) ,H_LEFM_23(I:I+3)'.*x(I:I+3).^(-s), 1);
 p4 = polyfit(x(I:I+4) ,H_LEFM_23(I:I+4)'.*x(I:I+4).^(-s), 2);
 
 %interp2(1:I) = (p3(1)*x(1:I)+p3(2)).*x(1:I).^(2/3-a);
-fprintf('intercept = %.3e%%\n',p3(2))
+fprintf('intercept = %.3e\n',p3(2))
 intercept(k) = p3(2);
 end
 

@@ -41,9 +41,9 @@ fprintf('iteration,  K,       dK,          global diff\n');
 hprime_new = hprime_start;
 K_new = hprime_new(n+1);
 iteration_number = 0;
-K_diff = tol+1; % Just to ensure that it iterates at least once
+global_diff = tol+1; % Just to ensure that it iterates at least once
 
-while abs(K_diff) >= tol && iteration_number<13
+while abs(global_diff) >= tol && iteration_number<13
     hprime_old = hprime_new;
     K_old = K_new;
     

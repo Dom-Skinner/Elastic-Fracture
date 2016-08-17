@@ -1,19 +1,14 @@
 function [theta,h] = linear_perturbation_solve(n,t,x,z, h0,h0_z,l0,kernel_matrix,s)
 % Solves the linear perturbation problem.
 
-
-%the data points
-
 % We will have kernel_matrix as an input, since it takes so long to compute
-%finds the appropriate elasticity kernel
-%[kernel_matrix, ~] = pressure_shear_matrix_s(x,z,s);
-
 
 %saves a matrix to convert h' to h
 h_coefficient_matrix = hprime_to_h_s(x,s,t);
 %R = lubrication_integral_s(x,z,n,t,h_coefficient_matrix,h0,l0,0.5);
 R = zeros(2*(n-1),2*n);
-R(1:n-1,n+1:2*n) = lubrication_integral(x,z,n,t,h_coefficient_matrix,h0,h0_z,l0,s);
+
+R(1:n-1,n+1:2*n) = l0*lubrication_integral(x,z,n,t,h_coefficient_matrix,h0,h0_z,s);
 
 %BT = kernel_matrix;
 rescale = diag([z.^(1-s), ones(1,n-1)]); % To account for singularity in p

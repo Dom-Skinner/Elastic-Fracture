@@ -12,9 +12,8 @@ s = 0.138673;
 u = 4 - 6*s;
 
 K = 3*sqrt(2*pi)*KI;
-l0 = 0.0591;
 
-[interp1,interp2] = interpolate_hprime(x,n,hprime_data,K,1/2,l0);
+[interp1,interp2] = interpolate_hprime(x,n,hprime_data,K,1/2);
 
 hold on
 plot(ax,x(dat),hprime_data(n+dat,5)'.*x(dat).^(-1/6), '*-', ...

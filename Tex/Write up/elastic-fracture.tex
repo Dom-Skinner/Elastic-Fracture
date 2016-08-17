@@ -12,6 +12,7 @@
 \usepackage{epstopdf, epsfig}
 
 \newcommand{\mrd}{\mathrm{d}}
+\newcommand{\cE}{\mathcal{E}}
 \newtheorem{lemma}{Lemma}
 \newtheorem{corollary}{Corollary}
 
@@ -145,6 +146,61 @@ $\Pi \to 0$ as $\xi \to \infty$,
 \begin{equation}\label{eq:lub-int}
 \Pi(\xi) = \int_{\xi}^{\infty} \lambda / H(\tilde{\xi})^2 \mrd \tilde{\xi}
 \end{equation}
+
+Here, for completeness, we include the equations of the linear perturbation 
+problem.
+\begin{equation}
+\Pi = \Pi_0 + \cE \Pi_1 + O(\cE), \quad
+H = H_0 + \cE H_1 + O(\cE) \quad
+\end{equation}
+%
+\refstepcounter{equation}
+$$
+\setlength{\arraycolsep}{2pt}
+\left[ \begin{array}{c} 
+\Pi_1 \\ 0
+\end{array} \right]
+= \int_0^{\infty} \mathsfbi{U}(\xi - \tilde{\xi}) 
+\left[ \begin{array}{c} 
+G_1'(\tilde{\xi}) \\ H_1'(\tilde{\xi})
+\end{array} \right]
+\mrd \tilde{\xi}, \qquad
+H_0^2\Pi_1' + 2H_0 H_1 \Pi_0 ' = \lambda_1
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:lin-pert}
+$$
+%
+\refstepcounter{equation}
+$$
+H_1''\to 0 \mbox{ as\ } \xi \to \infty, \qquad
+H_1 \sim \xi^{s} + \frac{\tilde{A}\lambda_1}{3\lambda_0^{2/3}} \xi^{2/3}
++ \dots \mbox{ as } \xi \to 0
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:lin-pert-bc}
+$$
+But these can be made into a more convenient form, by considering instead
+$\tilde{\Pi} = \Pi_0 - 3\lambda_0/\lambda_1 \Pi_1$, and similar for 
+$\tilde{H}$, $\tilde{G}$. The equations become
+\refstepcounter{equation}
+$$
+\setlength{\arraycolsep}{2pt}
+\left[ \begin{array}{c} 
+\tilde{\Pi} \\ 0
+\end{array} \right]
+= \int_0^{\infty} \mathsfbi{U}(\xi - \tilde{\xi}) 
+\left[ \begin{array}{c} 
+\tilde{G}'(\tilde{\xi}) \\ \tilde{H}'(\tilde{\xi})
+\end{array} \right]
+\mrd \tilde{\xi}, \qquad
+H_0^2\tilde{\Pi}' + 2H_0 \tilde{H} \Pi_0 ' = 0
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:rescaled-lin-pert}
+$$
+%
+\refstepcounter{equation}
+$$
+\tilde{H}''\to 1 \mbox{ as\ } \xi \to \infty, \qquad
+\tilde{H} \sim -\frac{3\lambda_0}{\lambda_1} \xi^{s} 
++ \dots \mbox{ as } \xi \to 0
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:rescaled-lin-pert-bc}
+$$
 %
 %
 \section{Numerical scheme}\label{sec:numerical_scheme}
@@ -158,8 +214,8 @@ $\Pi$, so that $\xi_1 < \zeta_1 < \dots < \zeta_{n-1} < \xi_n$. We take
 $\xi_1 = 0$, where the crack tip is situated.
 Linear interpolation of $G'$, $H'$ would work poorly near the crack tip, since
 both functions are singular there. However, both $\sqrt{\xi}G'(\xi)$, and
-$\sqrt{\xi}H'(\xi)$ are regular functions, so we work with these instead,
-near the tip. Away from the tip, we treat $H'$, $G'$ as linear. So for 
+$\sqrt{\xi}H'(\xi)$ are regular functions, so we work with these instead.
+Away from the tip, we treat $H'$, $G'$ as linear. So for 
 $\xi_{i} < \xi < \xi_{i+1}$ we have that
 \begin{equation}
 \setlength{\arraycolsep}{2pt}
@@ -179,20 +235,20 @@ i\geq t
 Where $1 < t < n$ is just a number governing where to interpolate as linear, and
 where not to; typically $t = n/2$ was used. Note that $H'$, $G$ are interpolated
 slightly differently near the tip, here the interpolating function was simply 
-based on the appearance of $\sqrt{\xi}G'(\xi)$,$\sqrt{\xi}H'(\xi)$, near the 
-tip. We will also define $a_n,b_n,c_n,d_n$ for interpolation beyond $\xi_n$.
+based on the appearance of $\sqrt{\xi}G'(\xi)$,$\sqrt{\xi}H'(\xi)$.
+We will also define $a_n,b_n,c_n,d_n$ for interpolation beyond $\xi_n$.
 We will define $\boldsymbol{a} = [a_1,\dots ,a_n]$, and similarly with 
-$\boldsymbol{b}$, $\boldsymbol{c}$, $\boldsymbol{d}$, we will also define,
+$\boldsymbol{b}$, $\boldsymbol{c}$, $\boldsymbol{d}$. We will also define,
 for convenience, the column vector $\boldsymbol{\gamma}=[\boldsymbol{a},
 \boldsymbol{b},\boldsymbol{c},\boldsymbol{d}]$.
 
 Now given this interpolation, suppose that we know $\boldsymbol{\gamma}$.
-Then the elasticity integral (\ref{eq:govern}a), is exact, 
+Then the elasticity integral (\ref{eq:govern}a), is exact; 
 that is to say there is an known analytic expression for $\Pi(\xi)$, given 
 our choice of interpolation.
 We also have a different expression for $\Pi$, due to the lubrication integral
 (\ref{eq:lub-int}).
-As before, given the interpolation, this integral becomes an analytic
+As before, given the interpolation, the integral becomes an analytic
 expression.
 
 We see that in equation \ref{eq:govern}a, the integral depends linearly
@@ -224,16 +280,29 @@ a_i \xi_{i+1} + b_i~ &= a_{i+1} \xi_{i+1} + b_{i+1},\mbox{ for } i<n,
 \end{equation}
 with a slightly modified equation to account for the different interpolation
 in $H'$. We can also introduce some boundary conditions here to get another 
-two equations. We know $G'(\xi_n)$ from our asymptotic expansion and beam
-theory, and we also know $G'(\xi_{n-1})$ (provided $\xi_{n-1}$, $\xi_n$ are
-suitably large). Therefore we know $G'(\xi_n)/G'(\xi_{n-1})$, which provides
-a linear constraint on $\boldsymbol{a}$, $\boldsymbol{b}$ (not similar for $H'$).
-We have enough equations here to calculate a matrix $\mathsfbi{T}$, so that
+two equations. We know $G'(\xi_n)$, $G''(\xi_n)$ from our asymptotic expansion 
+(via beam theory) so we know that $\boldsymbol{\theta}_n = G'(\xi_n)$ and 
+$a_n = G''(\xi_n)$. We can contort these relations into something linear via 
+writing, 
+\begin{equation}
+a_n = \frac{G''(\xi_n)}{G'(\xi_n)} \boldsymbol{\theta}_n, \qquad
+b_n  = \boldsymbol{\theta}_n - a_n \xi_n = \left( 1 - \frac{G''(\xi_n)}
+{G'(\xi_n)} \right) \boldsymbol{\theta}_n
+\end{equation}
+With $H$, we know that $a_n = H''(\xi_n)$, $a_{n-1} = H''(\xi_{n-1})$, and
+so we have that 
+\begin{equation}
+a_n = \frac{H''(\xi_n)}{H''(\xi_{n-1})} a_{n-1}, \qquad
+b_n = -a_n \xi_n + a_{n-1}\xi_n + b_{n-1}
+\end{equation}
+Where already we know $a_{n-1}$, $b_{n-1}$ linearly in terms of 
+$\boldsymbol{\theta}$. Therefore, we have enough equations to 
+calculate a matrix $\mathsfbi{T}$, so that
 \begin{equation}
 \boldsymbol{\gamma} = \mathsfbi{T} \boldsymbol{\theta}
 \end{equation}
-Although, since this matrix is fairly sparse, with a known structure, it is not
-ever actually calculated in the program. To recap, we now have that
+Although, since this matrix is fairly sparse, with a known structure, it is 
+never actually calculated in the program. To recap, we now have that
 \begin{equation}
 \mathsfbi{JT}\boldsymbol{\theta} = f_2(\boldsymbol{\theta}) 
 \end{equation}
@@ -259,6 +328,64 @@ $\boldsymbol{\delta}$, we have that
 \boldsymbol{\delta} = \left(\mathsfbi{A} - D_{\boldsymbol{\theta}}f \right)^{-1}
 \left( f(\boldsymbol{\theta}) - A \boldsymbol{\theta} \right)
 \end{equation}
+Convergence was determined to have occured when 
+$\max_{\; i} |\boldsymbol{\delta}_i| < 10^{-8}$
+
+For small values of $\lambda$, this can take two or three iterations, but as
+$\lambda$ becomes closer to $\lambda_0$, it may take 10-20 iterations to 
+converge.
+
+Note that we choose a value of $\lambda$, fix the boundary conditions
+at $\xi \to \infty$, then solve the problem, and subsequently recover
+the boundary conditions at $\xi=0$, i.e. the $\kappa_I$, $\kappa_{II}$ values.
+This can then be inverted, so that we think of $\lambda = \lambda(\kappa_I)$.
+Physically, we know $\kappa_I$, and want to find $\lambda$, but in numerically
+solving the problem, it makes more sense to choose $\lambda$ and recover 
+$\kappa_I$.
+
+The spacing of the points $\boldsymbol{\xi}$ makes a significant difference to 
+the convergence properties. The spacing should reflect that the important 
+part of the problem is happening near the tip, and this is where the points
+should be concentrated. The spacing that is most often used was 
+\begin{equation}
+\xi_i = \tan( \chi \; i/m )^2, \quad i=1,\dots,m < n
+\end{equation}
+where $\chi$ is chosen so that $\tan(\chi)^2 = O(10)$, and the remaining points
+are added in a geometric progression, so that 
+\begin{equation}
+\xi_{i+1} = (\xi_m/\xi_{m-1})\xi_{i} , \quad i = m,\dots,n-1
+\end{equation}
+The advantage of this, is that once one has picked an $m$, it then takes
+relatively few additional points to extend out to $\xi_n \approx 800$ or so.
+%
+%
+\subsection{Linear Perturbation Problem}
+%
+%
+As equation \ref{eq:rescaled-lin-pert-bc}b shows, we now anticipate a 
+singularity of the form $\xi^{s-1}$ in $\tilde{H}'$. We still expect a
+singularity of the form $\xi^{-1/2}$ in $\tilde{G}'$. Therefore, the
+interpolation used is
+\begin{equation}
+\setlength{\arraycolsep}{2pt}
+\tilde{G}'(\xi) = \left\{ \begin{array}{l}  
+\xi^{-1/2}(a_i \xi + b_i) \\[4pt]
+a_i \xi + b_i
+ \end{array}\right., \quad
+\tilde{H}'(\xi) = \left\{ \begin{array}{l}  
+\xi^{s-1}(c_i \xi + d_i) \\[4pt]
+c_i \xi + d_i
+ \end{array}\right. , \quad
+\; \mbox{for\ } \left\{ \begin{array}{l}  
+i<t\\[4pt]
+i\geq t
+\end{array}\right.
+\end{equation}
+We compute the matrices $\mathsfbi{J}$, $\mathsfbi{T}$ in a similar way as 
+before (in fact many elements are exactly the same), but taking into account 
+the new interpolation of $\tilde{H}'$. However, some matrix elements no longer
+have a easily computable analytic expression for general $s$. In this case, 
+such elements must be calculated by a numerical integration routine. 
 \subsection{Double Tip}
 Here we mention details specific to the problem with both a fluid
 and a dry tip. Perhaps details of the $\sin^2$ spacing or the interpolation
@@ -273,6 +400,10 @@ to $K_I=0$ should be mentioned here.
 \subsection{Single tip}
 Start off with some of the basic graphs showing $H'$,$G'$, and $\Pi$ against
 $\xi$.
+\begin{figure}
+  \centerline{\includegraphics[scale=0.3]{./../../Graphs/hprime-p-x-full.png}}
+  \caption{This is a typical example of what $H'$ and $\Pi$ look like}
+\end{figure}
 \begin{figure}
   \centerline{\includegraphics[scale=0.3]{./../../Graphs/hprime-x.pdf}}
   \caption{This shows some evidence of the LEFM boundary layer}
@@ -314,7 +445,7 @@ enough}
 By increasing $n$ (for large $\xi_{\mathrm{end}}$), we have been able to 
 determine $\lambda_0$ and $D$
 \begin{figure}
-  \centerline{\includegraphics[scale=0.3]{./../../Graphs/l0-D-too-far.png}}
+  \centerline{\includegraphics[scale=0.3]{./../../Graphs/l0-D.png}}
   \caption{Our best guess at $\lambda_0$ and $D$, and the approximate error
 one can expect in them}
 \end{figure}
@@ -334,7 +465,7 @@ Then we include the figure that shows convergence with different $n$ values
 to something approaching the right answer.
 \begin{figure}
  \centerline{
-\includegraphics[scale=0.2]{./../../Graphs/linear-perturbation-new.png}}
+\includegraphics[scale=0.2]{./../../Graphs/linear-perturbation-plot.png}}
   \caption{Sensitivity of linear perturbation problem on $H_0$}
 \end{figure}
 
@@ -344,14 +475,8 @@ problem. Perhaps some graphs that show an outline of the full numerical problem
 with non-zero $\kappa_I$ and $\kappa_{II}$, although these are not physical.
 \begin{figure}
  \centerline{
-\includegraphics[scale=0.3]{./../../Graphs/KI-KII-L.png}}
-  \caption{Different colours indicate different $\lambda$ values}
-\end{figure}
-
-\begin{figure}
- \centerline{
-\includegraphics[scale=0.3]{./../../Graphs/KI-KII-lambda.png}}
-  \caption{Different colours indicate different $L$ values}
+\includegraphics[scale=0.3]{./../../Graphs/KI-KII.png}}
+  \caption{Visualisation of what is really a surface in 4D}
 \end{figure}
 
 What would be nice, although it doesn't exist yet, is some sort of record of
@@ -372,7 +497,7 @@ accurate formulae for $\lambda$ in terms of $\kappa_I$. This holds for any
 toughness in the single tip case.
 \begin{figure}
  \centerline{
-\includegraphics[scale=0.3]{./../../Graphs/full-relation.png}}
+\includegraphics[scale=0.3]{./../../Graphs/overall-fit.png}}
   \caption{The formula valid for all $\kappa_I$}
 \end{figure}
 
