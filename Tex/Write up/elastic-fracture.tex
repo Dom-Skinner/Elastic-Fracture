@@ -76,7 +76,7 @@ problem, we have
 \left[ \begin{array}{c} 
 \sigma_y \\ \tau_{xy}
 \end{array} \right]
-= \int_0^{\infty} \mathsfbi{K}(x - \tilde{x}) 
+= \int_0^{\infty} \mathsfbi{K}(\tilde{x}-x) 
 \left[ \begin{array}{c} 
 g'(\tilde{x}) \\ h'(\tilde{x})
 \end{array} \right]
@@ -116,7 +116,7 @@ $$
 \left[ \begin{array}{c} 
 \Pi \\ 0
 \end{array} \right]
-= \int_0^{\infty} \mathsfbi{U}(\xi - \tilde{\xi}) 
+= \int_0^{\infty} \mathsfbi{U}(\tilde{\xi} - \xi) 
 \left[ \begin{array}{c} 
 G'(\tilde{\xi}) \\ H'(\tilde{\xi})
 \end{array} \right]
@@ -203,6 +203,35 @@ $$
 $$
 %
 %
+These are the equations for the two tip problem
+\refstepcounter{equation}
+$$
+\setlength{\arraycolsep}{2pt}
+\left[ \begin{array}{c} 
+\Pi \\ 0
+\end{array} \right]
+= \int_{-L}^{\infty} \mathsfbi{U}(\tilde{\xi} - \xi) 
+\left[ \begin{array}{c} 
+G'(\tilde{\xi}) \\ H'(\tilde{\xi})
+\end{array} \right]
+\mrd \tilde{\xi}, \qquad
+\Pi = \int_{\xi}^{\infty} \lambda / H(\tilde{\xi})^2 \mrd \tilde{\xi}
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:2-govern}
+$$
+%
+\refstepcounter{equation}
+$$
+\lim_{\xi \to \infty} H'' = 1 , \quad \lim_{\xi \to \infty} G' = \frac{1}{2}
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:2-bc-inf}
+$$
+%
+\refstepcounter{equation}
+$$
+\lim_{\xi \to 0} 3\sqrt{2\pi \xi} H' = 0 , 
+\quad
+\lim_{\xi \to -L} 3\sqrt{2\pi \xi} G' = \kappa_{II}
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:2-bc-0}
+$$
 \section{Numerical scheme}\label{sec:numerical_scheme}
 %
 %
@@ -234,11 +263,11 @@ i\geq t
 \end{equation}
 Where $1 < t < n$ is just a number governing where to interpolate as linear, and
 where not to; typically $t = n/2$ was used. Note that $H'$, $G$ are interpolated
-slightly differently near the tip, here the interpolating function was simply 
-based on the appearance of $\sqrt{\xi}G'(\xi)$,$\sqrt{\xi}H'(\xi)$.
+slightly differently near the tip, here the choice of interpolating function 
+was simply based on the appearance of $\sqrt{\xi}G'(\xi)$,$\sqrt{\xi}H'(\xi)$.
 We will also define $a_n,b_n,c_n,d_n$ for interpolation beyond $\xi_n$.
-We will define $\boldsymbol{a} = [a_1,\dots ,a_n]$, and similarly with 
-$\boldsymbol{b}$, $\boldsymbol{c}$, $\boldsymbol{d}$. We will also define,
+We define $\boldsymbol{a} = [a_1,\dots ,a_n]$, and similarly with 
+$\boldsymbol{b}$, $\boldsymbol{c}$, $\boldsymbol{d}$. We also define,
 for convenience, the column vector $\boldsymbol{\gamma}=[\boldsymbol{a},
 \boldsymbol{b},\boldsymbol{c},\boldsymbol{d}]$.
 
@@ -281,13 +310,13 @@ a_i \xi_{i+1} + b_i~ &= a_{i+1} \xi_{i+1} + b_{i+1},\mbox{ for } i<n,
 with a slightly modified equation to account for the different interpolation
 in $H'$. We can also introduce some boundary conditions here to get another 
 two equations. We know $G'(\xi_n)$, $G''(\xi_n)$ from our asymptotic expansion 
-(via beam theory) so we know that $\boldsymbol{\theta}_n = G'(\xi_n)$ and 
+(via beam theory) so we know that $\theta_n = G'(\xi_n)$ and 
 $a_n = G''(\xi_n)$. We can contort these relations into something linear via 
 writing, 
 \begin{equation}
-a_n = \frac{G''(\xi_n)}{G'(\xi_n)} \boldsymbol{\theta}_n, \qquad
-b_n  = \boldsymbol{\theta}_n - a_n \xi_n = \left( 1 - \frac{G''(\xi_n)}
-{G'(\xi_n)} \right) \boldsymbol{\theta}_n
+a_n = \frac{G''(\xi_n)}{G'(\xi_n)} \theta_n, \qquad
+b_n  = \theta_n - a_n \xi_n = \left( 1 - \frac{G''(\xi_n)}
+{G'(\xi_n)} \right) \theta_n
 \end{equation}
 With $H$, we know that $a_n = H''(\xi_n)$, $a_{n-1} = H''(\xi_{n-1})$, and
 so we have that 
@@ -301,7 +330,7 @@ calculate a matrix $\mathsfbi{T}$, so that
 \begin{equation}
 \boldsymbol{\gamma} = \mathsfbi{T} \boldsymbol{\theta}
 \end{equation}
-Although, since this matrix is fairly sparse, with a known structure, it is 
+Although since this matrix is fairly sparse, it is 
 never actually calculated in the program. To recap, we now have that
 \begin{equation}
 \mathsfbi{JT}\boldsymbol{\theta} = f_2(\boldsymbol{\theta}) 
@@ -311,19 +340,19 @@ $\boldsymbol{\theta}$ (really just of $\boldsymbol{\theta}_H$), with
 the first $n-1$ components calculating $\Pi$, and the last $n-1$ components
 set to $0$. We add another two rows to $\mathsfbi{JT}$, to make it a square
 matrix. Since we know $G'(\xi_n)$, and $H''(\xi_n) \approx 
-(H'(\xi_n)-H'(\xi_{n-1}))/(\xi_n-\xi_{n-1}) = (\boldsymbol{\theta}_{2n}-
-\boldsymbol{\theta}_{2n-1})/(\xi_n-\xi_{n-1}) $, we can replace $f_2$ with
+(H'(\xi_n)-H'(\xi_{n-1}))/(\xi_n-\xi_{n-1}) = (\theta_{2n}-
+\theta_{2n-1})/(\xi_n-\xi_{n-1}) $, we can replace $f_2$ with
 $f = [f_2, G'(\xi_n), H''(\xi_n)]$. The two rows added have the property that
-when multiplied by $\boldsymbol{\theta}$ equal $\boldsymbol{\theta}_{n}$, and
-$(\boldsymbol{\theta}_{2n}-\boldsymbol{\theta}_{2n-1})/(\xi_n-\xi_{n-1}) $
+when multiplied by $\boldsymbol{\theta}$, they equal $\theta_{n}$, and
+$(\theta_{2n}-\theta_{2n-1})/(\xi_n-\xi_{n-1}) $
 respectively. Let the enlarged matrix be called $\mathsfbi{A}$. Then
 \begin{equation}
 \mathsfbi{A}\boldsymbol{\theta} = f(\boldsymbol{\theta})
 \end{equation}
 This can be solved by Newton's method; if $\mathsfbi{A}\boldsymbol{\theta} 
 \approx f(\boldsymbol{\theta})$ and $ \mathsfbi{A}(\boldsymbol{\theta+\delta}) 
-= f(\boldsymbol{\theta + \delta})$, so to leading order in 
-$\boldsymbol{\delta}$, we have that 
+= f(\boldsymbol{\theta + \delta})$, to leading order in 
+$\boldsymbol{\delta}$ we have that 
 \begin{equation}
 \boldsymbol{\delta} = \left(\mathsfbi{A} - D_{\boldsymbol{\theta}}f \right)^{-1}
 \left( f(\boldsymbol{\theta}) - A \boldsymbol{\theta} \right)
@@ -386,13 +415,119 @@ before (in fact many elements are exactly the same), but taking into account
 the new interpolation of $\tilde{H}'$. However, some matrix elements no longer
 have a easily computable analytic expression for general $s$. In this case, 
 such elements must be calculated by a numerical integration routine. 
+
+The lubrication equation for the linear perturbation problem 
+(\ref{eq:rescaled-lin-pert}b) is first transformed into an integral, where
+we replace $\Pi_0'$ by  $\lambda_0 / H_0^2$ and use the boundary conditions
+$\Pi_0,\Pi_1 \to 0$ as $\xi \to \infty$. We get the equation
+\begin{equation}
+\tilde{\Pi}(\zeta) = \int_{\zeta}^{\infty} \frac{2\lambda_0 \tilde{H}}{H_0^3} 
+\mrd \xi \label{eq:lin-pert-lub}
+\end{equation}
+An important feature is that this is linear in $\tilde{H}$. We can integrate
+each spline of $\tilde{H}'$ to get
+\begin{equation}
+\setlength{\arraycolsep}{2pt}
+\tilde{H}'(\xi) = \left\{ \begin{array}{l}  
+\xi^{s}(w_i \xi + e_i) + r_i \\[4pt]
+w_i \xi^2 + e_i \xi + r_i
+ \end{array}\right. , \quad
+\; \mbox{for\ } \left\{ \begin{array}{l}  
+i<t\\[4pt]
+i\geq t
+\end{array}\right.
+\end{equation}
+Imposing continuity at $\xi_i$ for $1< i \leq n$, and $\tilde{H}(0) =0$, there
+are enough equations to obtain $\boldsymbol{w}$, $\boldsymbol{e}$, 
+$\boldsymbol{r}$ linearly in terms of $\boldsymbol{c}$, $\boldsymbol{d}$.
+The integrals that appear cannot be calculated analytically, so were determined 
+numerically by approximating the integrand as 
+\begin{equation}
+\setlength{\arraycolsep}{2pt}
+2\lambda_0 \tilde{H}/H_0^3 = \left\{ \begin{array}{l}  
+\xi^{s-2}(p_i \xi + q_i) \\[4pt]
+\xi^{-5}(p_i \xi + q_i )
+ \end{array}\right. , \quad
+\; \mbox{for\ } \left\{ \begin{array}{l}  
+i<t\\[4pt]
+i\geq t
+\end{array}\right.
+\end{equation}
+We find $p_i$, $q_i$ by matching values at the endpoints of an interval.
+Once this approximation has been made, the integrals are easily computed,
+and it is straightforward to work out a formula connecting the final integral
+linearly with $\boldsymbol{w}$, $\boldsymbol{e}$, $\boldsymbol{r}$.
+Therefore, we end up with a matrix $\mathsfbi{R}$, such that
+\begin{equation}
+[ \tilde{\Pi}(\zeta_1), \dots \tilde{\Pi}(\zeta_{n-1}) ] = 
+\mathsfbi{R} \boldsymbol{\theta}
+\end{equation}
+Padding out $\mathsfbi{R}$ with zeros, until it is of size $2n\times2n$, we
+see that
+\begin{equation}
+\left( \mathsfbi{A} - \left[ \begin{array}{c} \mathsfbi{R} \\ \boldsymbol{0}
+\end{array} \right] \right) \boldsymbol{\theta} = [0 ,\dots ,0, 
+\tilde{G}'(\xi_n), \tilde{H}''(\xi_n) ] \label{eq:lin-lub-matrix}
+\end{equation}
+Since we haven't changed the integral kernel, the asymptotics of the kernel
+remain the same, and together with the new lubrication equation, 
+\ref{eq:lin-pert-lub}, we can construct an asymptotic expression for
+$\tilde{H}''(\xi_n)$, $\tilde{G}'(\xi_n)$. Here, we do not need to deploy
+Newton's method, as we can simply solve the linear set of equations, 
+\ref{eq:lin-lub-matrix}.
+
+
 \subsection{Double Tip}
-Here we mention details specific to the problem with both a fluid
-and a dry tip. Perhaps details of the $\sin^2$ spacing or the interpolation
-to $K_I=0$ should be mentioned here.
+In solving the problem of two tips situated at $-L$ and $0$, it is given
+that $H = 0$ for $\xi <0$, and thus $H' = 0$ for $\xi <0$. We take $n$ points
+to cover $0 \leq \xi < \infty$, and $r$ points to cover $-L \leq \xi < 0$.
+we label these points so that
+\begin{equation}
+\setlength{\arraycolsep}{2pt}
+\begin{array}{llllllllll}
+\boldsymbol{\xi} = [ &   \xi_{1-r} = -L , & \xi_{2-r},& \dots ,& \xi_1 \quad = 0,
+& \xi_2 \quad,& \dots , & \xi_t \quad,& \dots,& \xi_n \quad] \\
+\boldsymbol{v} = [ &   v_{1}\quad = ~~~0 ,  & v_{2}\quad , &  \dots , 
+& v_{r+1} = L , & v_{r+2}, & \dots, & v_{t+r}, & \dots, & v_{n+r} ] 
+\end{array}
+\end{equation}
+Where $v_i = \xi_i+L$. We similarly define $\boldsymbol{\zeta}$ and 
+$\boldsymbol{w}$, so that $w_i = \zeta_i+L$. It is useful to introduce a new
+function $F(v) = F(L+\xi) = G(\xi)$. We interpolate $H'$ as before, and
+$F'$ as,
+\begin{equation}
+\setlength{\arraycolsep}{10pt}
+F'(v) = \left\{ \begin{array}{lcc}  
+\xi^{-1/2}(a_i v + b_i) & v_i < v < v_{i+1} & i < t+r\\[4pt]
+a_i \xi + b_i & v_i < v < v_{i+1} & i \geq t+r
+ \end{array} \right.
+\end{equation}
+In the elasticity integral, the range of integration is $[-L, \infty]$. Since
+$H=0$ for $\xi <0$, these limits can be replaced with $[0,\infty]$ for any
+integral of $H$. We can rewrite integrals involving $G$ as
+\begin{equation}
+\int_{-L}^{\infty} U_{11} (\xi - \zeta) G'(\xi) \mrd \xi = 
+\int_0^{\infty} U_{11}(v-(z+L)) F'(v) \mrd v =
+\int_0^{\infty} U_{11}(v-w) F'(v) \mrd v
+\end{equation}
+Writing the equation in this way, it is clear that the numerical problem
+is almost exactly the same as for the single tip problem. In fact, the 
+lubrication equation \ref{eq:lub-int}, is entirely unchanged. We do not 
+calculate $\Pi$ for $\xi <0$ (although it is easily done), but require that
+$\sigma_{xy} = 0$ for $\xi < 0$. This provides enough equations for the problem
+to be solved as before, with Newton's method. 
+We input $-L$ and $\lambda$ and recover $\kappa_I$, $\kappa_{II}$, where 
+$\kappa_I$ is measured at $0$. Physically, for $L>0$, we must have
+$\kappa_I=0$. Numerically we solve for some $\lambda$, $L$, find $\kappa_I >0$ 
+and extrapolate to $\kappa_I=0$.
+
+The spacing of points for $\xi<0$ was chosen so that there was a concentration
+of points near $-L$ and near $0$.
+
 %
 %
 % 
+\clearpage
 \section{Results}\label{sec:Results}
 %
 %
