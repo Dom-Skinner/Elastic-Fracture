@@ -53,28 +53,36 @@ Here we review the literature as well as describe the problem in more detail.
 We have the vertical displacement $h$, the horizontal displacement $g$, the
 thickness of the arm $l$, and the pressure $p$.
 We look for a travelling wave solution (propagating left), with speed $c$.
- 
-\section{Formulation of problem}\label{sec:formulation_of_problem}
-From lubrication, we expect Poiselle flow in the crack. This gives us the
-flux, $q$, as 
-\begin{equation}
-q = - \frac{1}{12\mu}\frac{\mrd p}{\mrd x}h^3
-\end{equation}
-We also have the conservation equation
 %
+% 
+\section{Formulation of problem}\label{sec:formulation_of_problem}
+%
+%
+From lubrication, we have Poiselle flow in the crack. We have
+the flux, and conservation of mass as 
 \begin{equation}
+q = - \frac{1}{12\mu}\frac{\mrd p}{\mrd x}h^3 \qquad
 \frac{\partial q}{\partial x} + \frac{\partial h}{\partial t} = 0 
 \end{equation}
-Which combined gives us the equation
+Which combined gives us 
 \begin{equation}
 \frac{\mrd p}{\mrd x} = 12\mu c / h^2
 \end{equation}
+Setting $p\to 0$ at $x \to \infty$, we can write this in integral form.
+\begin{equation}
+p(x) = -\int_x^{\infty} 12\mu c / h(\tilde{x})^2 \mrd \tilde{x}
+\end{equation}
+
 From the linear theory of elasticity, due to others who have studied this 
 problem, we have
 \begin{equation}
 \setlength{\arraycolsep}{2pt}
 \left[ \begin{array}{c} 
-\sigma_y \\ \tau_{xy}
+-\sigma_y \\ -\tau_{xy}
+\end{array} \right] 
+= 
+\left[ \begin{array}{c} 
+p(x) \\ 0
 \end{array} \right]
 = \int_0^{\infty} \mathsfbi{K}(\tilde{x}-x) 
 \left[ \begin{array}{c} 
@@ -85,33 +93,61 @@ g'(\tilde{x}) \\ h'(\tilde{x})
 %
 Where the integral kernel is
 \begin{equation}
-\setlength{\arraycolsep}{2pt}
+\setlength{\arraycolsep}{4pt}
 \renewcommand{\arraystretch}{1.3}
-\mathsfbi{K} = \left[
+\mathsfbi{K}(x) = \left[
 \begin{array}{ccccc}
   K_{11}  &  K_{12}  \\
 K_{21} & K_{22} \\
 \end{array}  \right] 
+%
+= \left[
+\begin{array}{ccccc}
+  \frac{l^3(32l^2-24x^2)}{(x^2+4l^2)^3}  &  
+\frac{l^4(48x^2-64l^2)}{x(x^2+4l^2)^3}  \\[4pt]
+-\frac{l^2(16x^4+16x^2l^2+4l^4)}{x(x^2+4l^2)^3} & 
+-\frac{l^3(32l^2 - 24x^2)}{(x^2+4l^2)^3} 
+\end{array}  \right] 
 \end{equation}
-Here we change into a set of dimensionless variables, and will spend the 
-rest of the paper working with them.
-We have a length scale $l$, a pressure scale $p^* = E/12(1-\nu^2)$, and a
-time scale $t^* = 12\mu /p^*$.
-From these, we can define the following dimensionless parameters,
-\begin{equation}
-\mathcal{M} = \frac{M}{p^* l^2}, \qquad \mathcal{C} = \frac{c}{l/t^*}
-= \frac{12\mu c}{p^* l}, \qquad \mathcal{K}_I = \frac{K_I}{p^* l^{1/2}},
-\qquad \mathcal{K}_{II} = \frac{K_{II}}{p^* l^{1/2}} 
-\end{equation}
-and variables 
-\begin{equation} 
-x = l\xi, \quad K_{ij} = U_{ij} /l, \quad h = \alpha l H(\xi), \quad
-g = \alpha l G(\xi), \quad p = \beta p^* \Pi(\xi)
-\end{equation}
-The preferred scalings to be used in this paper are $\alpha = \upi \beta /3
-= \mathcal{M}$, $\lambda = \upi\mathcal{C}/3\mathcal{M}^2$, which give
+We have the boundary conditions near $x=0$ governed by fracture mechanics
 \refstepcounter{equation}
 $$
+K_I =\lim_{x \to 0} \frac{E}{1-\nu^2} \sqrt{\frac{\upi}{8}} \sqrt{x} \, h'(x)
+\, ,\qquad
+K_{II} =\lim_{x \to 0} \frac{E}{1-\nu^2} \sqrt{\frac{\upi}{8}} \sqrt{x} \, g'(x) 
+\eqno{(\theequation{\mathit{a},\mathit{b}})}
+$$
+As we go to $x \gg l$, we are looking at the problem of peeling off a thin
+strip from an elastic half space. We can then use beam theory approximations,
+which give
+\refstepcounter{equation}
+$$
+M(x) = \frac{El^3}{12(1-\nu^2)} \frac{\mrd^2 h}{\mrd x^2} = 
+\frac{El^3}{6(1-\nu^2)} \frac{\mrd g}{\mrd x}, \qquad
+p = \frac{El^3}{12(1-\nu^2)} h^{(4)}(x) 
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:by-at-inf}
+$$
+As $x \to \infty$, $M(x) \to M$, the applied bending moment, so this gives
+us boundary conditions on $h''$, $g'$.
+%
+\subsection{Rescaling}
+%
+We change into a set of dimensionless variables.
+We have a length scale $l$, a pressure scale $p^* = E/12(1-\nu^2)$, and a
+time scale $t^* = 12\mu /p^*$.
+From these, we can define the following dimensionless variables
+\begin{equation} 
+x = l\xi, \quad K_{ij}(x) = U_{ij}(\xi) /l, \quad h(x) = \frac{M}{p^* l}
+H(\xi), \quad g(x) = \frac{M}{p^*l} G(\xi)
+\end{equation}
+\begin{equation}
+ p = \frac{3M}{\upi l^2} \Pi(\xi), \quad
+K_I = Ml^{-3/2} \kappa_I, \quad
+K_{II} = Ml^{-3/2} \kappa_{II}, \quad
+\lambda = \frac{4\upi \mu  p^* l^3}{M^2}
+\end{equation}
+With these scalings, the equations become
+\begin{equation}
 \setlength{\arraycolsep}{2pt}
 \left[ \begin{array}{c} 
 \Pi \\ 0
@@ -120,35 +156,31 @@ $$
 \left[ \begin{array}{c} 
 G'(\tilde{\xi}) \\ H'(\tilde{\xi})
 \end{array} \right]
-\mrd \tilde{\xi}, \qquad
+\mrd \tilde{\xi}
+\end{equation}
+\refstepcounter{equation}
+$$
 H^2 \frac{\mrd \Pi}{\mrd \xi} = \lambda
-\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:govern}
-$$
+\quad \mbox{ or\ } \quad
+\Pi(\xi) = -\int_{\xi}^{\infty} \lambda / H(\tilde{\xi})^2 \mrd \tilde{\xi}
 %
-\refstepcounter{equation}
+\eqno{(\theequation{\mathit{a},\mathit{b}})}
+\label{eq:govern}
 $$
+\begin{equation}
 \lim_{\xi \to \infty} H'' = 1 , \quad \lim_{\xi \to \infty} G' = \frac{1}{2}
-\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:bc-at-0}
-$$
-%
-\refstepcounter{equation}
-$$
-\lim_{\xi \to 0} 3\sqrt{2\pi \xi} H' = \frac{K_I}{M l^{-3/2}} \equiv \kappa_I , 
+,\quad
+\lim_{\xi \to 0} 3\sqrt{2\pi \xi} H' = \kappa_I , 
 \quad
-\lim_{\xi \to 0} 3\sqrt{2\pi \xi} G' = \frac{K_{II}}{M l^{-3/2}} 
-\equiv \kappa_{II} , 
-\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:by-at-inf}
-$$
-
-These shall be the governing equations for the rest of this paper, athough
-we will often rewrite equation \ref{eq:govern}b as an integral, choosing
-$\Pi \to 0$ as $\xi \to \infty$,
-\begin{equation}\label{eq:lub-int}
-\Pi(\xi) = \int_{\xi}^{\infty} \lambda / H(\tilde{\xi})^2 \mrd \tilde{\xi}
+\lim_{\xi \to 0} 3\sqrt{2\pi \xi} G' = \kappa_{II} , 
 \end{equation}
 
-Here, for completeness, we include the equations of the linear perturbation 
-problem.
+These shall be the governing equations for the rest of this paper.
+\\
+\\
+
+The equations of the linear perturbation 
+problem:
 \begin{equation}
 \Pi = \Pi_0 + \cE \Pi_1 + O(\cE), \quad
 H = H_0 + \cE H_1 + O(\cE) \quad
@@ -236,57 +268,49 @@ $$
 %
 %
 \subsection{Single Tip}
-We discretize the problem by taking n points $\boldsymbol{\xi} = (\xi_1, \dots
-,\xi_n)$ at which we measure $H'$, $G'$, and $n-1$ intermediate points 
-$\boldsymbol{\zeta} = (\zeta_1, \dots , \zeta_{n-1})$ at which to measure
-$\Pi$, so that $\xi_1 < \zeta_1 < \dots < \zeta_{n-1} < \xi_n$. We take
-$\xi_1 = 0$, where the crack tip is situated.
-Linear interpolation of $G'$, $H'$ would work poorly near the crack tip, since
-both functions are singular there. However, both $\sqrt{\xi}G'(\xi)$, and
-$\sqrt{\xi}H'(\xi)$ are regular functions, so we work with these instead.
-Away from the tip, we treat $H'$, $G'$ as linear. So for 
-$\xi_{i} < \xi < \xi_{i+1}$ we have that
+We discretize the problem by taking n points $\boldsymbol{\xi} = (\xi_1 =0,
+\xi_2 \dots ,\xi_n)$ at which we measure $H'$, $G'$, and $n-1$ intermediate 
+points $\boldsymbol{\zeta} = (\zeta_1, \dots , \zeta_{n-1})$ at which to measure
+$\Pi$, so that $\xi_1 < \zeta_1 < \dots < \zeta_{n-1} < \xi_n$.
+We work with $\sqrt{\xi}G'(\xi)$,
+$\sqrt{\xi}H'(\xi)$ near the tip to avoid singularities.
+We interpolate as
 \begin{equation}
-\setlength{\arraycolsep}{2pt}
+\setlength{\arraycolsep}{1pt}
 G'(\xi) = \left\{ \begin{array}{l}  
 \xi^{-1/2}(a_i \xi + b_i) \\[4pt]
 a_i \xi + b_i
- \end{array}\right., \quad
+ \end{array}\right., \;\;
 H'(\xi) = \left\{ \begin{array}{l}  
 \xi^{-1/2}(c_i \xi^{1/2} + d_i) \\[4pt]
 c_i \xi + d_i
- \end{array}\right. , \quad
-\; \mbox{for\ } \left\{ \begin{array}{l}  
+ \end{array}\right. , \;\;
+\xi_{i}< \xi < \xi_{i+1} \;\; \left\{ \begin{array}{l}  
 i<t\\[4pt]
 i\geq t
 \end{array}\right.
 \end{equation}
-Where $1 < t < n$ is just a number governing where to interpolate as linear, and
-where not to; typically $t = n/2$ was used. Note that $H'$, $G$ are interpolated
-slightly differently near the tip, here the choice of interpolating function 
-was simply based on the appearance of $\sqrt{\xi}G'(\xi)$,$\sqrt{\xi}H'(\xi)$.
+Where typically $t = n/2$ was used. The choice of interpolating function 
+was based on the appearance of the relevant functions.
 We will also define $a_n,b_n,c_n,d_n$ for interpolation beyond $\xi_n$.
 We define $\boldsymbol{a} = [a_1,\dots ,a_n]$, and similarly with 
 $\boldsymbol{b}$, $\boldsymbol{c}$, $\boldsymbol{d}$. We also define,
 for convenience, the column vector $\boldsymbol{\gamma}=[\boldsymbol{a},
 \boldsymbol{b},\boldsymbol{c},\boldsymbol{d}]$.
 
-Now given this interpolation, suppose that we know $\boldsymbol{\gamma}$.
-Then the elasticity integral (\ref{eq:govern}a), is exact; 
-that is to say there is an known analytic expression for $\Pi(\xi)$, given 
-our choice of interpolation.
+Given this interpolation, the elasticity integral (\ref{eq:govern}a), is exact; 
+that is to say there is an known analytic expression for $\Pi(\xi)$. 
 We also have a different expression for $\Pi$, due to the lubrication integral
 (\ref{eq:lub-int}).
-As before, given the interpolation, the integral becomes an analytic
-expression.
+As before; given the interpolation, we can do the integral exactly.
 
-We see that in equation \ref{eq:govern}a, the integral depends linearly
+In equation \ref{eq:govern}a, the integral depends linearly
 on $\boldsymbol{\gamma}$. Therefore, we can write
 \begin{equation}
 [ \Pi(\zeta_{1}) , \dots , \Pi(\zeta_{n-1}), \, \underbrace{0 \, , \, \dots \, 
 ,\, 0 }_{n-1} \, ] = \mathsfbi{J} \boldsymbol{\gamma}
 \end{equation}
-where $\mathsfbi{J}$ is a matrix in lieu of the integral kernel. We also know
+where $\mathsfbi{J}$ is a matrix representing the integral kernel. We also know
 that $[ \Pi(\zeta_{1}) , \dots , \Pi(\zeta_{n-1})] = 
 f_1( \boldsymbol{c},\boldsymbol{d})$, from the lubrication integral. This time,
 $\Pi$ does not depend linearly on $\boldsymbol{\gamma}$.
@@ -296,8 +320,8 @@ $\boldsymbol{\theta}_H = [c_1 \xi_1^{1/2} + d_1, \dots ,
 c_n \xi_n^{1/2} + d_n]$, as well as $\boldsymbol{\theta} = 
 [\boldsymbol{\theta}_G, \boldsymbol{\theta}_H] $. 
 We would prefer to work with $\boldsymbol{\theta}$ over $\boldsymbol{\gamma}$,
-since it contains half as many elements. Continuity of $G'$, $H'$ impose 
-$2(n-1)$ equations, which are typically of the form
+since it contains half as many elements. Continuity of $G'$, $H'$ imposes 
+$2(n-1)$ equations. For $G'$ they are 
 \begin{equation}
 \setlength{\arraycolsep}{1pt}
 \begin{array}{rl}
@@ -307,12 +331,11 @@ a_i \xi_{i+1} + b_i~ &= a_{i+1} \xi_{i+1} + b_{i+1},\mbox{ for } i<n,
 \mbox{ for } i = t -1
 \end{array}
 \end{equation}
-with a slightly modified equation to account for the different interpolation
-in $H'$. We can also introduce some boundary conditions here to get another 
-two equations. We know $G'(\xi_n)$, $G''(\xi_n)$ from our asymptotic expansion 
-(via beam theory) so we know that $\theta_n = G'(\xi_n)$ and 
-$a_n = G''(\xi_n)$. We can contort these relations into something linear via 
-writing, 
+with similar equations for $H'$ (accounting for the slightly different 
+interpolation).
+From our asymptotic expansion 
+(via beam theory) we know $\theta_n = G'(\xi_n)$ and $a_n = G''(\xi_n)$. 
+Therefore we can write
 \begin{equation}
 a_n = \frac{G''(\xi_n)}{G'(\xi_n)} \theta_n, \qquad
 b_n  = \theta_n - a_n \xi_n = \left( 1 - \frac{G''(\xi_n)}
@@ -324,49 +347,34 @@ so we have that
 a_n = \frac{H''(\xi_n)}{H''(\xi_{n-1})} a_{n-1}, \qquad
 b_n = -a_n \xi_n + a_{n-1}\xi_n + b_{n-1}
 \end{equation}
-Where already we know $a_{n-1}$, $b_{n-1}$ linearly in terms of 
-$\boldsymbol{\theta}$. Therefore, we have enough equations to 
+Therefore, we have enough equations to 
 calculate a matrix $\mathsfbi{T}$, so that
 \begin{equation}
 \boldsymbol{\gamma} = \mathsfbi{T} \boldsymbol{\theta}
 \end{equation}
-Although since this matrix is fairly sparse, it is 
-never actually calculated in the program. To recap, we now have that
+We now have that
 \begin{equation}
 \mathsfbi{JT}\boldsymbol{\theta} = f_2(\boldsymbol{\theta}) 
 \end{equation}
 With $\mathsfbi{JT}$ a $2(n-1) \times 2n$ matrix, and $f_2$ a function of 
 $\boldsymbol{\theta}$ (really just of $\boldsymbol{\theta}_H$), with
 the first $n-1$ components calculating $\Pi$, and the last $n-1$ components
-set to $0$. We add another two rows to $\mathsfbi{JT}$, to make it a square
-matrix. Since we know $G'(\xi_n)$, and $H''(\xi_n) \approx 
-(H'(\xi_n)-H'(\xi_{n-1}))/(\xi_n-\xi_{n-1}) = (\theta_{2n}-
-\theta_{2n-1})/(\xi_n-\xi_{n-1}) $, we can replace $f_2$ with
-$f = [f_2, G'(\xi_n), H''(\xi_n)]$. The two rows added have the property that
-when multiplied by $\boldsymbol{\theta}$, they equal $\theta_{n}$, and
-$(\theta_{2n}-\theta_{2n-1})/(\xi_n-\xi_{n-1}) $
-respectively. Let the enlarged matrix be called $\mathsfbi{A}$. Then
+set to $0$. 
+
+Both $G'(\xi_n) = \theta_n$, and
+$H''(\xi_n) \approx (\theta_{2n}-\theta_{2n-1})/(\xi_n-\xi_{n-1}) $, 
+are known, and are linear in $\boldsymbol{\theta}$. Therefore we can 
+add another two rows to $\mathsfbi{JT}$, and replace $f_2$ with
+$f = [f_2, G'(\xi_n), H''(\xi_n)]$. 
+Let the enlarged matrix be called $\mathsfbi{A}$. Then
 \begin{equation}
 \mathsfbi{A}\boldsymbol{\theta} = f(\boldsymbol{\theta})
 \end{equation}
-This can be solved by Newton's method; if $\mathsfbi{A}\boldsymbol{\theta} 
-\approx f(\boldsymbol{\theta})$ and $ \mathsfbi{A}(\boldsymbol{\theta+\delta}) 
-= f(\boldsymbol{\theta + \delta})$, to leading order in 
-$\boldsymbol{\delta}$ we have that 
-\begin{equation}
-\boldsymbol{\delta} = \left(\mathsfbi{A} - D_{\boldsymbol{\theta}}f \right)^{-1}
-\left( f(\boldsymbol{\theta}) - A \boldsymbol{\theta} \right)
-\end{equation}
-Convergence was determined to have occured when 
-$\max_{\; i} |\boldsymbol{\delta}_i| < 10^{-8}$
-
-For small values of $\lambda$, this can take two or three iterations, but as
-$\lambda$ becomes closer to $\lambda_0$, it may take 10-20 iterations to 
-converge.
+This can be solved by Newton's method, from quite arbitrary initial guesses.
 
 Note that we choose a value of $\lambda$, fix the boundary conditions
-at $\xi \to \infty$, then solve the problem, and subsequently recover
-the boundary conditions at $\xi=0$, i.e. the $\kappa_I$, $\kappa_{II}$ values.
+at $\xi \to \infty$, then solve the problem and subsequently recover
+the boundary conditions at $\xi=0$ ($\kappa_I$, $\kappa_{II}$).
 This can then be inverted, so that we think of $\lambda = \lambda(\kappa_I)$.
 Physically, we know $\kappa_I$, and want to find $\lambda$, but in numerically
 solving the problem, it makes more sense to choose $\lambda$ and recover 
@@ -375,7 +383,7 @@ $\kappa_I$.
 The spacing of the points $\boldsymbol{\xi}$ makes a significant difference to 
 the convergence properties. The spacing should reflect that the important 
 part of the problem is happening near the tip, and this is where the points
-should be concentrated. The spacing that is most often used was 
+should be concentrated. The spacing most often used is 
 \begin{equation}
 \xi_i = \tan( \chi \; i/m )^2, \quad i=1,\dots,m < n
 \end{equation}
@@ -384,16 +392,14 @@ are added in a geometric progression, so that
 \begin{equation}
 \xi_{i+1} = (\xi_m/\xi_{m-1})\xi_{i} , \quad i = m,\dots,n-1
 \end{equation}
-The advantage of this, is that once one has picked an $m$, it then takes
-relatively few additional points to extend out to $\xi_n \approx 800$ or so.
 %
 %
 \subsection{Linear Perturbation Problem}
 %
 %
-As equation \ref{eq:rescaled-lin-pert-bc}b shows, we now anticipate a 
-singularity of the form $\xi^{s-1}$ in $\tilde{H}'$. We still expect a
-singularity of the form $\xi^{-1/2}$ in $\tilde{G}'$. Therefore, the
+From equation \ref{eq:rescaled-lin-pert-bc}b, we anticipate a 
+singularity of the form $\xi^{s-1}$ in $\tilde{H}'$, (we still expect a
+$\xi^{-1/2}$ singularity in $\tilde{G}'$). Therefore, the
 interpolation used is
 \begin{equation}
 \setlength{\arraycolsep}{2pt}
@@ -410,11 +416,11 @@ i<t\\[4pt]
 i\geq t
 \end{array}\right.
 \end{equation}
-We compute the matrices $\mathsfbi{J}$, $\mathsfbi{T}$ in a similar way as 
-before (in fact many elements are exactly the same), but taking into account 
-the new interpolation of $\tilde{H}'$. However, some matrix elements no longer
-have a easily computable analytic expression for general $s$. In this case, 
-such elements must be calculated by a numerical integration routine. 
+We compute the $\mathsfbi{J}$, $\mathsfbi{T}$ in a similar way as 
+before, but taking into account 
+the new interpolation. Some of the integrals no longer
+have exact expressions. In this case, they are
+calculated by a numerical integration routine. 
 
 The lubrication equation for the linear perturbation problem 
 (\ref{eq:rescaled-lin-pert}b) is first transformed into an integral, where
@@ -424,40 +430,11 @@ $\Pi_0,\Pi_1 \to 0$ as $\xi \to \infty$. We get the equation
 \tilde{\Pi}(\zeta) = \int_{\zeta}^{\infty} \frac{2\lambda_0 \tilde{H}}{H_0^3} 
 \mrd \xi \label{eq:lin-pert-lub}
 \end{equation}
-An important feature is that this is linear in $\tilde{H}$. We can integrate
-each spline of $\tilde{H}'$ to get
-\begin{equation}
-\setlength{\arraycolsep}{2pt}
-\tilde{H}'(\xi) = \left\{ \begin{array}{l}  
-\xi^{s}(w_i \xi + e_i) + r_i \\[4pt]
-w_i \xi^2 + e_i \xi + r_i
- \end{array}\right. , \quad
-\; \mbox{for\ } \left\{ \begin{array}{l}  
-i<t\\[4pt]
-i\geq t
-\end{array}\right.
-\end{equation}
-Imposing continuity at $\xi_i$ for $1< i \leq n$, and $\tilde{H}(0) =0$, there
-are enough equations to obtain $\boldsymbol{w}$, $\boldsymbol{e}$, 
-$\boldsymbol{r}$ linearly in terms of $\boldsymbol{c}$, $\boldsymbol{d}$.
-The integrals that appear cannot be calculated analytically, so were determined 
-numerically by approximating the integrand as 
-\begin{equation}
-\setlength{\arraycolsep}{2pt}
-2\lambda_0 \tilde{H}/H_0^3 = \left\{ \begin{array}{l}  
-\xi^{s-2}(p_i \xi + q_i) \\[4pt]
-\xi^{-5}(p_i \xi + q_i )
- \end{array}\right. , \quad
-\; \mbox{for\ } \left\{ \begin{array}{l}  
-i<t\\[4pt]
-i\geq t
-\end{array}\right.
-\end{equation}
-We find $p_i$, $q_i$ by matching values at the endpoints of an interval.
-Once this approximation has been made, the integrals are easily computed,
-and it is straightforward to work out a formula connecting the final integral
-linearly with $\boldsymbol{w}$, $\boldsymbol{e}$, $\boldsymbol{r}$.
-Therefore, we end up with a matrix $\mathsfbi{R}$, such that
+This is linear in $\tilde{H}$, which is linear in $\boldsymbol{c}$,
+$\boldsymbol{d}$ (after integrating $H'$ over each spline and imposing 
+continuity).
+The integrals that appear were determined numerically.
+We end up with a matrix $\mathsfbi{R}$, such that
 \begin{equation}
 [ \tilde{\Pi}(\zeta_1), \dots \tilde{\Pi}(\zeta_{n-1}) ] = 
 \mathsfbi{R} \boldsymbol{\theta}
@@ -469,9 +446,9 @@ see that
 \end{array} \right] \right) \boldsymbol{\theta} = [0 ,\dots ,0, 
 \tilde{G}'(\xi_n), \tilde{H}''(\xi_n) ] \label{eq:lin-lub-matrix}
 \end{equation}
-Since we haven't changed the integral kernel, the asymptotics of the kernel
-remain the same, and together with the new lubrication equation, 
-\ref{eq:lin-pert-lub}, we can construct an asymptotic expression for
+Since we haven't changed the integral kernel, the  beam theory asymptotics 
+remain the same, and together with \ref{eq:lin-pert-lub}, 
+we have an asymptotic expression for
 $\tilde{H}''(\xi_n)$, $\tilde{G}'(\xi_n)$. Here, we do not need to deploy
 Newton's method, as we can simply solve the linear set of equations, 
 \ref{eq:lin-lub-matrix}.
@@ -553,11 +530,7 @@ $\xi$.
 \end{figure}
 
 Obvious questions to ask at this point are: How are you sure this is the right
-answer, what is the effect of $n$, $t$, $\xi_{\mathrm{end}}$? Well $t$ really
-doesn't have too much of an effect. This is not unexpected, in a region away
-from zero, interpolating with base functions $\xi$, $1$ is similar to 
-interpolating with $\xi^{-1/2}$, $\xi^{1/2}$, as both are smooth, regular 
-functions. So as long as $t > O(10)$ the difference is not too noticable.
+answer, what is the effect of $n$,  $\xi_{\mathrm{end}}$? 
 In the next graph, we determine the effect of extending $\xi_{\mathrm{end}}$,
 by adding on extra points (so maintaining the same resolution near the tip).
 There is a satisfactory demonstration of convergence.
@@ -605,7 +578,7 @@ to something approaching the right answer.
 \end{figure}
 
 \subsection{Two tips}
-After the success of the linear perturbation problem, we move on to the two tip
+After the linear perturbation problem, we move on to the two tip
 problem. Perhaps some graphs that show an outline of the full numerical problem
 with non-zero $\kappa_I$ and $\kappa_{II}$, although these are not physical.
 \begin{figure}
@@ -656,7 +629,7 @@ At this point, I would like to construct another contrived formulae for the
 two tip problem. Then I would like to plot a graph of $\kappa_I$ against
 $\kappa_{II}$ in the full fluid problem. This provides a guide of when it
 is appropriate to take the single tip, and when it is appropriate to take
-the double tip asymptotics.
+the double tip. 
 
 \clearpage
 
