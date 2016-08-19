@@ -1,5 +1,5 @@
 %sets easy geometric parameters
-%%{
+%{
 n = 500;
 t = 250;
 xmax = 50;

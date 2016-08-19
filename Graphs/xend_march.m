@@ -1,3 +1,8 @@
+clear 
+load xend_march
+% The code that created the data in xend_march is commented out below.
+
+%{
 l0_est=[];
 D_est=[];
 n_used=[];
@@ -16,7 +21,7 @@ u = 4 - 6*s;
 l0 = [];
 x_val=[];
 D=[];
-%}    
+    
 
 
 while x(n) < 10
@@ -55,32 +60,16 @@ while xmax < upper_lim
     end
 end
 
-
-%%{
-hold on
-subplot(2,2,1)
-plot(x_val,D,'o-')
-xlabel('x')
-ylabel('D')
-%axis([0,0.0016^2,-0.0082618,-0.0082604])
+%}
 
 hold on
-subplot(2,2,2)
+subplot(1,2,1)
 plot(x_val.^(-1),D,'o-')
 xlabel('x^{-1}')
 ylabel('D')
-%axis([0,0.0016,0.05908,0.05918])
-%}
-%%{
-hold on
-subplot(2,2,3)
-plot(x_val,l0,'o-')
-xlabel('x')
-ylabel('l0')
-%axis([0,0.0016^2,-0.0082618,-0.0082604])
 
 hold on
-subplot(2,2,4)
+subplot(1,2,2)
 plot(x_val.^(-1),l0,'o-')
 xlabel('x^{-1}')
 ylabel('l0')

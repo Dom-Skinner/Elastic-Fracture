@@ -170,14 +170,12 @@ $$
 \begin{equation}
 \lim_{\xi \to \infty} H'' = 1 , \quad \lim_{\xi \to \infty} G' = \frac{1}{2}
 ,\quad
-\lim_{\xi \to 0} 3\sqrt{2\pi \xi} H' = \kappa_I , 
+\lim_{\xi \to 0} 3\sqrt{2\upi \xi} H' = \kappa_I , 
 \quad
-\lim_{\xi \to 0} 3\sqrt{2\pi \xi} G' = \kappa_{II} , 
+\lim_{\xi \to 0} 3\sqrt{2\upi \xi} G' = \kappa_{II} , 
 \end{equation}
 
 These shall be the governing equations for the rest of this paper.
-\\
-\\
 
 The equations of the linear perturbation 
 problem:
@@ -514,15 +512,24 @@ Start off with some of the basic graphs showing $H'$,$G'$, and $\Pi$ against
 $\xi$.
 \begin{figure}
   \centerline{\includegraphics[scale=0.3]{./../../Graphs/hprime-p-x-full.png}}
-  \caption{This is a typical example of what $H'$ and $\Pi$ look like}
+  \caption{Numerical solutions for two typical $\kappa_I$ values. log-log plots
+           are shown for $H'$,$G'$, with solid lines indicating the predicted 
+           asymptotics; $\log(H') \approx -\frac{1}{2}\kappa_I \log(\xi)$, 
+           $\log(G') \approx -\frac{1}{2} \kappa_{II}\log(\xi)$ near $\xi=0$, 
+           and $\log(H') \approx \log(\xi)$, $\log(G') \approx -\log(2)$, as 
+           $\xi \to \infty$. Figure produced with $n=465$, $x_n=819$.}
 \end{figure}
 \begin{figure}
-  \centerline{\includegraphics[scale=0.3]{./../../Graphs/hprime-x.pdf}}
-  \caption{This shows some evidence of the LEFM boundary layer}
+  \centerline{\includegraphics[scale=0.3]{./../../Graphs/K-lambda.png}}
+  \caption{Here we vary the parameter $\lambda$ and plot the change in 
+           $\kappa_I$. Figure produced with $n=465$, $x_n = 819$.}
 \end{figure}
 \begin{figure}
-  \centerline{\includegraphics[scale=0.3]{./../../Graphs/pprime-x.pdf}}
-  \caption{This also shows some evidence of the LEFM boundary layer}
+  \centerline{\includegraphics[scale=0.3]{./../../Graphs/hprime-x.png}}
+  \caption{As $\kappa_I\to 0$, $H'$ moves from a $\xi^{-1/2}$ singularity
+           to a $\xi^{-1/3}$ singularity. We can not calculate $\kappa_I=0$, 
+           but the extrapolation to it is shown. Figure produced with $n=465$, 
+           $x_n = 819$.}
 \end{figure}
 \begin{figure}
   \centerline{\includegraphics[scale=0.3]{./../../Graphs/l0.pdf}}
@@ -536,19 +543,15 @@ by adding on extra points (so maintaining the same resolution near the tip).
 There is a satisfactory demonstration of convergence.
 \begin{figure}
   \centerline{\includegraphics[scale=0.5]{./../../Graphs/xend-march.png}}
-  \caption{Satisfactory convergence as $\xi_{\mathrm{end}} \to \infty$}
+  \caption{As we increase $\xi_{n}$, we can estimate the effect of finite 
+           truncation. The figure starts with $n=400$, and increases $\xi_n$
+           by adding more points until $n=544$.}
 \end{figure}
 
 By adding points on in a geometric progression, it becomes quite cheap to
 extend out to $\xi_{\mbox{end}} \approx 800$ or so. Once one has done this,
 it is apparent that the effect of the tip resolution dominates the effect
 of finite truncation, as the following figure shows.
-\begin{figure}
-  \centerline{\includegraphics[scale=0.3]{./../../Graphs/xend-effect-l0-D.png}}
-  \caption{Shows the relatively small effect that $\xi_{\mathrm{end}}$ has
-compared to the tip resolution, once $\xi_{\mathrm{end}}$ has become large
-enough}
-\end{figure}
 
 By increasing $n$ (for large $\xi_{\mathrm{end}}$), we have been able to 
 determine $\lambda_0$ and $D$
