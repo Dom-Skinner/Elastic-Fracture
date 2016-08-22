@@ -45,7 +45,10 @@ of dry fracture.
 \end{abstract}
 
 \begin{keywords}
-Authors should not enter keywords on the manuscript, as these must be chosen by the author during the online submission process and will then be added during the typesetting process (see http://journals.cambridge.org/data/\linebreak[3]relatedlink/jfm-\linebreak[3]keywords.pdf for the full list)
+Authors should not enter keywords on the manuscript, as these must be chosen by the 
+author during the online submission process and will then be added during the 
+typesetting process (see http://journals.cambridge.org/data/
+\linebreak[3]relatedlink/jfm-\linebreak[3]keywords.pdf for the full list)
 \end{keywords}
 
 \section{Introduction}\label{sec:introduction}
@@ -58,19 +61,19 @@ We look for a travelling wave solution (propagating left), with speed $c$.
 \section{Formulation of problem}\label{sec:formulation_of_problem}
 %
 %
-From lubrication, we have Poiselle flow in the crack. We have
+From lubrication, we have Poiseulle flow in the crack. We obtain
 the flux, and conservation of mass as 
 \begin{equation}
-q = - \frac{1}{12\mu}\frac{\mrd p}{\mrd x}h^3 \qquad
-\frac{\partial q}{\partial x} + \frac{\partial h}{\partial t} = 0 
+q = - \frac{1}{12\mu}\frac{\mrd p}{\mrd x}h^3 \, , \qquad
+\frac{\partial q}{\partial x} + \frac{\partial h}{\partial t} = 0 \, ,
 \end{equation}
-Which combined gives us 
+which combined gives
 \begin{equation}
-\frac{\mrd p}{\mrd x} = 12\mu c / h^2
+\frac{\mrd p}{\mrd x} = 12\mu c / h^2 \, .
 \end{equation}
-Setting $p\to 0$ at $x \to \infty$, we can write this in integral form.
+Setting $p\to 0$ at $x \to \infty$, we can write this in integral form,
 \begin{equation}
-p(x) = -\int_x^{\infty} 12\mu c / h(\tilde{x})^2 \mrd \tilde{x}
+p(x) = -\int_x^{\infty} 12\mu c / h(\tilde{x})^2 \mrd \tilde{x} \, .
 \end{equation}
 
 From the linear theory of elasticity, due to others who have studied this 
@@ -84,18 +87,18 @@ problem, we have
 \left[ \begin{array}{c} 
 p(x) \\ 0
 \end{array} \right]
-= \int_0^{\infty} \mathsfbi{K}(\tilde{x}-x) 
+=\frac{1}{l}  \int_0^{\infty} \mathsfbi{K} \left( \frac{\tilde{x}-x}{l} \right) 
 \left[ \begin{array}{c} 
 g'(\tilde{x}) \\ h'(\tilde{x})
 \end{array} \right]
-\mrd \tilde{x} 
+\mrd \tilde{x} \, ,
 \end{equation}
 %
-Where the integral kernel is
+where the integral kernel is
 \begin{equation}
 \setlength{\arraycolsep}{4pt}
 \renewcommand{\arraystretch}{1.3}
-\mathsfbi{K}(x) = \left[
+\mathsfbi{K}(\xi) = \left[
 \begin{array}{ccccc}
   K_{11}  &  K_{12}  \\
 K_{21} & K_{22} \\
@@ -103,18 +106,19 @@ K_{21} & K_{22} \\
 %
 = \left[
 \begin{array}{ccccc}
-  \frac{l^3(32l^2-24x^2)}{(x^2+4l^2)^3}  &  
-\frac{l^4(48x^2-64l^2)}{x(x^2+4l^2)^3}  \\[4pt]
--\frac{l^2(16x^4+16x^2l^2+4l^4)}{x(x^2+4l^2)^3} & 
--\frac{l^3(32l^2 - 24x^2)}{(x^2+4l^2)^3} 
-\end{array}  \right] 
+  \frac{(32-24\xi^2)}{(\xi^2+4)^3}  &  
+\frac{(48\xi^2-64)}{\xi(\xi^2+4)^3}  \\[4pt]
+-\frac{(16\xi^4+16\xi^2+4)}{\xi(\xi^2+4)^3} & 
+-\frac{(32 - 24\xi^2)}{(\xi^2+4)^3} 
+\end{array}  \right] \, .
 \end{equation}
-We have the boundary conditions near $x=0$ governed by fracture mechanics
+The boundary conditions near $x=0$ are governed by fracture mechanics
 \refstepcounter{equation}
 $$
 K_I =\lim_{x \to 0} \frac{E}{1-\nu^2} \sqrt{\frac{\upi}{8}} \sqrt{x} \, h'(x)
 \, ,\qquad
-K_{II} =\lim_{x \to 0} \frac{E}{1-\nu^2} \sqrt{\frac{\upi}{8}} \sqrt{x} \, g'(x) 
+K_{II} =\lim_{x \to 0} \frac{E}{1-\nu^2} \sqrt{\frac{\upi}{8}} \sqrt{x} \,
+g'(x) \, .
 \eqno{(\theequation{\mathit{a},\mathit{b}})}
 $$
 As we go to $x \gg l$, we are looking at the problem of peeling off a thin
@@ -132,19 +136,16 @@ us boundary conditions on $h''$, $g'$.
 %
 \subsection{Rescaling}
 %
-We change into a set of dimensionless variables.
-We have a length scale $l$, a pressure scale $p^* = E/12(1-\nu^2)$, and a
-time scale $t^* = 12\mu /p^*$.
-From these, we can define the following dimensionless variables
+We can define the following dimensionless variables
 \begin{equation} 
-x = l\xi, \quad K_{ij}(x) = U_{ij}(\xi) /l, \quad h(x) = \frac{M}{p^* l}
-H(\xi), \quad g(x) = \frac{M}{p^*l} G(\xi)
+x = l\xi,  \quad h(x) = \frac{12M(1-\nu^2)}{El}
+H(\xi), \quad g(x) = \frac{12M(1-\nu^2)}{El} G(\xi) \, ,
 \end{equation}
 \begin{equation}
  p = \frac{3M}{\upi l^2} \Pi(\xi), \quad
 K_I = Ml^{-3/2} \kappa_I, \quad
 K_{II} = Ml^{-3/2} \kappa_{II}, \quad
-\lambda = \frac{4\upi \mu  p^* l^3}{M^2}
+\lambda = \frac{4\upi \mu  p^* l^3}{M^2} \, .
 \end{equation}
 With these scalings, the equations become
 \begin{equation}
@@ -152,7 +153,7 @@ With these scalings, the equations become
 \left[ \begin{array}{c} 
 \Pi \\ 0
 \end{array} \right]
-= \int_0^{\infty} \mathsfbi{U}(\tilde{\xi} - \xi) 
+= \int_0^{\infty} \mathsfbi{K}(\tilde{\xi} - \xi) 
 \left[ \begin{array}{c} 
 G'(\tilde{\xi}) \\ H'(\tilde{\xi})
 \end{array} \right]
@@ -190,7 +191,7 @@ $$
 \left[ \begin{array}{c} 
 \Pi_1 \\ 0
 \end{array} \right]
-= \int_0^{\infty} \mathsfbi{U}(\xi - \tilde{\xi}) 
+= \int_0^{\infty} \mathsfbi{K}(\xi - \tilde{\xi}) 
 \left[ \begin{array}{c} 
 G_1'(\tilde{\xi}) \\ H_1'(\tilde{\xi})
 \end{array} \right]
@@ -215,7 +216,7 @@ $$
 \left[ \begin{array}{c} 
 \tilde{\Pi} \\ 0
 \end{array} \right]
-= \int_0^{\infty} \mathsfbi{U}(\xi - \tilde{\xi}) 
+= \int_0^{\infty} \mathsfbi{K}(\xi - \tilde{\xi}) 
 \left[ \begin{array}{c} 
 \tilde{G}'(\tilde{\xi}) \\ \tilde{H}'(\tilde{\xi})
 \end{array} \right]
@@ -240,7 +241,7 @@ $$
 \left[ \begin{array}{c} 
 \Pi \\ 0
 \end{array} \right]
-= \int_{-L}^{\infty} \mathsfbi{U}(\tilde{\xi} - \xi) 
+= \int_{-L}^{\infty} \mathsfbi{K}(\tilde{\xi} - \xi) 
 \left[ \begin{array}{c} 
 G'(\tilde{\xi}) \\ H'(\tilde{\xi})
 \end{array} \right]
@@ -264,15 +265,55 @@ $$
 $$
 \section{Numerical scheme}\label{sec:numerical_scheme}
 %
-%
+%%$$
 \subsection{Single Tip}
-We discretize the problem by taking n points $\boldsymbol{\xi} = (\xi_1 =0,
-\xi_2 \dots ,\xi_n)$ at which we measure $H'$, $G'$, and $n-1$ intermediate 
-points $\boldsymbol{\zeta} = (\zeta_1, \dots , \zeta_{n-1})$ at which to measure
-$\Pi$, so that $\xi_1 < \zeta_1 < \dots < \zeta_{n-1} < \xi_n$.
+We discretize the problem by taking $n+1$ points $\boldsymbol{\xi} = (\xi_0 =0,
+\xi_1 \dots ,\xi_n)$ at which we measure $H'$, $G'$, and $n$ intermediate 
+points $\boldsymbol{\zeta} = (\zeta_0, \dots , \zeta_{n-1})$ at which to measure
+$\Pi$, so that $\xi_0 < \zeta_0 < \dots < \zeta_{n-1} < \xi_n$.
 We work with $\sqrt{\xi}G'(\xi)$,
 $\sqrt{\xi}H'(\xi)$ near the tip to avoid singularities.
-We interpolate as
+We define $\boldsymbol{\theta}_G = [\sqrt{\xi_0}G'(\xi_0), \dots , 
+\sqrt{\xi_{t-1}} G'(\xi_{t-1}), G'(\xi_t), \dots G'(\xi_n)]$,
+$\boldsymbol{\theta}_H =[\sqrt{\xi_0}H'(\xi_0), \dots , 
+\sqrt{\xi_{t-1}} H'(\xi_{t-1}), H'(\xi_t), \dots H'(\xi_n)]$, as well as 
+$\boldsymbol{\theta} =  [ \boldsymbol{\theta}_G, \boldsymbol{\theta}_H] $,
+(where $\sqrt{\xi_0}G'(\xi_0) = \lim_{\xi \to \xi_0} \sqrt{\xi}G'(\xi)$).
+Typically $t \approx n/2$ was used. 
+The elasticity integral is linear in $G'$, $H'$, and so the discretized 
+integration is linear in $\boldsymbol{\theta}$. Such a linear relation
+may be written as 
+\begin{equation}
+[ \Pi(\zeta_{1}) , \dots , \Pi(\zeta_{n-1}), \, \underbrace{0 \, , \, \dots \, 
+,\, 0 }_{n-1} \, ] = \mathsfbi{J} \boldsymbol{\theta} \, .
+\end{equation}
+By imposing $H(0)=0$, and choosing a sensible interpolation,
+one can recover $H(\xi_i)$ from $\boldsymbol{\theta}_H$. Therefore,
+from the lubrication integral, there exists another expression for 
+$[\Pi(\zeta_0), \dots , \Pi(\zeta_{n-1})]$ as some function of 
+$\boldsymbol{\theta}_H$. So we can write 
+\begin{equation}
+[ \Pi(\zeta_{1}) , \dots , \Pi(\zeta_{n-1}), \, \underbrace{0 \, , \, \dots \, 
+,\, 0 }_{n-1} \, ] = \mathsfbi{J} \boldsymbol{\theta} = \boldsymbol{f}
+(\boldsymbol{\theta}_H) \, ,
+\end{equation}
+for some function $\boldsymbol{f}$.
+
+Both $G'(\xi_n)$, and $H''(\xi_n)$ are known from our beam theory
+asymptotic expansion. But these are linear in $\boldsymbol{\theta}$, as
+$G'(\xi_n) = \theta_n$, and 
+$H''(\xi_n) \approx (\theta_{2n}-\theta_{2n-1})/(\xi_n-\xi_{n-1}) $, 
+Therefore we can 
+add another two rows to $\mathsfbi{J}$, so that
+\begin{equation}
+\mathsfbi{A}\boldsymbol{\theta} = \left[ 
+\boldsymbol{f}(\boldsymbol{\theta}),  
+G'(\xi_n), H''(\xi_n)\right] \, .
+\end{equation}
+Where the $\mathsfbi{A}$ is the enlarged matrix. 
+This can be solved by Newton's method from quite arbitrary initial guesses.
+
+For $\xi_i < \xi < \xi_{i+1}$, we interpolate as
 \begin{equation}
 \setlength{\arraycolsep}{1pt}
 G'(\xi) = \left\{ \begin{array}{l}  
@@ -283,54 +324,33 @@ H'(\xi) = \left\{ \begin{array}{l}
 \xi^{-1/2}(c_i \xi^{1/2} + d_i) \\[4pt]
 c_i \xi + d_i
  \end{array}\right. , \;\;
-\xi_{i}< \xi < \xi_{i+1} \;\; \left\{ \begin{array}{l}  
+\mbox{for} \;\; \left\{ \begin{array}{l}  
 i<t\\[4pt]
 i\geq t
 \end{array}\right.
 \end{equation}
-Where typically $t = n/2$ was used. The choice of interpolating function 
+The choice of interpolating function 
 was based on the appearance of the relevant functions.
 We will also define $a_n,b_n,c_n,d_n$ for interpolation beyond $\xi_n$.
-We define $\boldsymbol{a} = [a_1,\dots ,a_n]$, and similarly with 
-$\boldsymbol{b}$, $\boldsymbol{c}$, $\boldsymbol{d}$. We also define,
-for convenience, the column vector $\boldsymbol{\gamma}=[\boldsymbol{a},
-\boldsymbol{b},\boldsymbol{c},\boldsymbol{d}]$.
+With this choice of interpolation,
+there exist exact closed form expressions for both the lubrication integral,
+and the elasticity integral, in terms of the $a_i - d_i$ coefficients.
 
-Given this interpolation, the elasticity integral (\ref{eq:govern}a), is exact; 
-that is to say there is an known analytic expression for $\Pi(\xi)$. 
-We also have a different expression for $\Pi$, due to the lubrication integral
-(\ref{eq:lub-int}).
-As before; given the interpolation, we can do the integral exactly.
-
-In equation \ref{eq:govern}a, the integral depends linearly
-on $\boldsymbol{\gamma}$. Therefore, we can write
-\begin{equation}
-[ \Pi(\zeta_{1}) , \dots , \Pi(\zeta_{n-1}), \, \underbrace{0 \, , \, \dots \, 
-,\, 0 }_{n-1} \, ] = \mathsfbi{J} \boldsymbol{\gamma}
-\end{equation}
-where $\mathsfbi{J}$ is a matrix representing the integral kernel. We also know
-that $[ \Pi(\zeta_{1}) , \dots , \Pi(\zeta_{n-1})] = 
-f_1( \boldsymbol{c},\boldsymbol{d})$, from the lubrication integral. This time,
-$\Pi$ does not depend linearly on $\boldsymbol{\gamma}$.
-
-We define $\boldsymbol{\theta}_G = [a_1 \xi_1 + b_1, \dots , a_n \xi_n + b_n]$,
-$\boldsymbol{\theta}_H = [c_1 \xi_1^{1/2} + d_1, \dots , 
-c_n \xi_n^{1/2} + d_n]$, as well as $\boldsymbol{\theta} = 
-[\boldsymbol{\theta}_G, \boldsymbol{\theta}_H] $. 
-We would prefer to work with $\boldsymbol{\theta}$ over $\boldsymbol{\gamma}$,
-since it contains half as many elements. Continuity of $G'$, $H'$ imposes 
-$2(n-1)$ equations. For $G'$ they are 
+We therefore want to determine $a_i -d_i$ in terms of $\boldsymbol{\theta}$.
+Continuity of $G'$, $H'$ imposes $2(n-1)$ equations. For $G'$ they are 
 \begin{equation}
 \setlength{\arraycolsep}{1pt}
 \begin{array}{rl}
-a_i \xi_{i+1} + b_i~ &= a_{i+1} \xi_{i+1} + b_{i+1},\mbox{ for } i<n,
+a_i \xi_{i+1} + b_i~ &= a_{i+1} \xi_{i+1} + b_{i+1} = \theta_{i+1},\mbox{ for } i<n,
 \,i\neq t -1 \\[4pt]
-\xi^{-1/2}(a_i \xi_{i+1} + b_i) &= a_{i+1} \xi_{i+1} + b_{i+1},
-\mbox{ for } i = t -1
+\xi^{-1/2}(a_{t-1} \xi_t + b_{t-1}) &= a_t \xi_t + b_t = \theta_t,
 \end{array}
 \end{equation}
 with similar equations for $H'$ (accounting for the slightly different 
-interpolation).
+interpolation). We also have the $2n$ equations following from the definition
+of $\boldsymbol{\theta}$, such as $a_i \xi_i + b_i = \theta_i$ for 
+$t\leq i \leq n$. 
+
 From our asymptotic expansion 
 (via beam theory) we know $\theta_n = G'(\xi_n)$ and $a_n = G''(\xi_n)$. 
 Therefore we can write
@@ -339,36 +359,18 @@ a_n = \frac{G''(\xi_n)}{G'(\xi_n)} \theta_n, \qquad
 b_n  = \theta_n - a_n \xi_n = \left( 1 - \frac{G''(\xi_n)}
 {G'(\xi_n)} \right) \theta_n
 \end{equation}
-With $H$, we know that $a_n = H''(\xi_n)$, $a_{n-1} = H''(\xi_{n-1})$, and
+With $H$, we know that $c_n = H''(\xi_n)$, $c_{n-1} = H''(\xi_{n-1})$, and
 so we have that 
 \begin{equation}
-a_n = \frac{H''(\xi_n)}{H''(\xi_{n-1})} a_{n-1}, \qquad
-b_n = -a_n \xi_n + a_{n-1}\xi_n + b_{n-1}
+c_n = \frac{H''(\xi_n)}{H''(\xi_{n-1})} c_{n-1}, \qquad
+d_n = -c_n \xi_n + c_{n-1}\xi_n + d_{n-1}
 \end{equation}
 Therefore, we have enough equations to 
 calculate a matrix $\mathsfbi{T}$, so that
 \begin{equation}
-\boldsymbol{\gamma} = \mathsfbi{T} \boldsymbol{\theta}
+[a_1, \dots, a_n, b_1, \dots, b_n, c_1, \dots , c_n, d_1, \dots , d_n] = 
+\mathsfbi{T} \boldsymbol{\theta}
 \end{equation}
-We now have that
-\begin{equation}
-\mathsfbi{JT}\boldsymbol{\theta} = f_2(\boldsymbol{\theta}) 
-\end{equation}
-With $\mathsfbi{JT}$ a $2(n-1) \times 2n$ matrix, and $f_2$ a function of 
-$\boldsymbol{\theta}$ (really just of $\boldsymbol{\theta}_H$), with
-the first $n-1$ components calculating $\Pi$, and the last $n-1$ components
-set to $0$. 
-
-Both $G'(\xi_n) = \theta_n$, and
-$H''(\xi_n) \approx (\theta_{2n}-\theta_{2n-1})/(\xi_n-\xi_{n-1}) $, 
-are known, and are linear in $\boldsymbol{\theta}$. Therefore we can 
-add another two rows to $\mathsfbi{JT}$, and replace $f_2$ with
-$f = [f_2, G'(\xi_n), H''(\xi_n)]$. 
-Let the enlarged matrix be called $\mathsfbi{A}$. Then
-\begin{equation}
-\mathsfbi{A}\boldsymbol{\theta} = f(\boldsymbol{\theta})
-\end{equation}
-This can be solved by Newton's method, from quite arbitrary initial guesses.
 
 Note that we choose a value of $\lambda$, fix the boundary conditions
 at $\xi \to \infty$, then solve the problem and subsequently recover
@@ -378,14 +380,14 @@ Physically, we know $\kappa_I$, and want to find $\lambda$, but in numerically
 solving the problem, it makes more sense to choose $\lambda$ and recover 
 $\kappa_I$.
 
-The spacing of the points $\boldsymbol{\xi}$ makes a significant difference to 
-the convergence properties. The spacing should reflect that the important 
+The spacing of the points should reflect that the important 
 part of the problem is happening near the tip, and this is where the points
-should be concentrated. The spacing most often used is 
+should be concentrated. The spacing that was typically used in numerical 
+calculations was 
 \begin{equation}
-\xi_i = \tan( \chi \; i/m )^2, \quad i=1,\dots,m < n
+\xi_i = \tan^2( \chi \; i/m ), \quad i=1,\dots,m < n
 \end{equation}
-where $\chi$ is chosen so that $\tan(\chi)^2 = O(10)$, and the remaining points
+where $\chi$ is chosen so that $\tan^2(\chi) = O(10)$, and the remaining points
 are added in a geometric progression, so that 
 \begin{equation}
 \xi_{i+1} = (\xi_m/\xi_{m-1})\xi_{i} , \quad i = m,\dots,n-1
@@ -414,28 +416,23 @@ i<t\\[4pt]
 i\geq t
 \end{array}\right.
 \end{equation}
-We compute the $\mathsfbi{J}$, $\mathsfbi{T}$ in a similar way as 
-before, but taking into account 
-the new interpolation. Some of the integrals no longer
-have exact expressions. In this case, they are
-calculated by a numerical integration routine. 
+Some of the integrals no longer have exact expressions. In this case, they are
+calculated by a numerical integration routine. We define 
+$\tilde{\boldsymbol{\theta}}$ to be like $\boldsymbol{\theta}$, but with $\tilde{H}'$,
+$\tilde{G}'$ instead of $H$, $G$.
 
 The lubrication equation for the linear perturbation problem 
-(\ref{eq:rescaled-lin-pert}b) is first transformed into an integral, where
-we replace $\Pi_0'$ by  $\lambda_0 / H_0^2$ and use the boundary conditions
-$\Pi_0,\Pi_1 \to 0$ as $\xi \to \infty$. We get the equation
+(\ref{eq:rescaled-lin-pert}b) may be written as
 \begin{equation}
 \tilde{\Pi}(\zeta) = \int_{\zeta}^{\infty} \frac{2\lambda_0 \tilde{H}}{H_0^3} 
-\mrd \xi \label{eq:lin-pert-lub}
+\mrd \xi  \, . \label{eq:lin-pert-lub}
 \end{equation}
-This is linear in $\tilde{H}$, which is linear in $\boldsymbol{c}$,
-$\boldsymbol{d}$ (after integrating $H'$ over each spline and imposing 
-continuity).
+This is linear in $\tilde{H}$, and so in $\tilde{\boldsymbol{\theta}}$.
 The integrals that appear were determined numerically.
 We end up with a matrix $\mathsfbi{R}$, such that
 \begin{equation}
 [ \tilde{\Pi}(\zeta_1), \dots \tilde{\Pi}(\zeta_{n-1}) ] = 
-\mathsfbi{R} \boldsymbol{\theta}
+\mathsfbi{R} \tilde{\boldsymbol{\theta}}
 \end{equation}
 Padding out $\mathsfbi{R}$ with zeros, until it is of size $2n\times2n$, we
 see that
@@ -446,7 +443,7 @@ see that
 \end{equation}
 Since we haven't changed the integral kernel, the  beam theory asymptotics 
 remain the same, and together with \ref{eq:lin-pert-lub}, 
-we have an asymptotic expression for
+we can calculate an asymptotic expression for
 $\tilde{H}''(\xi_n)$, $\tilde{G}'(\xi_n)$. Here, we do not need to deploy
 Newton's method, as we can simply solve the linear set of equations, 
 \ref{eq:lin-lub-matrix}.
@@ -458,40 +455,17 @@ that $H = 0$ for $\xi <0$, and thus $H' = 0$ for $\xi <0$. We take $n$ points
 to cover $0 \leq \xi < \infty$, and $r$ points to cover $-L \leq \xi < 0$.
 we label these points so that
 \begin{equation}
-\setlength{\arraycolsep}{2pt}
-\begin{array}{llllllllll}
-\boldsymbol{\xi} = [ &   \xi_{1-r} = -L , & \xi_{2-r},& \dots ,& \xi_1 \quad = 0,
-& \xi_2 \quad,& \dots , & \xi_t \quad,& \dots,& \xi_n \quad] \\
-\boldsymbol{v} = [ &   v_{1}\quad = ~~~0 ,  & v_{2}\quad , &  \dots , 
-& v_{r+1} = L , & v_{r+2}, & \dots, & v_{t+r}, & \dots, & v_{n+r} ] 
-\end{array}
+\boldsymbol{\xi} = [  \xi_{-r} = -L ,  \xi_{1-r}, \dots , \xi_0 = 0,
+\xi_1 , \dots, \xi_n ] .
 \end{equation}
-Where $v_i = \xi_i+L$. We similarly define $\boldsymbol{\zeta}$ and 
-$\boldsymbol{w}$, so that $w_i = \zeta_i+L$. It is useful to introduce a new
-function $F(v) = F(L+\xi) = G(\xi)$. We interpolate $H'$ as before, and
-$F'$ as,
-\begin{equation}
-\setlength{\arraycolsep}{10pt}
-F'(v) = \left\{ \begin{array}{lcc}  
-\xi^{-1/2}(a_i v + b_i) & v_i < v < v_{i+1} & i < t+r\\[4pt]
-a_i \xi + b_i & v_i < v < v_{i+1} & i \geq t+r
- \end{array} \right.
-\end{equation}
-In the elasticity integral, the range of integration is $[-L, \infty]$. Since
-$H=0$ for $\xi <0$, these limits can be replaced with $[0,\infty]$ for any
-integral of $H$. We can rewrite integrals involving $G$ as
-\begin{equation}
-\int_{-L}^{\infty} U_{11} (\xi - \zeta) G'(\xi) \mrd \xi = 
-\int_0^{\infty} U_{11}(v-(z+L)) F'(v) \mrd v =
-\int_0^{\infty} U_{11}(v-w) F'(v) \mrd v
-\end{equation}
-Writing the equation in this way, it is clear that the numerical problem
-is almost exactly the same as for the single tip problem. In fact, the 
-lubrication equation \ref{eq:lub-int}, is entirely unchanged. We do not 
-calculate $\Pi$ for $\xi <0$ (although it is easily done), but require that
+We interpolate $G'$ expecting a $\xi^{-1/2}$ singularity at $\xi = -L$, and
+$H'$ expecting a $\xi^{-1/2}$ singularity at $\xi = 0$.
+We do not 
+calculate $\Pi$ for $\xi <0$ (although it is easily done), but just require that
 $\sigma_{xy} = 0$ for $\xi < 0$. This provides enough equations for the problem
 to be solved as before, with Newton's method. 
-We input $-L$ and $\lambda$ and recover $\kappa_I$, $\kappa_{II}$, where 
+
+Note that we input $-L$ and $\lambda$ and recover $\kappa_I$, $\kappa_{II}$, where 
 $\kappa_I$ is measured at $0$. Physically, for $L>0$, we must have
 $\kappa_I=0$. Numerically we solve for some $\lambda$, $L$, find $\kappa_I >0$ 
 and extrapolate to $\kappa_I=0$.
