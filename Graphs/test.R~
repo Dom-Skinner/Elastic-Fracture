@@ -1,0 +1,18 @@
+pdf(file = "K-lambda.pdf", useDingbats = FALSE, width = 4, height = 2)
+dat <- read.csv("K-lambda.csv")
+
+library(ggplot2)
+
+lp <- ggplot(data=dat, aes(x=lambda, y=K),cex=0.7) + 
+    geom_line(colour="black", linetype="solid", size=0.5) + 
+    geom_point(colour="black", size=1, shape=21, fill="black")
+
+lp + coord_cartesian(ylim=c(0,2),xlim=c(0,0.06),expand=FALSE) +
+ylab(expression(kappa)) + xlab(expression(lambda)) +
+theme_bw() +
+  theme(plot.margin = unit(c(1,0,0,0), "cm")) +# ("left", "right", "bottom", "top")
+theme(axis.title = element_text(face="bold", colour="#990000", size=10),
+           axis.text  = element_text(size=6))
+#> geom_smooth: method="auto" and size of largest group is <1000, so using loess. Use 'method = x' to change the smoothing method.
+
+dev.off()

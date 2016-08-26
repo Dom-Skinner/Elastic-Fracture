@@ -19,6 +19,11 @@ set(get(ax,'YLabel'),'Rotation',0)
 set(get(ax,'YLabel'),'Rotation',0, 'Position', [-0.006, 1])
 
 plot(ax,lambda,K, 'ko-')
-
+fid = fopen('K-lambda.csv','w');
+fprintf(fid,'K,    lambda \n');
+for j = 1:numel(K)
+    fprintf(fid, '%.5e,   %.5e \n',K(j), lambda(j));
+end
+fclose(fid);
 %export_fig ('K-lambda', '-pdf', '-transparent')
 %clear
