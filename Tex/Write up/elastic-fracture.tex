@@ -494,20 +494,24 @@ $\xi$.
            $\xi \to \infty$. Figure produced with $n=465$, $x_n=819$.}
 \end{figure}
 \begin{figure}
-  \centerline{\includegraphics[scale=1.0]{./../../Graphs/K-lambda.pdf}}
+  \centerline{\includegraphics{./../../Graphs/K-lambda.pdf}}
   \caption{Here we vary the parameter $\lambda$ and plot the change in 
            $\kappa_I$. Figure produced with $n=465$, $x_n = 819$.}
 \end{figure}
 \begin{figure}
-  \centerline{\includegraphics[scale=1.0]{./../../Graphs/hprime-x.pdf}}
+  \centerline{\includegraphics{./../../Graphs/hprime-x.pdf}}
   \caption{As $\kappa_I\to 0$, $H'$ moves from a $\xi^{-1/2}$ singularity
            to a $\xi^{-1/3}$ singularity. We can not calculate $\kappa_I=0$, 
-           but the extrapolation to it is shown. Figure produced with $n=465$, 
-           $x_n = 819$.}
+           but the extrapolation to it is shown.}
 \end{figure}
 \begin{figure}
-  \centerline{\includegraphics[scale=0.3]{./../../Graphs/l0.pdf}}
-  \caption{Good agreement between theory and numerics here}
+  \centerline{\includegraphics{./../../Graphs/l0.pdf}}
+  \caption{A linear fit from the two smallest $\kappa_I$ values is plotted, 
+           as is a quadratic fit from the three smallest $\kappa_I$ values.
+           They are almost indistiguishable at this scale. 
+           The difference between the two extrapolations to $\kappa_I=0$,  
+           provides an estimate of the error in calculating $\lambda_0$, 
+           (not accounting for the error due to $n$.) }
 \end{figure}
 
 Obvious questions to ask at this point are: How are you sure this is the right
@@ -541,17 +545,16 @@ intercept of $\tilde{H}_1$ is. It is perhaps worth mentioning the difficulties
 in measuring the intercept and perhaps a notion of the sensitivity of the 
 result on the estimate provided for $H_0$. Illustrating that is the next
 figure 
-\begin{figure}
- \centerline{\includegraphics[scale=0.3]{./../../Graphs/linear-perturbation.pdf}}
-  \caption{Sensitivity of linear perturbation problem on $H_0$}
-\end{figure}
 
 Then we include the figure that shows convergence with different $n$ values
 to something approaching the right answer.
 \begin{figure}
  \centerline{
-\includegraphics[scale=0.2]{./../../Graphs/linear-perturbation-plot.png}}
-  \caption{Sensitivity of linear perturbation problem on $H_0$}
+\includegraphics{./../../Graphs/linear-perturbation-plot.pdf}}
+  \caption{The numerical solution of the linear perturbation problem for a selection of
+           resolutions. Of interest is the value of the intercept, which as shown is dependent
+           on the resolution. Also shown is the numerical instability near the tip, due to our 
+           difficulty in calculating $H_0$ for $\xi \ll 1$.}
 \end{figure}
 
 \subsection{Two tips}

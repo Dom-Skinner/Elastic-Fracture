@@ -2,10 +2,12 @@
 % $\lambda \approx \lambda_0 + D K_I^u $ where $\lambda_0,D$ are found 
 % here numerically. 
 
+%n_val = [350,407,465,524,815];
+%x_val = [873,822,819,846,846];
 clear
-nstr = '500';
-xstr = '20';
-file = strcat('n',nstr,'x',xstr,'-modified');
+nstr = '524';
+xstr = '846';
+file = strcat('n',nstr,'x',xstr,'-mod');
 load(file)
 %load n400x40
 
@@ -26,6 +28,7 @@ figure('units','normalized','outerposition',[0 0 0.5 1]) % Makes figure fill
 % the whole screen. Needed when using export fig.
 %
 lx = [K.^u 0];
+hold on
 plot(lx,p1(2)+p1(1).*lx,'k--', lx,p2(3)+p2(2).*lx+p2(1).*lx.^2,'b:', ...
     K.^u,lambda,'ko','LineWidth',2.5, 'MarkerFaceColor', 'k', 'MarkerSize', 10);
 
@@ -49,7 +52,19 @@ text(0.27,0.0579,['$x_{end}=', xstr, '$'],'Interpreter','latex','fontsize',20)
 
 legend({'Linear fit','Quadratic fit','$\lambda$'},'Interpreter','Latex'...
     ,'fontsize',20)
-%export_fig ('l0', '-pdf', '-transparent')
 
+fid = fopen('l0.csv','w');
+fprintf(fid,'type,   lambda,    K \n');
+for j = 1:numel(K)
+    fprintf(fid, 'Kval,    %.5e,   %.5e \n',lambda(j), K(j).^u);
+end
+for j = 1:numel(lx)
+    fprintf(fid, 'linear,    %.5e,   %.5e \n',p1(2)+p1(1).*lx(j),lx(j));
+end
+for j = 1:numel(lx)
+    fprintf(fid, 'quadratic,    %.5e,   %.5e \n',p2(3)+p2(2).*lx(j)+p2(1).*lx(j).^2,lx(j));
+end
+
+fclose(fid);
 
 clear

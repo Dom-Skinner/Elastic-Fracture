@@ -1,4 +1,4 @@
-function [interp1, interp2] = interpolate_hprime(x,n,hprime_data,K,a)
+function [interp1, interp2] = interpolate_hprime(x,n,hprime_data,K,a,l0)
 % Interpolates h_0' based on values of h' for non zero K.
 % Also attempts to correct for the LEFM boundary layer since this is not
 % present in the h_0 solution.
@@ -16,21 +16,21 @@ pc_er = zeros(1,n);
 % First go at interpolation of hprime
 for l = 1:n
     p1 = polyfit(K(end-1:end).^u , hprime_data(n+l,end-1:end),1);
-  %  p2 = polyfit(K(end-2:end).^u , hprime_data(n+l,end-2:end),2);
+    p2 = polyfit(K(end-2:end).^u , hprime_data(n+l,end-2:end),2);
     interp1(l) = p1(2);
-   % er(l)    = abs(p1(2)-p2(3));
-   % pc_er(l) = abs(p1(2)-p2(3))/p1(2);
+    er(l)    = abs(p1(2)-p2(3));
+    pc_er(l) = abs(p1(2)-p2(3))/p1(2);
 end
 
-%fprintf('Approximate interpolation error = %.2e%%\n',100*max(pc_er(40:end)))
+fprintf('Approximate interpolation error = %.2e%%\n',100*max(pc_er(40:end)))
 % Now we correct for the LEFM boundary
 
 er = ones(1,round(0.2*n));
 for k = round(0.02*n):round(0.25*n)
-   % p3 = polyfit([x(k:k+1), 0] , [interp1(k:k+1).*x(k:k+1).^(a-2/3),(16*l0^2/(3*pi^2))^(1/6)],1);
-   % p4 = polyfit([x(k:k+2), 0] , [interp1(k:k+2).*x(k:k+2).^(a-2/3),(16*l0^2/(3*pi^2))^(1/6)],2);
-   p3 = polyfit(x(k:k+1) , interp1(k:k+1).*x(k:k+1).^(a-2/3),1);
-   p4 = polyfit( x(k:k+2) , interp1(k:k+2).*x(k:k+2).^(a-2/3),2);
+    p3 = polyfit([x(k:k+1), 0] , [interp1(k:k+1).*x(k:k+1).^(a-2/3),(16*l0^2/(3*pi^2))^(1/6)],1);
+    p4 = polyfit([x(k:k+2), 0] , [interp1(k:k+2).*x(k:k+2).^(a-2/3),(16*l0^2/(3*pi^2))^(1/6)],2);
+   %p3 = polyfit(x(k:k+1) , interp1(k:k+1).*x(k:k+1).^(a-2/3),1);
+   %p4 = polyfit( x(k:k+2) , interp1(k:k+2).*x(k:k+2).^(a-2/3),2);
     
     er(k) = abs(p3(2)-p4(3));
 end
