@@ -550,7 +550,7 @@ Then we include the figure that shows convergence with different $n$ values
 to something approaching the right answer.
 \begin{figure}
  \centerline{
-\includegraphics{./../../Graphs/linear-perturbation-plot.pdf}}
+\includegraphics{./../../Graphs/linear-perturbation-plot-edited.pdf}}
   \caption{The numerical solution of the linear perturbation problem for a selection of
            resolutions. Of interest is the value of the intercept, which as shown is dependent
            on the resolution. Also shown is the numerical instability near the tip, due to our 
@@ -563,8 +563,11 @@ problem. Perhaps some graphs that show an outline of the full numerical problem
 with non-zero $\kappa_I$ and $\kappa_{II}$, although these are not physical.
 \begin{figure}
  \centerline{
-\includegraphics[scale=0.3]{./../../Graphs/KI-KII.png}}
-  \caption{Visualisation of what is really a surface in 4D}
+\includegraphics{./../../Graphs/KI-KII-edited.pdf}}
+  \caption{Some of the numerical results for the two tip problem. Having 
+           $\kappa_{I} \neq 0$ at $\xi =0$ and $L \neq 0$ is unphysical, but
+           is what is found numerically. We can recover the physical solution
+           by increasing $\lambda$ for fixed $L$ until $\kappa_I =0$.}
 \end{figure}
 
 What would be nice, although it doesn't exist yet, is some sort of record of
@@ -573,8 +576,17 @@ be made.
 We now move on to the $\kappa_I=0$ set of relations.
 \begin{figure}
  \centerline{
-\includegraphics[scale=0.5]{./../../Graphs/KI-0.png}}
+\includegraphics{./../../Graphs/KI-0.pdf}}
   \caption{The results of extrapolating to $\kappa_I = 0$}
+\end{figure}
+
+
+\begin{figure}
+ \centerline{
+\includegraphics{./../../Graphs/catagory-edited.pdf}}
+  \caption{Given values $(\kappa_I,\kappa_{II})$, this graph determines which
+           frature regime occurs and so how $\lambda$ and/or $L$ should be 
+           calculated. }
 \end{figure}
 \section{Discussion}
 This is where we discuss the figures, possibly include more figures, and draw

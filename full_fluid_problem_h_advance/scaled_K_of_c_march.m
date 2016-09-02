@@ -1,22 +1,23 @@
-%sets easy geometric parameters
-%%{
-
 %n = 350;
 %t = 170;
 r = 100;
-%xmax = 50;
 xmax = x(n);
-%x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
-%z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 
 
-L = 1:0.2:3.4;%[0.6:0.3:5];%[0.1,0.3,0.5,1, 1.5,2.1,2.6];
+
+L = 0.2:0.2:0.6;
+%0.01; early
+% 0.2:0.2:0.6; mid
+%0.8:0.2:3.4; late
 
 
 
 %some values of lambda to try
-lambda =0.07:0.01:0.09;
-%}
+lambda = 0.04:0.005:0.065;
+%0:0.008:0.058; early
+% 0:0.01:0.07; mid
+%0:0.005:0.085; late
+
 
 
 
@@ -58,8 +59,11 @@ s = 0.138673;
 u = 4-6*s;
 p1 = polyfit(KI(end-2:end,j).^u,lambda(end-2:end)',1);
 l0(j) = p1(2);
+p1 = polyfit(lambda(end-1:end)',KII(end-1:end,j),1);
 p2 = polyfit(lambda(end-2:end)',KII(end-2:end,j),2);
 KII0(j) = p2(1)*l0(j)*l0(j)+p2(2)*l0(j)+p2(3);
+%er = abs(p2(1)*l0(j)*l0(j)+p2(2)*l0(j)+p2(3) - (p1(1)*l0(j)+p1(2)));
+% line above if you want some idea of the extrapolation error.
 
 end
 subplot(1,3,1)
