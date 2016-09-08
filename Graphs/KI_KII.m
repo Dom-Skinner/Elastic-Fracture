@@ -1,4 +1,4 @@
-load n350x873-2t
+load n995x846-late
 
 fid1 = fopen('KI-KII-1.csv','w');
 fprintf(fid1,'lambda,  L,     KI,  \n');

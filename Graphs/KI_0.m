@@ -6,11 +6,11 @@
 
 clear
 
-load n350x873-2t-early
+load n995x846-early
 L1 = L; lam1 = l0; K2 = 3*sqrt(2*pi)*KII0;
-load n350x873-2t-mid
+load n995x846-mid
 L1 = [L1 L]; lam1 = [lam1 l0]; K2 = [K2 3*sqrt(2*pi)*KII0];
-load n350x873-2t
+load n995x846-late
 L1 = [L1 L]; lam1 = [lam1 l0]; K2 = [K2 3*sqrt(2*pi)*KII0];
 
 

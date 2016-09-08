@@ -519,12 +519,6 @@ answer, what is the effect of $n$,  $\xi_{\mathrm{end}}$?
 In the next graph, we determine the effect of extending $\xi_{\mathrm{end}}$,
 by adding on extra points (so maintaining the same resolution near the tip).
 There is a satisfactory demonstration of convergence.
-\begin{figure}
-  \centerline{\includegraphics[scale=0.5]{./../../Graphs/xend-march.png}}
-  \caption{As we increase $\xi_{n}$, we can estimate the effect of finite 
-           truncation. The figure starts with $n=400$, and increases $\xi_n$
-           by adding more points until $n=544$.}
-\end{figure}
 
 By adding points on in a geometric progression, it becomes quite cheap to
 extend out to $\xi_{\mbox{end}} \approx 800$ or so. Once one has done this,
@@ -533,11 +527,6 @@ of finite truncation, as the following figure shows.
 
 By increasing $n$ (for large $\xi_{\mathrm{end}}$), we have been able to 
 determine $\lambda_0$ and $D$
-\begin{figure}
-  \centerline{\includegraphics[scale=0.3]{./../../Graphs/l0-D.png}}
-  \caption{Our best guess at $\lambda_0$ and $D$, and the approximate error
-one can expect in them}
-\end{figure}
 \subsection{Linear perturbation problem}
 We solve the linear perturbation problem. All that we really want to know
 is that we see the $\xi^{s-1}$ behaviour that we expect, and we ask what the
@@ -567,7 +556,8 @@ with non-zero $\kappa_I$ and $\kappa_{II}$, although these are not physical.
   \caption{Some of the numerical results for the two tip problem. Having 
            $\kappa_{I} \neq 0$ at $\xi =0$ and $L \neq 0$ is unphysical, but
            is what is found numerically. We can recover the physical solution
-           by increasing $\lambda$ for fixed $L$ until $\kappa_I =0$.}
+           by increasing $\lambda$ for fixed $L$ until $\kappa_I =0$. Figure 
+           made with $n = 995$, $\xi_n = 846$.}
 \end{figure}
 
 What would be nice, although it doesn't exist yet, is some sort of record of
@@ -577,7 +567,8 @@ We now move on to the $\kappa_I=0$ set of relations.
 \begin{figure}
  \centerline{
 \includegraphics{./../../Graphs/KI-0.pdf}}
-  \caption{The results of extrapolating to $\kappa_I = 0$}
+  \caption{The results of extrapolating to $\kappa_I = 0$. Figure 
+           made with $n = 995$, $\xi_n = 846$.}
 \end{figure}
 
 
@@ -586,7 +577,7 @@ We now move on to the $\kappa_I=0$ set of relations.
 \includegraphics{./../../Graphs/catagory-edited.pdf}}
   \caption{Given values $(\kappa_I,\kappa_{II})$, this graph determines which
            frature regime occurs and so how $\lambda$ and/or $L$ should be 
-           calculated. }
+           calculated. Figure made with $n=465$, $\xi_n = 819$.}
 \end{figure}
 \section{Discussion}
 This is where we discuss the figures, possibly include more figures, and draw
@@ -597,8 +588,10 @@ accurate formulae for $\lambda$ in terms of $\kappa_I$. This holds for any
 toughness in the single tip case.
 \begin{figure}
  \centerline{
-\includegraphics[scale=0.3]{./../../Graphs/overall-fit.png}}
-  \caption{The formula valid for all $\kappa_I$}
+\includegraphics{./../../Graphs/overall-fit.pdf}}
+  \caption{The formula valid for all $\kappa_I$. For the single tip 
+           calculations, $n=815$ was used, for the double tip $n=995$. 
+           $\xi_n = 846$ in both cases.  }
 \end{figure}
 
 Then we could move on to talk about the decoupling between the fluid problem
@@ -608,14 +601,9 @@ $H'$, one can construct $G'$ with relative ease.
 
 \begin{figure}
  \centerline{
-\includegraphics[scale=0.4]{./../../Graphs/hprime-variation.png}}
-  \caption{Demonstrating the decoupling of fluid and solid fracture}
-\end{figure}
-%
-\begin{figure}
- \centerline{
-\includegraphics[scale=0.4]{./../../Graphs/fixed-fluid.png}}
-  \caption{Reconstructing the full solution given a reference $H'$}
+\includegraphics{./../../Graphs/fixed-fluid.pdf}}
+  \caption{Reconstructing the full solution given a reference $H'$. Figure 
+           made with $n=995$, $\xi_n = 846$.}
 \end{figure}
 At this point, I would like to construct another contrived formulae for the
 two tip problem. Then I would like to plot a graph of $\kappa_I$ against
