@@ -12,8 +12,12 @@ h_coefficient_matrix = hprime_to_h(x,t,lambda(l));
 h_coeffs = h_coefficient_matrix*hprime_data(n+1:2*n,l);
 %finds the pressure: an n-1 vector
 p(:,l) = pprime_to_p(x,z,h_coeffs,t);
+h(:,l) = h_integrate(hprime_data(n+1:2*n,l),x,n,t, ... 
+    h_coefficient_matrix,1/2);
+
 hprime_data(n+1:n+t-1,l) = x(1:t-1)'.^(-0.5).*hprime_data(n+1:n+t-1,l);
 hprime_data(1:t-1,l) = x(1:t-1)'.^(-0.5).*hprime_data(1:t-1,l);
+
 
 end
 
@@ -129,7 +133,8 @@ set(get(ax,'YLabel'),'Rotation',0, 'Position', [-0.4, -1.5])
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 subplot(2,3,6)
 ax = gca;
-plot(ax,log(z),p(:,1),'+',log(z),p(:,10),'d','LineWidth',2)
+plot(ax,log(z),p(:,1),'+',log(z),p(:,10),'d',[-10,0],...
+    lambda(10)*9*pi/(2*K(10)^2)*[-10,0],'LineWidth',2)
 hold on
 axis( [-10, 5, -35,1]);
 axis square
@@ -141,3 +146,25 @@ set(ax,'TickLabelInterpreter', 'latex');
 set(ax,'fontsize',20')
 set(get(ax,'YLabel'),'Rotation',0)
 %set(get(ax,'YLabel'),'Rotation',0, 'Position', [-0.4, -1.5])
+
+
+fid = fopen('hprime-p-x-full-1.csv','w');
+fprintf(fid,'K,  x,   hprime,  gprime,   \n');
+for l = [2,10]
+for j = 1:numel(x)
+    fprintf(fid, '%.5e,    %.5e,   %.5e,    %.5e,  \n',...
+        K(l),x(j), hprime(j,l), gprime(j,l) );
+end
+end
+fclose(fid);
+
+
+fid = fopen('hprime-p-x-full-2.csv','w');
+fprintf(fid,'K,  z,   pressure\n');
+for l = [2,10]
+for j = 1:numel(z)
+    fprintf(fid, '%.5e,    %.5e,   %.5e \n',...
+        K(l),z(j), p(j,l) );
+end
+end
+fclose(fid);

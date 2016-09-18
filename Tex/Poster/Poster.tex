@@ -13,9 +13,9 @@
 \newcolumntype{Z}{>{\centering\arraybackslash}X} % centered tabularx columns
 
 \title{\huge Viscous Control Of Shallow Elastic Fracture}
-\author{Dominic Skinner, Tim Large}
+\author{Tim Large, John Lister, Dominic Skinner}
 \institute[Univerity of Cambridge]
-{DAMTP, University of Cambridge}
+{Department of Applied Mathematics and Theoretical Physics, University of Cambridge}
 \date{\today}
 
 \newlength{\columnheight}
@@ -31,12 +31,12 @@
 				\parbox[t][\columnheight]{\textwidth}{ % must bei
 % some better way to set the the height, width and textwidth simultaneously
 \begin{myblock}{Introduction}
-Consider a semi-infinite elastic solid with a thin strip peeled off, and the
+We consider a semi-infinite elastic solid with a thin strip peeled off, and the
 resulting crack filled with an incompressible fluid. The motion is driven
 by a bending moment applied to the ``arm'' of the solid. The aim is to be
 able to write down a set of equations governing the dynamics, in particular
 it is of interest to examine the relationship between the speed of traveling
-wave solutions $c$, the magnitude of the bending moment $M$, and the toughness 
+wave solutions $c$, the bending moment $M$, and the toughness 
 of the solid $K_I$, $K_{II}$. 
 
 Relevant physical problems include both igneous intrusions beneath a volcano,
@@ -45,7 +45,7 @@ reservoir, since both involve the propagation of a crack through a brittle
 elastic solid driven by fluid injection.
 
 \begin{figure}
-\centering\includegraphics[width=0.8\textwidth]{../Fig10.pdf}
+\centering\includegraphics[width=0.75\textwidth]{../Fig10.pdf}
 \caption{Diagram to show the geometry of the problem. $q(x)$ is the flux,
 $g(x)$ the horizontal displacement, $h(x)$ the vertical displacement, and
 $\ell$ is the thickness of the arm.}
@@ -58,19 +58,16 @@ fluid mechanics, we then get the equation
 
 From elasticity, using Muskhelishiveli methods, we can derive the equation
 \[
-\left( \begin{array}{c} p \\ 0 \end{array} \right)   =
-\frac{E}{4\pi (1-\nu^2)} \int_0^{\infty}
-\left(\begin{array}{cc} K_{11}(x-\tilde{x}) & K_{12}(x-\tilde{x}) \\ 
-K_{21}(x-\tilde{x}) & K_{22}(x-\tilde{x}) \end{array} \right)
-\left( \begin{array}{c} g'(\tilde{x}) \\ h'(\tilde{x}) \end{array} 
-\right)d\tilde{x},  \]
+\left[ p,  0 \right]   =
+E/(4\pi (1-\nu^2)) \int_0^{\infty}
+\textbf{K}(x-\tilde{x}) \;
+\left[ g'(\tilde{x}) , h'(\tilde{x}) \right] \, d\tilde{x},  \]
 where $K_{ij}$ is the integral kernel specific to this geometry.
 \begin{itemize}
 \item Boundary conditions as $x\to\infty$ are governed by the bending moment.
-      For large $x$ the geometry is well approximated by beam theory. This 
-      gives the equation 
-      \[ M(x) = \frac{E\ell^3}{12(1-\nu^2)}\frac{d^2h}{dx^2}, \]
-      where $M(x)$ tends to a constant bending moment as $x\to \infty$.
+      We have (via beam theory), 
+      \[ M(x) = \frac{E\ell^3}{12(1-\nu^2)}\frac{d^2h}{dx^2} \to M_0,
+        \mbox{ as } x \to \infty. \]
 \item The boundary conditions as $x\to0$ are governed by ``\emph{Linear Elastic
       Fracture Mechanics}'', (LEFM). This gives the condition
       \[K_I = \lim_{x\to 0} \; \frac{E}{1-\nu^2}\sqrt{\frac{\pi}{8}} \sqrt{x}
@@ -82,14 +79,15 @@ We move into dimensionless variables,
 \Lambda_{ij},\lambda). \]
 The new equations and boundary conditions are
 \[(\Pi,0) = \int \Lambda \cdot (G',H') d\xi, \quad H^2\Pi' = \lambda\]
-\[\lim_{\xi \to \infty} H'' = 1, \quad \lim_{\xi \to 0} 3\sqrt{2\pi}H' 
-= \kappa_I,  \quad \lim_{\xi \to 0} 3\sqrt{2\pi}G' 
+\[\lim_{\xi \to \infty} H'' = 1, \quad \lim_{\xi \to 0} 3\sqrt{2\pi\xi}H' 
+= \kappa_I,  \quad \lim_{\xi \to 0} 3\sqrt{2\pi\xi}G' 
 = \kappa_{II}. \]
 \end{myblock}\vfill
 \begin{myblock}{Results}
 \begin{figure}
-\centering\includegraphics[width=0.8\textwidth]{../../Graphs/hprime-p-x-full.png}
-\caption{Numerical results for typical $\kappa_I$ values}
+\centering\includegraphics[width=0.95\textwidth]{hprime-p-x-full-poster.pdf}
+\caption{Numerical results for two typical $\kappa_I$ values, including
+         logarithmic scales for $H'$ and $G'$ (lower two graphs).}
 \end{figure}
 \end{myblock}\vfill
 }\end{minipage}\end{beamercolorbox}
