@@ -63,8 +63,11 @@ p4 <- ggplot(data=dat, aes(x=x, y= hprime,group=K,shape=K,color=K))  +
                      labels = trans_format("log10", math_format(10^.x))) +
   scale_colour_manual(values=cbPalette,name  = NULL) +
   scale_shape_manual(values = c(15,16,17,18,4), name  = NULL) +
-  coord_cartesian(xlim=c(0.0005,6),ylim=c(0.8,7),expand=FALSE) +
-  ylab(expression(log(Hprime) )) + xlab(expression(log(xi))) +
+  coord_cartesian(xlim=c(0.00002,10),ylim=c(0.8,35),expand=FALSE) +
+  annotate("segment", x=10^-5, xend=10^-3, y=10^1.75, yend=10^0.75)+
+  annotate("segment", x=1, xend=10, y=1, yend=10,linetype="dashed")+
+  #cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+  ylab(expression(Hprime )) + xlab(expression(xi)) +
   theme_bw() +
   theme(plot.margin = unit(c(0.2,0.5,0,0), "cm")) + # ("top", "right", "bottom", "left")
   theme(axis.title = element_text(size=8,family="Palatino"), axis.text  = element_text(size=6),legend.position="none")
@@ -80,12 +83,15 @@ p5 <- ggplot(data=dat, aes(x=x, y= gprime,group=K,shape=K,color=K))  +
                      labels = trans_format("log10", math_format(10^.x))) +
   scale_colour_manual(values=cbPalette,name  = NULL) +
   scale_shape_manual(values = c(15,16,17,18,4), name  = NULL) +
-  coord_cartesian(xlim=c(0.016,6),ylim=c(0.45,1.7),expand=FALSE) +
-  ylab(expression(log(Gprime) )) + xlab(expression(log(xi))) +
+  coord_cartesian(xlim=c(0.004,6),ylim=c(0.45,2.8),expand=FALSE) +
+  ylab(expression(Gprime )) + xlab(expression(xi)) +
   theme_bw() +
+  #geom_abline(intercept=-0.77, slope=-0.5)+
+  annotate("segment", x=10^-2.5, xend=10^-1.5, y=10^0.48, yend=10^-0.02)+
   theme(plot.margin = unit(c(0.2,0.5,0,0), "cm")) + # ("top", "right", "bottom", "left")
   theme(axis.title = element_text(size=8,family="Palatino"), axis.text  = element_text(size=6),
-  legend.position="none")
+  legend.justification=c(1,1), legend.position=c(1,1),legend.background = element_rect(color="#808080",fill="#F0F0F0", size=0.25),
+  legend.text = element_text(size=8,family="Palatino"))
     
 multiplot(p1,p2,p3, cols=3)
 dev.off()

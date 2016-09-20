@@ -129,7 +129,7 @@ which give
 \refstepcounter{equation}
 $$
 M(x) = \frac{El^3}{12(1-\nu^2)} \frac{\mrd^2 h}{\mrd x^2} = 
-\frac{El^3}{6(1-\nu^2)} \frac{\mrd g}{\mrd x}, \qquad
+\frac{El^2}{6(1-\nu^2)} \frac{\mrd g}{\mrd x}, \qquad
 p = \frac{El^3}{12(1-\nu^2)} h^{(4)}(x) 
 \eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:by-at-inf}
 $$
@@ -194,7 +194,37 @@ $$
 \end{equation}
 
 These shall be the governing equations for the rest of this paper.
+\subsection{Beam theory asymptotics}
+In the dimensionless variables, the outer asymptotics are of the form
+$$
+\frac{\mrd ^2 H}{\mrd \xi ^2} = \frac{1}{2}  \frac{\mrd G }{\mrd \xi},
+\qquad H^{(4)}(\xi) = \frac{3}{\upi} \Pi(\xi), \qquad
+\frac{\mrd ^2 H}{\mrd \xi ^2} \to 1
+\eqno{(\theequation{\mathit{a},\mathit{b},\mathit{c}})}
+\label{eq:outer-asymp}
+$$
+From integration by parts, we can write 
+\begin{equation}
+H''(\xi) = 1 - \frac{1}{2} \int_{\xi}^{\infty} (\tilde{\xi}-\xi)^2 H^{(5)}
+(\tilde{\xi}) \mrd \tilde{\xi},
+\end{equation}
+provided $\lim_{\xi \to \infty} \xi H^{(3)}(\xi) = \lim_{\xi \to \infty} 
+\xi^2 H^{(4)}(\xi) =0$. 
+Then using equation \ref{eq:govern}a, we have that
+\begin{equation}
+H''(\xi) = 1 - \frac{3\lambda}{2\upi} \int_{\xi}^{\infty} 
+\frac{(\tilde{\xi}-\xi)^2}{H(\tilde{\xi})^2} \mrd \tilde{\xi}.
+\end{equation}
+Since $H(\xi) = \frac{1}{2} \xi^2 + o(\xi^2)$, as $\xi \to \infty$, 
+we can use this to get a better estimate of $H''$;
+\begin{equation}
+H''(\xi) = 1 - \frac{2 \lambda}{\upi} \frac{1}{\xi} + o(1/\xi).
+\end{equation}
+This new expression can be used to refine the error estimate from $o(1/\xi)$, to 
+$O(\log(\xi)/\xi^2)$.
 
+\subsection{Linear perturbation problem}
+\emph{ This section is problably better placed elsewhere...}
 The equations of the linear perturbation 
 problem:
 \begin{equation}
@@ -381,15 +411,14 @@ obtain two expressions for $\tilde{\Pi}(\zeta_i)$ that are linear in
 $\tilde{G}'(\xi_j)$, $\tilde{H}'(\xi_j)$.
 Together with the boundary conditions and beam theory asymptotics, 
 (we haven't changed the integral kernel, so the asymptotics 
-remain the same) we have enough to numerically solve the linear perturbation
-problem. There is no need to use 
+remain the same) there are enough equations to numerically solve the linear 
+perturbation problem. There is no need to use 
 Newton's method, as we can simply solve the linear set of equations.
 
 
 \subsection{Double Tip}
 In solving the problem of two tips situated at $-L$ and $0$, 
-we take $n$ points
-to cover $0 \leq \xi < \infty$, and $r$ points to cover $-L \leq \xi < 0$.
+an additional $r$ points are taken to cover $-L \leq \xi < 0$.
 The spacing of points for $\xi<0$ was chosen so that there was a concentration
 of points near $-L$ and near $0$.
 
@@ -418,13 +447,11 @@ and extrapolate to $\kappa_I=0$.
 Start off with some of the basic graphs showing $H'$,$G'$, and $\Pi$ against
 $\xi$.
 \begin{figure}
-  \centerline{\includegraphics[scale=0.3]{./../../Graphs/hprime-p-x-full.png}}
+  \centerline{\includegraphics{./../../Graphs/hprime-p-x-full-edited.pdf}}
   \caption{Numerical solutions for two typical $\kappa_I$ values. log-log plots
            are shown for $H'$,$G'$, with solid lines indicating the predicted 
-           asymptotics; $\log(H') \approx -\frac{1}{2}\kappa_I \log(\xi)$, 
-           $\log(G') \approx -\frac{1}{2} \kappa_{II}\log(\xi)$ near $\xi=0$, 
-           and $\log(H') \approx \log(\xi)$, $\log(G') \approx -\log(2)$, as 
-           $\xi \to \infty$. Figure produced with $n=465$, $x_n=819$.}
+           asymptotics; $\xi^{-1/2}$ singularities near $\xi=0$, and  $H' \sim x$ 
+           as $\xi \to \infty$. Figure produced with $n=465$, $x_n=819$.}
 \end{figure}
 \begin{figure}
   \centerline{\includegraphics{./../../Graphs/K-lambda.pdf}}
@@ -447,19 +474,6 @@ $\xi$.
            (not accounting for the error due to $n$.) }
 \end{figure}
 
-Obvious questions to ask at this point are: How are you sure this is the right
-answer, what is the effect of $n$,  $\xi_{\mathrm{end}}$? 
-In the next graph, we determine the effect of extending $\xi_{\mathrm{end}}$,
-by adding on extra points (so maintaining the same resolution near the tip).
-There is a satisfactory demonstration of convergence.
-
-By adding points on in a geometric progression, it becomes quite cheap to
-extend out to $\xi_{\mbox{end}} \approx 800$ or so. Once one has done this,
-it is apparent that the effect of the tip resolution dominates the effect
-of finite truncation, as the following figure shows.
-
-By increasing $n$ (for large $\xi_{\mathrm{end}}$), we have been able to 
-determine $\lambda_0$ and $D$
 \subsection{Linear perturbation problem}
 We solve the linear perturbation problem. All that we really want to know
 is that we see the $\xi^{s-1}$ behaviour that we expect, and we ask what the
@@ -468,8 +482,6 @@ in measuring the intercept and perhaps a notion of the sensitivity of the
 result on the estimate provided for $H_0$. Illustrating that is the next
 figure 
 
-Then we include the figure that shows convergence with different $n$ values
-to something approaching the right answer.
 \begin{figure}
  \centerline{
 \includegraphics{./../../Graphs/linear-perturbation-plot-edited.pdf}}
@@ -493,9 +505,6 @@ with non-zero $\kappa_I$ and $\kappa_{II}$, although these are not physical.
            made with $n = 995$, $\xi_n = 846$.}
 \end{figure}
 
-What would be nice, although it doesn't exist yet, is some sort of record of
-how we now extrapolate to $\kappa_I=0$. This is certainly a plot that needs to 
-be made.
 We now move on to the $\kappa_I=0$ set of relations.
 \begin{figure}
  \centerline{
@@ -512,13 +521,7 @@ We now move on to the $\kappa_I=0$ set of relations.
            frature regime occurs and so how $\lambda$ and/or $L$ should be 
            calculated. Figure made with $n=465$, $\xi_n = 819$.}
 \end{figure}
-\section{Discussion}
-This is where we discuss the figures, possibly include more figures, and draw
-the results and conclusions of this paper.
 
-Perhaps the first thing worth mentioning is the somewhat contrived, but pretty
-accurate formulae for $\lambda$ in terms of $\kappa_I$. This holds for any 
-toughness in the single tip case.
 \begin{figure}
  \centerline{
 \includegraphics{./../../Graphs/overall-fit.pdf}}
@@ -538,11 +541,7 @@ $H'$, one can construct $G'$ with relative ease.
   \caption{Reconstructing the full solution given a reference $H'$. Figure 
            made with $n=995$, $\xi_n = 846$.}
 \end{figure}
-At this point, I would like to construct another contrived formulae for the
-two tip problem. Then I would like to plot a graph of $\kappa_I$ against
-$\kappa_{II}$ in the full fluid problem. This provides a guide of when it
-is appropriate to take the single tip, and when it is appropriate to take
-the double tip. 
+\section{Discussion}
 
 \clearpage
 
