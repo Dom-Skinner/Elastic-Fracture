@@ -61,6 +61,7 @@ We look for a travelling wave solution (propagating left), with speed $c$.
 \section{Formulation of problem}\label{sec:formulation_of_problem}
 %
 %
+\subsection{Single tip}
 From lubrication, we have Poiseulle flow in the crack. We obtain
 the flux, and conservation of mass as 
 \begin{equation}
@@ -87,7 +88,8 @@ problem, we have
 \left[ \begin{array}{c} 
 p(x) \\ 0
 \end{array} \right]
-=\frac{1}{l}  \int_0^{\infty} \mathsfbi{K} \left( \frac{\tilde{x}-x}{l} \right) 
+=\frac{E}{4\upi l(1-\nu^2)}  \int_0^{\infty} \mathsfbi{K} \left( 
+\frac{\tilde{x}-x}{l} \right) 
 \left[ \begin{array}{c} 
 g'(\tilde{x}) \\ h'(\tilde{x})
 \end{array} \right]
@@ -133,6 +135,21 @@ p = \frac{El^3}{12(1-\nu^2)} h^{(4)}(x)
 $$
 As $x \to \infty$, $M(x) \to M$, the applied bending moment, so this gives
 us boundary conditions on $h''$, $g'$.
+%
+\subsection{Double tip}
+The equations are mostly unchanged from the single tip problem. From the
+geometry of the double tip problem, a second crack tip is situated at
+$x = -lL$, and $h(x),h'(x) =0$ for $x < 0$. The boundary conditions at $\infty$
+are unaffected, and the boundary conditions at the crack tip become
+\refstepcounter{equation}
+$$
+\lim_{x \to 0} \sqrt{x} \, h'(x) = L
+\, ,\qquad
+\lim_{x \to -Ll} \frac{E}{1-\nu^2} \sqrt{\frac{\upi}{8}} \sqrt{x} \,
+g'(x) \, =K_{II} .
+\eqno{(\theequation{\mathit{a},\mathit{b}})}
+$$
+The limits in the elasticity integral become $(-Ll,\infty)$.
 %
 \subsection{Rescaling}
 %
@@ -234,35 +251,6 @@ $$
 $$
 %
 %
-These are the equations for the two tip problem
-\refstepcounter{equation}
-$$
-\setlength{\arraycolsep}{2pt}
-\left[ \begin{array}{c} 
-\Pi \\ 0
-\end{array} \right]
-= \int_{-L}^{\infty} \mathsfbi{K}(\tilde{\xi} - \xi) 
-\left[ \begin{array}{c} 
-G'(\tilde{\xi}) \\ H'(\tilde{\xi})
-\end{array} \right]
-\mrd \tilde{\xi}, \qquad
-\Pi = \int_{\xi}^{\infty} \lambda / H(\tilde{\xi})^2 \mrd \tilde{\xi}
-\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:2-govern}
-$$
-%
-\refstepcounter{equation}
-$$
-\lim_{\xi \to \infty} H'' = 1 , \quad \lim_{\xi \to \infty} G' = \frac{1}{2}
-\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:2-bc-inf}
-$$
-%
-\refstepcounter{equation}
-$$
-\lim_{\xi \to 0} 3\sqrt{2\pi \xi} H' = 0 , 
-\quad
-\lim_{\xi \to -L} 3\sqrt{2\pi \xi} G' = \kappa_{II}
-\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:2-bc-0}
-$$
 \section{Numerical scheme}\label{sec:numerical_scheme}
 %
 %%$$
@@ -275,23 +263,19 @@ We work with $\sqrt{\xi}G'(\xi)$,
 $\sqrt{\xi}H'(\xi)$ near the tip to avoid singularities.
 We define $\boldsymbol{\theta}_G = [\sqrt{\xi_0}G'(\xi_0), \dots , 
 \sqrt{\xi_{t-1}} G'(\xi_{t-1}), G'(\xi_t), \dots G'(\xi_n)]$,
-$\boldsymbol{\theta}_H =[\sqrt{\xi_0}H'(\xi_0), \dots , 
-\sqrt{\xi_{t-1}} H'(\xi_{t-1}), H'(\xi_t), \dots H'(\xi_n)]$, as well as 
+and $\boldsymbol{\theta}_H$ similarly, as well as 
 $\boldsymbol{\theta} =  [ \boldsymbol{\theta}_G, \boldsymbol{\theta}_H] $,
-(where $\sqrt{\xi_0}G'(\xi_0) = \lim_{\xi \to \xi_0} \sqrt{\xi}G'(\xi)$).
 Typically $t \approx n/2$ was used. 
-The elasticity integral is linear in $G'$, $H'$, and so the discretized 
-integration is linear in $\boldsymbol{\theta}$. Such a linear relation
-may be written as 
+From the linearity of the elasticity integral (and the discretized 
+integral) we may write 
 \begin{equation}
 [ \Pi(\zeta_{1}) , \dots , \Pi(\zeta_{n-1}), \, \underbrace{0 \, , \, \dots \, 
-,\, 0 }_{n-1} \, ] = \mathsfbi{J} \boldsymbol{\theta} \, .
+,\, 0 }_{n-1} \, ] = \mathsfbi{J} \boldsymbol{\theta} \, ,
 \end{equation}
-By imposing $H(0)=0$, and choosing a sensible interpolation,
-one can recover $H(\xi_i)$ from $\boldsymbol{\theta}_H$. Therefore,
-from the lubrication integral, there exists another expression for 
-$[\Pi(\zeta_0), \dots , \Pi(\zeta_{n-1})]$ as some function of 
-$\boldsymbol{\theta}_H$. So we can write 
+for some matrix $\mathsfbi{J}$.
+One can recover $H(\xi_i)$ from $\boldsymbol{\theta}_H$. Therefore,
+a discritized lubrication integral, yields an expression for 
+$\Pi(\zeta_i)$ as a function of $\boldsymbol{\theta}_H$. So we can write 
 \begin{equation}
 [ \Pi(\zeta_{1}) , \dots , \Pi(\zeta_{n-1}), \, \underbrace{0 \, , \, \dots \, 
 ,\, 0 }_{n-1} \, ] = \mathsfbi{J} \boldsymbol{\theta} = \boldsymbol{f}
@@ -336,20 +320,11 @@ With this choice of interpolation,
 there exist exact closed form expressions for both the lubrication integral,
 and the elasticity integral, in terms of the $a_i - d_i$ coefficients.
 
-We therefore want to determine $a_i -d_i$ in terms of $\boldsymbol{\theta}$.
-Continuity of $G'$, $H'$ imposes $2(n-1)$ equations. For $G'$ they are 
-\begin{equation}
-\setlength{\arraycolsep}{1pt}
-\begin{array}{rl}
-a_i \xi_{i+1} + b_i~ &= a_{i+1} \xi_{i+1} + b_{i+1} = \theta_{i+1},\mbox{ for } i<n,
-\,i\neq t -1 \\[4pt]
-\xi^{-1/2}(a_{t-1} \xi_t + b_{t-1}) &= a_t \xi_t + b_t = \theta_t,
-\end{array}
-\end{equation}
-with similar equations for $H'$ (accounting for the slightly different 
-interpolation). We also have the $2n$ equations following from the definition
-of $\boldsymbol{\theta}$, such as $a_i \xi_i + b_i = \theta_i$ for 
-$t\leq i \leq n$. 
+It therefore remains to determine $a_i -d_i$ in terms of $\boldsymbol{\theta}$.
+Continuity of $G'$, $H'$ imposes $2(n-1)$ linear equations. 
+We also have the $2n$ equations following from the definition
+of $\boldsymbol{\theta}$, (such as $a_i \xi_i + b_i = \theta_i$ for 
+$t\leq i \leq n$). 
 
 From our asymptotic expansion 
 (via beam theory) we know $\theta_n = G'(\xi_n)$ and $a_n = G''(\xi_n)$. 
@@ -357,7 +332,7 @@ Therefore we can write
 \begin{equation}
 a_n = \frac{G''(\xi_n)}{G'(\xi_n)} \theta_n, \qquad
 b_n  = \theta_n - a_n \xi_n = \left( 1 - \frac{G''(\xi_n)}
-{G'(\xi_n)} \right) \theta_n
+{G'(\xi_n)}\xi_n \right) \theta_n
 \end{equation}
 With $H$, we know that $c_n = H''(\xi_n)$, $c_{n-1} = H''(\xi_{n-1})$, and
 so we have that 
@@ -365,12 +340,8 @@ so we have that
 c_n = \frac{H''(\xi_n)}{H''(\xi_{n-1})} c_{n-1}, \qquad
 d_n = -c_n \xi_n + c_{n-1}\xi_n + d_{n-1}
 \end{equation}
-Therefore, we have enough equations to 
-calculate a matrix $\mathsfbi{T}$, so that
-\begin{equation}
-[a_1, \dots, a_n, b_1, \dots, b_n, c_1, \dots , c_n, d_1, \dots , d_n] = 
-\mathsfbi{T} \boldsymbol{\theta}
-\end{equation}
+Therefore, we have enough equations to know the $a_i-d_i$ in terms of 
+$\boldsymbol{\theta}$.
 
 Note that we choose a value of $\lambda$, fix the boundary conditions
 at $\xi \to \infty$, then solve the problem and subsequently recover
@@ -400,64 +371,28 @@ are added in a geometric progression, so that
 From equation \ref{eq:rescaled-lin-pert-bc}b, we anticipate a 
 singularity of the form $\xi^{s-1}$ in $\tilde{H}'$, (we still expect a
 $\xi^{-1/2}$ singularity in $\tilde{G}'$). Therefore, the
-interpolation used is
-\begin{equation}
-\setlength{\arraycolsep}{2pt}
-\tilde{G}'(\xi) = \left\{ \begin{array}{l}  
-\xi^{-1/2}(a_i \xi + b_i) \\[4pt]
-a_i \xi + b_i
- \end{array}\right., \quad
-\tilde{H}'(\xi) = \left\{ \begin{array}{l}  
-\xi^{s-1}(c_i \xi + d_i) \\[4pt]
-c_i \xi + d_i
- \end{array}\right. , \quad
-\; \mbox{for\ } \left\{ \begin{array}{l}  
-i<t\\[4pt]
-i\geq t
-\end{array}\right.
-\end{equation}
+interpolation was changed to reflect this.
 Some of the integrals no longer have exact expressions. In this case, they are
-calculated by a numerical integration routine. We define 
-$\tilde{\boldsymbol{\theta}}$ to be like $\boldsymbol{\theta}$, but with $\tilde{H}'$,
-$\tilde{G}'$ instead of $H$, $G$.
+calculated by a numerical integration routine.
 
 The lubrication equation for the linear perturbation problem 
-(\ref{eq:rescaled-lin-pert}b) may be written as
-\begin{equation}
-\tilde{\Pi}(\zeta) = \int_{\zeta}^{\infty} \frac{2\lambda_0 \tilde{H}}{H_0^3} 
-\mrd \xi  \, . \label{eq:lin-pert-lub}
-\end{equation}
-This is linear in $\tilde{H}$, and so in $\tilde{\boldsymbol{\theta}}$.
-The integrals that appear were determined numerically.
-We end up with a matrix $\mathsfbi{R}$, such that
-\begin{equation}
-[ \tilde{\Pi}(\zeta_1), \dots \tilde{\Pi}(\zeta_{n-1}) ] = 
-\mathsfbi{R} \tilde{\boldsymbol{\theta}}
-\end{equation}
-Padding out $\mathsfbi{R}$ with zeros, until it is of size $2n\times2n$, we
-see that
-\begin{equation}
-\left( \mathsfbi{A} - \left[ \begin{array}{c} \mathsfbi{R} \\ \boldsymbol{0}
-\end{array} \right] \right) \boldsymbol{\theta} = [0 ,\dots ,0, 
-\tilde{G}'(\xi_n), \tilde{H}''(\xi_n) ] \label{eq:lin-lub-matrix}
-\end{equation}
-Since we haven't changed the integral kernel, the  beam theory asymptotics 
-remain the same, and together with \ref{eq:lin-pert-lub}, 
-we can calculate an asymptotic expression for
-$\tilde{H}''(\xi_n)$, $\tilde{G}'(\xi_n)$. Here, we do not need to deploy
-Newton's method, as we can simply solve the linear set of equations, 
-\ref{eq:lin-lub-matrix}.
+(\ref{eq:rescaled-lin-pert}b), is linear in $\tilde{H}$. Therefore, we can
+obtain two expressions for $\tilde{\Pi}(\zeta_i)$ that are linear in 
+$\tilde{G}'(\xi_j)$, $\tilde{H}'(\xi_j)$.
+Together with the boundary conditions and beam theory asymptotics, 
+(we haven't changed the integral kernel, so the asymptotics 
+remain the same) we have enough to numerically solve the linear perturbation
+problem. There is no need to use 
+Newton's method, as we can simply solve the linear set of equations.
 
 
 \subsection{Double Tip}
-In solving the problem of two tips situated at $-L$ and $0$, it is given
-that $H = 0$ for $\xi <0$, and thus $H' = 0$ for $\xi <0$. We take $n$ points
+In solving the problem of two tips situated at $-L$ and $0$, 
+we take $n$ points
 to cover $0 \leq \xi < \infty$, and $r$ points to cover $-L \leq \xi < 0$.
-we label these points so that
-\begin{equation}
-\boldsymbol{\xi} = [  \xi_{-r} = -L ,  \xi_{1-r}, \dots , \xi_0 = 0,
-\xi_1 , \dots, \xi_n ] .
-\end{equation}
+The spacing of points for $\xi<0$ was chosen so that there was a concentration
+of points near $-L$ and near $0$.
+
 We interpolate $G'$ expecting a $\xi^{-1/2}$ singularity at $\xi = -L$, and
 $H'$ expecting a $\xi^{-1/2}$ singularity at $\xi = 0$.
 We do not 
@@ -470,8 +405,6 @@ $\kappa_I$ is measured at $0$. Physically, for $L>0$, we must have
 $\kappa_I=0$. Numerically we solve for some $\lambda$, $L$, find $\kappa_I >0$ 
 and extrapolate to $\kappa_I=0$.
 
-The spacing of points for $\xi<0$ was chosen so that there was a concentration
-of points near $-L$ and near $0$.
 
 %
 %
