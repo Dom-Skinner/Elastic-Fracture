@@ -45,7 +45,7 @@ hold on
 p1 = plot(ax,x,hprime(:,2),'LineWidth',2);
 p2 = plot(x,hprime(:,10),':','LineWidth',2);
 
-axis( [0, 2.5, 0.8,3]);
+axis( [0, 2, 0.8,2.5]);
 axis square
 xlabel(ax,'$ \xi $','Interpreter','latex','fontsize',25);
 ylabel(ax,'$ H'' $','Interpreter','latex','fontsize',25);
@@ -84,7 +84,7 @@ set(get(ax,'YLabel'),'Rotation',0)
 subplot(2,3,2)
 ax = gca;
 plot(ax,x,gprime(:,1),x,gprime(:,10),':','LineWidth',2)
-axis( [0, 2, 0,2]);
+axis( [0, 2, 0.5,1.5]);
 axis square
 
 xlabel(ax,'$ \xi $','Interpreter','latex','fontsize',25);
@@ -93,7 +93,7 @@ ylabel(ax,'$ G'' $','Interpreter','latex','fontsize',25);
 set(ax,'TickLabelInterpreter', 'latex');
 set(ax,'fontsize',20')
 set(get(ax,'YLabel'),'Rotation',0)
-set(get(ax,'YLabel'),'Rotation',0, 'Position', [-0.4, 1.5])
+set(get(ax,'YLabel'),'Rotation',0, 'Position', [-0.4, 1])
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 subplot(2,3,5)
@@ -116,10 +116,9 @@ set(get(ax,'YLabel'),'Rotation',0)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 subplot(2,3,3)
 ax = gca;
-g = lambda(10)/4/KI(10)^2;
 
-plot(z,p(:,1),z,p(:,10),':','LineWidth',2)
-axis( [0, 3, -3,0.5]);
+plot(z,lambda(2)*p(:,2),z,lambda(10)*p(:,10),':','LineWidth',2)
+axis( [0, 2, -1,0]);
 axis square
 
 xlabel(ax,'$ \xi $','Interpreter','latex','fontsize',25);
@@ -133,10 +132,12 @@ set(get(ax,'YLabel'),'Rotation',0, 'Position', [-0.4, -1.5])
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 subplot(2,3,6)
 ax = gca;
-plot(ax,log(z),p(:,1),'+',log(z),p(:,10),'d',[-10,0],...
-    lambda(10)*9*pi/(2*K(10)^2)*[-10,0],'LineWidth',2)
-hold on
-axis( [-10, 5, -35,1]);
+
+plot(ax,log(z),lambda(2)*p(:,2),'+', ...
+     log(z),lambda(10)*p(:,10),'d',...
+     [-16,-6],lambda(2)*9*pi/(2*K(2)^2)*[-16,-6], 'k', ...
+    [-16,-8],lambda(10)*9*pi/(2*K(10)^2)*[-16,-8]+ 7.4, 'k','LineWidth',2)
+axis( [-16, 1, -16,1]);
 axis square
 
 xlabel(ax,'$ \log(\xi) $','Interpreter','latex','fontsize',25);
@@ -164,7 +165,7 @@ fprintf(fid,'K,  z,   pressure\n');
 for l = [2,10]
 for j = 1:numel(z)
     fprintf(fid, '%.5e,    %.5e,   %.5e \n',...
-        K(l),z(j), p(j,l) );
+        K(l),z(j), lambda(l)*p(j,l) );
 end
 end
 fclose(fid);

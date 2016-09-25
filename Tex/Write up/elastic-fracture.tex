@@ -447,31 +447,38 @@ and extrapolate to $\kappa_I=0$.
 Start off with some of the basic graphs showing $H'$,$G'$, and $\Pi$ against
 $\xi$.
 \begin{figure}
-  \centerline{\includegraphics{./../../Graphs/hprime-p-x-full-edited.pdf}}
-  \caption{Numerical solutions for two typical $\kappa_I$ values. log-log plots
-           are shown for $H'$,$G'$, with solid lines indicating the predicted 
-           asymptotics; $\xi^{-1/2}$ singularities near $\xi=0$, and  $H' \sim x$ 
-           as $\xi \to \infty$. Figure produced with $n=465$, $x_n=819$.}
+  \centerline{\includegraphics{./../../Graphs/hprime-p-x-full.pdf}}
+  \caption{Numerical solutions for two typical values of $\kappa_I$. 
+           Logarithmic scales are shown, with solid lines indicating the 
+           predicted asymptotics; $H', G' \propto \xi^{-1/2}$, 
+           $\Pi \propto \log(\xi)$, near $\xi=0$, 
+           $H' \to \xi$, $G'\to 1/2$ as $\xi \to \infty$. 
+           Figure produced with $n=465$, $\xi_n=819$.}
 \end{figure}
 \begin{figure}
-  \centerline{\includegraphics{./../../Graphs/K-lambda.pdf}}
+  \centerline{\includegraphics{./../../Graphs/K-lambda-edited.pdf}}
   \caption{Here we vary the parameter $\lambda$ and plot the change in 
-           $\kappa_I$. Figure produced with $n=465$, $x_n = 819$.}
+           $\kappa_I$. Figure produced with $n=465$, $\xi_n = 819$.}
 \end{figure}
 \begin{figure}
   \centerline{\includegraphics{./../../Graphs/hprime-x.pdf}}
   \caption{As $\kappa_I\to 0$, $H'$ moves from a $\xi^{-1/2}$ singularity
            to a $\xi^{-1/3}$ singularity. We can not calculate $\kappa_I=0$, 
-           but the extrapolation to it is shown.}
+           but the extrapolation to it is shown. Figure produced with $n=465$,
+           $\xi_n = 819$.}
 \end{figure}
 \begin{figure}
-  \centerline{\includegraphics{./../../Graphs/l0.pdf}}
-  \caption{A linear fit from the two smallest $\kappa_I$ values is plotted, 
-           as is a quadratic fit from the three smallest $\kappa_I$ values.
+  \centerline{\includegraphics{./../../Graphs/l0-edited.pdf}}
+  \caption{The numerical values of $\kappa_I^u$ are plotted as points against
+           the values of $\lambda$. A linear fit from the two smallest $\kappa_I$ 
+           values is plotted 
+           as a solid line, a quadratic fit from the three smallest $\kappa_I$ 
+           values is plotted as a dashed line.
            They are almost indistiguishable at this scale. 
            The difference between the two extrapolations to $\kappa_I=0$,  
            provides an estimate of the error in calculating $\lambda_0$, 
-           (not accounting for the error due to $n$.) }
+           (not accounting for the error due to $n$), which in this instance is 
+           $\approx 0.002\%$. This figure was made with $n=524$, $\xi_n=846$. }
 \end{figure}
 
 \subsection{Linear perturbation problem}
