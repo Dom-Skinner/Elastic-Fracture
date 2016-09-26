@@ -1,4 +1,3 @@
-pdf(file = "./Documents/Summer-Project/Elastic-Fracture/Graphs/hprime-p-x-full-temp.pdf", useDingbats = FALSE, width = 6, height = 3.8)
 dat <- read.csv("./Documents/Summer-Project/Elastic-Fracture/Graphs/hprime-p-x-full-1.csv")
 dat$K <- factor(dat$K, labels=c("K=0.74","K=1.82"))
 
@@ -133,6 +132,7 @@ g4 = ggplotGrob(p4)
 g5 = ggplotGrob(p5)
 g6 = ggplotGrob(p6)
 
+pdf(file = "./Documents/Summer-Project/Elastic-Fracture/Graphs/hprime-p-x-full.pdf", useDingbats = FALSE, width = 6, height = 3.8)
 p + annotation_custom(grob = g1, xmin = 0, xmax = 200, ymin = 200, ymax = 400) +
 annotation_custom(grob = g2, xmin = 200, xmax = 400, ymin = 200, ymax = 400) +
 annotation_custom(grob = g3, xmin = 390, xmax = 600, ymin = 200, ymax = 400) + 

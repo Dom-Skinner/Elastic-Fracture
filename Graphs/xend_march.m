@@ -1,19 +1,20 @@
 clear 
 %load xend_march
 % The code that created the data in xend_march is commented out below.
+% or n350x880 etc.
 
 %%{
 l0_est=[];
 D_est=[];
 n_used=[];
    
-n = 400;
+n = 601;
 t = round(n/2);
 
 xmax = 15;
-x = tan((0:n-1)*atan((xmax)^(1/3))/(n-1)).^3;
-z = tan((0.5:1:n-1.5)*atan((xmax)^(1/3))/(n-1)).^3;
-scale = x(n)/x(n-1);
+x = tan((0:n-1)*atan((xmax)^(1/2))/(n-1)).^3;
+z = tan((0.5:1:n-1.5)*atan((xmax)^(1/2))/(n-1)).^3;
+scale = 1.0000*x(n)/x(n-1);
     
 s = 0.138673;
 u = 4 - 6*s;
@@ -31,12 +32,12 @@ while x(n) < 10
 end
 xmax = x(n);
 
-upper_lim = 900;
+upper_lim = 898;
 while xmax < upper_lim
-    if x(n) * scale <upper_lim -2
+    if x(n) * scale <upper_lim  
         lambda = 0.0584:0.0004:0.0588;
     else
-        lambda = 0.0570:0.0001:0.0589;
+        lambda = 0.0578:0.0001:0.0588;
     
     scaled_K_of_c_march
     K = 3*sqrt(2*pi)*KI;

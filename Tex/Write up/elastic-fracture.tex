@@ -444,8 +444,6 @@ and extrapolate to $\kappa_I=0$.
 %
 %
 \subsection{Single tip}
-Start off with some of the basic graphs showing $H'$,$G'$, and $\Pi$ against
-$\xi$.
 \begin{figure}
   \centerline{\includegraphics{./../../Graphs/hprime-p-x-full.pdf}}
   \caption{Numerical solutions for two typical values of $\kappa_I$. 
@@ -461,7 +459,7 @@ $\xi$.
            $\kappa_I$. Figure produced with $n=465$, $\xi_n = 819$.}
 \end{figure}
 \begin{figure}
-  \centerline{\includegraphics{./../../Graphs/hprime-x.pdf}}
+  \centerline{\includegraphics{./../../Graphs/hprime-x.pdf}}\label{fig:hprime-x}
   \caption{As $\kappa_I\to 0$, $H'$ moves from a $\xi^{-1/2}$ singularity
            to a $\xi^{-1/3}$ singularity. We can not calculate $\kappa_I=0$, 
            but the extrapolation to it is shown. Figure produced with $n=465$,
@@ -480,22 +478,32 @@ $\xi$.
            (not accounting for the error due to $n$), which in this instance is 
            $\approx 0.002\%$. This figure was made with $n=524$, $\xi_n=846$. }
 \end{figure}
-
+\subsubsection{Calculating $H$ for $\kappa_I =0$}
+$H(\xi ; \kappa_I=0)$ will be needed for the linear pertubation problem.
+Numerically, for each $\xi_i$, $H'(\xi_i; \kappa_I = 0)$ is extrapolated
+from $H'(\xi_i, \kappa_j)$ from two $\kappa_j$ values. Figure 
+\ref{fig:hprime-x} shows that $H'(\xi; 0.21)$ 
+is a good approximation to $H'(\xi;0)$, away from a boundary 
+layer near $\xi=0$. The size of the boundary layer becomes smaller as $\kappa_I$
+decreases, but to avoid using very small values of $\kappa_I$, the effects
+of the boundary layer are removed by simply extending the linear trend present
+in $0.002 < \xi < 0.003$ all the way to $\xi=0$.
 \subsection{Linear perturbation problem}
 We solve the linear perturbation problem. All that we really want to know
-is that we see the $\xi^{s-1}$ behaviour that we expect, and we ask what the
-intercept of $\tilde{H}_1$ is. It is perhaps worth mentioning the difficulties
+is that we see the $\tilde{H} \sim \xi^{s}$ behaviour that we expect, and we ask what the
+intercept of $\tilde{H}$ is. It is perhaps worth mentioning the difficulties
 in measuring the intercept and perhaps a notion of the sensitivity of the 
 result on the estimate provided for $H_0$. Illustrating that is the next
 figure 
 
 \begin{figure}
  \centerline{
-\includegraphics{./../../Graphs/linear-perturbation-plot-edited.pdf}}
-  \caption{The numerical solution of the linear perturbation problem for a selection of
-           resolutions. Of interest is the value of the intercept, which as shown is dependent
-           on the resolution. Also shown is the numerical instability near the tip, due to our 
-           difficulty in calculating $H_0$ for $\xi \ll 1$.}
+\includegraphics{./../../Graphs/linear-perturbation-plot.pdf}}
+  \caption{The numerical solution of the linear perturbation problem near 
+           $\xi=0$ for a selection of resolutions, all with $\xi_n = 875$. Of 
+           interest, is the value of the intercept, which as shown is dependent
+           on the resolution. Also shown is the numerical divergence near the 
+           tip, due to the difficulty in calculating $H_0$ for $\xi \ll 1$.}
 \end{figure}
 
 \subsection{Two tips}

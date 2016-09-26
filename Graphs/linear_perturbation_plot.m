@@ -1,6 +1,6 @@
 clear
-n_val = [350,524,815];
-x_val = [873,846,846];
+n_val = [350,525,700];
+x_val = [875,875,875];
 
 %n_val = [350,407,465,524,605,698,815];
 %x_val = [873,822,819,846,833,832,846];
@@ -8,7 +8,7 @@ x_val = [873,846,846];
 s = 0.138673;
 
 for k = 1:numel(n_val)
-     file = strcat('n', num2str(n_val(k)), 'x', num2str(x_val(k)),'-mod');
+     file = strcat('n', num2str(n_val(k)), 'x', num2str(x_val(k)));
     load(file)
     s = 0.138673;
     u = 4 - 6*s;
@@ -68,12 +68,13 @@ end
 
 
 
+return
 
 fid = fopen('linear-perturbation-plot.csv','w');
 fprintf(fid,'n,  x,     Htilde,  \n');
 
 for k = 1:numel(n_val)
-    file = strcat('n', num2str(n_val(k)), 'x', num2str(x_val(k)),'-mod');
+    file = strcat('n', num2str(n_val(k)), 'x', num2str(x_val(k)));
     load(file)
     s = 0.138673;
     u = 4 - 6*s;
@@ -95,7 +96,7 @@ for k = 1:numel(n_val)
     [~,H_LEFM_23] = linear_perturbation_solve(n,t,x,z, h0_LEFM_23,...
         h0_LEFM_23_z,l0,kernel_matrix,s);
 
-    for j = 1:numel(x)
+    for j = 2:numel(x) %start from 2 since 1 is NaN
     fprintf(fid, '%d,    %.5e,    %.5e \n',...
         n,x(j), H_LEFM_23(j)*x(j)^(-s));
     end

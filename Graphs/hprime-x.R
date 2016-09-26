@@ -4,6 +4,9 @@ dat$K <- factor(dat$K, levels=c("one","two","three","five","interp"),labels=c("K
 #After some reflection, there doesn't appear to be any easy way to extract the K values from the data file, so I've just hard coded them in here...
 
 library(ggplot2)
+library(scales)     # Need the scales package
+library(grid) 
+library(gtable)
 cbPalette <- c("#e41a1c","#377eb8","#4daf4a","#984ea3","#000000")
 
 p <- ggplot(data=dat, aes(x=x, y= hprime,group=K,shape=K,color=K))  +

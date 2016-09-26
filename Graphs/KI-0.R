@@ -1,4 +1,3 @@
-# Remember to run multiplot before using this script (should be in /Graphs)
 pdf(file = "./Documents/Summer-Project/Elastic-Fracture/Graphs/KI-0.pdf", useDingbats = FALSE, width = 6, height = 2)
 
 dat <- read.csv("./Documents/Summer-Project/Elastic-Fracture/Graphs/KI-0.csv")
@@ -7,38 +6,51 @@ library(ggplot2)
 cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73","#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 p1 <- ggplot(data=dat, aes(x=l0, y= KII2))  +
-      geom_line(linetype="solid", size=0.2) +
-      geom_point(size=0.75) +
+      geom_line(linetype="solid", size=0.3) +
+      geom_point(size=1,shape=15) +
       scale_colour_manual(values=cbPalette1,name  = NULL) +
-     # scale_shape_manual(values = c(15,16,17,18), name  = NULL) +
-      coord_cartesian(ylim=c(0,2),xlim=c(0.057,0.101),expand=FALSE) +
+      coord_cartesian(ylim=c(0,2),xlim=c(0.055,0.105),expand=FALSE) +
       ylab(expression(K[II]^2))+ xlab(expression(lambda[0]))+
-      theme_bw() +
-      theme(plot.margin = unit(c(0.2,0.5,0,0), "cm")) + # ("top", "right", "bottom", "left")
-      theme(axis.title = element_text(size=8,family="Palatino"), axis.text  = element_text(size=6))
+      theme_custom() +
+      #theme(plot.margin = unit(c(0.2,0.5,0,0), "cm")) + # ("top", "right", "bottom", "left")
+      theme(axis.title = element_text(size=8,family="Palatino"))
 
 
 p2 <- ggplot(data=dat, aes(x=L, y= KII0))  +
-      geom_line(linetype="solid", size=0.2) +
-      geom_point(size=1) +
+      geom_line(linetype="solid", size=0.3) +
+      geom_point(size=1,shape=15) +
       scale_colour_manual(values=cbPalette1,name  = NULL) +
-     # scale_shape_manual(values = c(15,16,17,18), name  = NULL) +
-     # coord_cartesian(ylim=c(0.1,0.4),xlim=c(0.8,3.4),expand=FALSE) +
+      coord_cartesian(ylim=c(-0.25,1.5),xlim=c(0,3),expand=FALSE) +
      ylab(expression(K[II]))+
-      theme_bw() +
-      theme(plot.margin = unit(c(0.2,0.5,0,0), "cm")) + # ("top", "right", "bottom", "left")
-      theme(axis.title = element_text(size=8,family="Palatino"), axis.text  = element_text(size=6))
+      theme_custom() +
+      #theme(plot.margin = unit(c(0.2,0.5,0,0), "cm")) + # ("top", "right", "bottom", "left")
+      theme(axis.title = element_text(size=8,family="Palatino"))
 p3 <- ggplot(data=dat, aes(x=L, y= l0))  +
-      geom_line(linetype="solid", size=0.2) +
-      geom_point(size=1) +
+      geom_line(linetype="solid", size=0.3) +
+      geom_point(size=1,shape=15) +
       scale_colour_manual(values=cbPalette1,name  = NULL) +
-     # scale_shape_manual(values = c(15,16,17,18), name  = NULL) +
-     # coord_cartesian(ylim=c(0.1,0.4),xlim=c(0.8,3.4),expand=FALSE) +
-     ylab(expression(lambda[0]))+ 
-      theme_bw() +
-      theme(plot.margin = unit(c(0.2,0.5,0,0), "cm")) + # ("top", "right", "bottom", "left")
-      theme(axis.title = element_text(size=8,family="Palatino"), axis.text  = element_text(size=6))
+      coord_cartesian(ylim=c(0.055,0.105),xlim=c(0,3),expand=FALSE) +
+      ylab(expression(lambda[0]))+ 
+      theme_custom()+
+      #theme(plot.margin = unit(c(0.2,0.5,0,0), "cm")) + # ("top", "right", "bottom", "left")
+      theme(axis.title = element_text(size=8,family="Palatino"))
    
- multiplot(p1,p2,p3, cols=3)
- 
+
+g1 = plot_custom(p1)
+g2 = plot_custom(p2) 
+g3 = plot_custom(p3) 
+    
+p <- ggplot(mtcars, aes(x = wt, y = mpg)) + geom_blank() +
+     coord_cartesian(xlim=c(0,600),ylim=c(0,200),expand=FALSE) +
+     theme(axis.line=element_blank(),axis.text.x=element_blank(),
+          axis.text.y=element_blank(),axis.ticks=element_blank(),
+          axis.title.x=element_blank(),
+          axis.title.y=element_blank(),legend.position="none",
+          panel.background=element_blank(),panel.border=element_blank(),panel.grid.major=element_blank(),
+          panel.grid.minor=element_blank(),plot.background=element_blank())
+
+pdf(file = "./Documents/Summer-Project/Elastic-Fracture/Graphs/KI-0.pdf", useDingbats = FALSE, width = 6, height = 2)
+p + annotation_custom(grob = g1, xmin = -20, xmax = 190, ymin = -20, ymax = 200) +
+annotation_custom(grob = g2, xmin = 190, xmax = 400, ymin = -20, ymax = 200) +
+annotation_custom(grob = g3, xmin = 400, xmax = 610, ymin = -20, ymax = 200)
  dev.off()
