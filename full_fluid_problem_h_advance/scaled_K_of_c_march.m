@@ -5,7 +5,7 @@ xmax = x(n);
 
 
 
-L = 1:0.6:3.4;
+L = 0.8:0.2:3.4;
 % 0.01;        early
 % 0.2:0.2:0.6; mid
 % 0.8:0.2:3.4; late
@@ -14,7 +14,7 @@ L = 1:0.6:3.4;
 
 
 %some values of lambda to try
-lambda = 0.07:0.005:0.09;
+lambda = 0:0.005:0.085;
 % 0:0.008:0.058;    early
 % 0.04:0.005:0.065; mid
 % 0:0.005:0.085;    late
@@ -58,11 +58,13 @@ end
 %%{
 s = 0.138673;
 u = 4-6*s;
+%%{
 p1 = polyfit(KI(end-2:end,j).^u,lambda(end-2:end)',1);
 l0(j) = p1(2);
 p1 = polyfit(lambda(end-1:end)',KII(end-1:end,j),1);
 p2 = polyfit(lambda(end-2:end)',KII(end-2:end,j),2);
 KII0(j) = p2(1)*l0(j)*l0(j)+p2(2)*l0(j)+p2(3);
+%}
 %er = abs(p2(1)*l0(j)*l0(j)+p2(2)*l0(j)+p2(3) - (p1(1)*l0(j)+p1(2)));
 % line above if you want some idea of the extrapolation error.
 

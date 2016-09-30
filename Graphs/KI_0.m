@@ -40,7 +40,7 @@ ylabel('K_{II}')
 
 fid = fopen('KI-0.csv','w');
 fprintf(fid,'KII0,     l0,    KII2,      L\n');
-for j = 1:numel(L)
+for j = 1:numel(L1)
     fprintf(fid, '%.5e,    %.5e,   %.5e,     %.5e \n', ...
         K2(j), lam1(j), K2(j)^2, L1(j));
 end

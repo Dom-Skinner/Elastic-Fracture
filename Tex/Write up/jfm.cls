@@ -804,7 +804,7 @@
   %{\normalfont\small (Received \@date)}% x@rem
   \normalfont\small
   \@history@alignment%
-  (Received xx; revised xx; accepted xx)\hfill% x@add
+  (Received \today; revised xx; accepted xx)\hfill% x@add
   \put@absrule
  \par}%
  \vskip 8\p@ \@plus 2\p@ \@minus 1\p@
