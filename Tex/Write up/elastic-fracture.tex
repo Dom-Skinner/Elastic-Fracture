@@ -52,10 +52,40 @@ typesetting process (see http://journals.cambridge.org/data/
 \end{keywords}
 
 \section{Introduction}\label{sec:introduction}
-Here we review the literature as well as describe the problem in more detail.
-We have the vertical displacement $h$, the horizontal displacement $g$, the
-thickness of the arm $l$, and the pressure $p$.
-We look for a travelling wave solution (propagating left), with speed $c$.
+Consider a semi infinite elastic solid, with a thin strip peeled off, and the
+resulting crack filled with an incompressible fluid with viscosity $\mu$, as
+shown in figure \ref{fig:diagram}. The
+motion is driven by a constant bending moment $M$. We look for travelling wave
+solutions, propagating with speed $c$. We define the origin to be 
+instantaneously at the crack tip, and the positive $x$ axis to be aligned
+in the direction of the crack.
+We define the vertical displacement to be $h(x)$, the horizontal 
+displacement to be $g(x)$, and the thickness of the strip as $l$.
+%
+\begin{figure}
+  \centerline{\includegraphics{./../Fig1.pdf}}\label{fig:diagram}
+  \caption{Diagram of the geometry. \textbf{Redo this diagram}}
+           
+\end{figure}
+%
+
+The flow is assumed to be in lubrication everywhere. The fracture
+is assumed to obey linear elastic fracture mechanics, which describes
+well the fracture of brittle solids. Since we have posed a two dimensional
+problem, only mode I and mode II fractures are of relevance. These are governed
+by two fracture toughness constants $K_I$, $K_{II}$. This paper will calculate
+the speed of travelling waves $c$ for any combination of $K_I$, $K_{II}$.
+To do that, we also consider a geometry where the mode II fracture preceeds 
+the fluid tip. 
+
+The problem considered here is relevant to the physical problem of the 
+expansion of a magma bubble just under the surface, 
+with the motion being driven by a flux of magma into the bubble.
+Consider just the outer edges of such an expanding bubble. Looking at just
+the crack tip, the problem becomes the one studied in this paper, where the
+motion is driven by some far off bending moment.
+
+
 %
 % 
 \section{Formulation of problem}\label{sec:formulation_of_problem}
@@ -77,8 +107,8 @@ Setting $p\to 0$ at $x \to \infty$, we can write this in integral form,
 p(x) = -\int_x^{\infty} 12\mu c / h(\tilde{x})^2 \mrd \tilde{x} \, .
 \end{equation}
 
-From the linear theory of elasticity, due to others who have studied this 
-problem, we have
+From (citations to relevant papers) who have studied an elastic solid
+with the same geometry, we have
 \begin{equation}
 \setlength{\arraycolsep}{2pt}
 \left[ \begin{array}{c} 
@@ -114,15 +144,17 @@ K_{21} & K_{22} \\
 -\frac{(32 - 24\xi^2)}{(\xi^2+4)^3} 
 \end{array}  \right] \, .
 \end{equation}
-The boundary conditions near $x=0$ are governed by fracture mechanics
+The boundary conditions near $x=0$ are governed by fracture mechanics,
 \refstepcounter{equation}
 $$
-K_I =\lim_{x \to 0} \frac{E}{1-\nu^2} \sqrt{\frac{\upi}{8}} \sqrt{x} \, h'(x)
+K_I \geq \lim_{x \to 0} \frac{E}{1-\nu^2} \sqrt{\frac{\upi}{8}} \sqrt{x} \, h'(x)
 \, ,\qquad
-K_{II} =\lim_{x \to 0} \frac{E}{1-\nu^2} \sqrt{\frac{\upi}{8}} \sqrt{x} \,
+K_{II} \geq \lim_{x \to 0} \frac{E}{1-\nu^2} \sqrt{\frac{\upi}{8}} \sqrt{x} \,
 g'(x) \, .
 \eqno{(\theequation{\mathit{a},\mathit{b}})}
 $$
+Where equality holds in at least one of the two equations.
+
 As we go to $x \gg l$, we are looking at the problem of peeling off a thin
 strip from an elastic half space. We can then use beam theory approximations,
 which give
@@ -137,19 +169,18 @@ As $x \to \infty$, $M(x) \to M$, the applied bending moment, so this gives
 us boundary conditions on $h''$, $g'$.
 %
 \subsection{Double tip}
-The equations are mostly unchanged from the single tip problem. From the
-geometry of the double tip problem, a second crack tip is situated at
-$x = -lL$, and $h(x),h'(x) =0$ for $x < 0$. The boundary conditions at $\infty$
-are unaffected, and the boundary conditions at the crack tip become
+Consider the mode II fracture preceeding the fluid tip at $x=0$ by
+a distance $lL$, so $h(x),h'(x) =0$ for $-lL < x < 0$ (but $g \neq 0$).
+Since the solid has already fractured, $h'(x)$ does not have an $x^{-1/2}$
+singularity at $x=0$. The boundary conditions at the crack tip become
 \refstepcounter{equation}
 $$
-\lim_{x \to 0} \sqrt{x} \, h'(x) = L
+\lim_{x \to 0} \sqrt{x} \, h'(x) = 0
 \, ,\qquad
 \lim_{x \to -Ll} \frac{E}{1-\nu^2} \sqrt{\frac{\upi}{8}} \sqrt{x} \,
 g'(x) \, =K_{II} .
 \eqno{(\theequation{\mathit{a},\mathit{b}})}
 $$
-The limits in the elasticity integral become $(-Ll,\infty)$.
 %
 \subsection{Rescaling}
 %
@@ -188,9 +219,9 @@ $$
 \begin{equation}
 \lim_{\xi \to \infty} H'' = 1 , \quad \lim_{\xi \to \infty} G' = \frac{1}{2}
 ,\quad
-\lim_{\xi \to 0} 3\sqrt{2\upi \xi} H' = \kappa_I , 
+\lim_{\xi \to 0} 3\sqrt{2\upi \xi} H' \leq \kappa_I , 
 \quad
-\lim_{\xi \to 0} 3\sqrt{2\upi \xi} G' = \kappa_{II} , 
+\lim_{\xi \to 0} 3\sqrt{2\upi \xi} G' \leq \kappa_{II} , 
 \end{equation}
 
 These shall be the governing equations for the rest of this paper.
@@ -313,8 +344,8 @@ $\Pi(\zeta_i)$ as a function of $\boldsymbol{\theta}_H$. So we can write
 \end{equation}
 for some function $\boldsymbol{f}$.
 
-Both $G'(\xi_n)$, and $H''(\xi_n)$ are known from our beam theory
-asymptotic expansion. But these are linear in $\boldsymbol{\theta}$, as
+The values of both $G'(\xi_n)$, and $H''(\xi_n)$ are known from our beam theory
+asymptotic expansion. But these are linear in $\boldsymbol{\theta}$, since
 $G'(\xi_n) = \theta_n$, and 
 $H''(\xi_n) \approx (\theta_{2n}-\theta_{2n-1})/(\xi_n-\xi_{n-1}) $, 
 Therefore we can 
@@ -362,24 +393,22 @@ Therefore we can write
 \begin{equation}
 a_n = \frac{G''(\xi_n)}{G'(\xi_n)} \theta_n, \qquad
 b_n  = \theta_n - a_n \xi_n = \left( 1 - \frac{G''(\xi_n)}
-{G'(\xi_n)}\xi_n \right) \theta_n
+{G'(\xi_n)}\xi_n \right) \theta_n.
 \end{equation}
 With $H$, we know that $c_n = H''(\xi_n)$, $c_{n-1} = H''(\xi_{n-1})$, and
 so we have that 
 \begin{equation}
 c_n = \frac{H''(\xi_n)}{H''(\xi_{n-1})} c_{n-1}, \qquad
-d_n = -c_n \xi_n + c_{n-1}\xi_n + d_{n-1}
+d_n = -c_n \xi_n + c_{n-1}\xi_n + d_{n-1}.
 \end{equation}
 Therefore, we have enough equations to know the $a_i-d_i$ in terms of 
 $\boldsymbol{\theta}$.
 
-Note that we choose a value of $\lambda$, fix the boundary conditions
-at $\xi \to \infty$, then solve the problem and subsequently recover
+Note that numerically, we choose a value of $\lambda$, 
+solve the problem and subsequently recover
 the boundary conditions at $\xi=0$ ($\kappa_I$, $\kappa_{II}$).
-This can then be inverted, so that we think of $\lambda = \lambda(\kappa_I)$.
-Physically, we know $\kappa_I$, and want to find $\lambda$, but in numerically
-solving the problem, it makes more sense to choose $\lambda$ and recover 
-$\kappa_I$.
+This can then be inverted, so that we think of $\lambda = \lambda(\kappa_I)$,
+since this is the physical interpretation.
 
 The spacing of the points should reflect that the important 
 part of the problem is happening near the tip, and this is where the points
@@ -430,28 +459,39 @@ $\sigma_{xy} = 0$ for $\xi < 0$. This provides enough equations for the problem
 to be solved as before, with Newton's method. 
 
 Note that we input $-L$ and $\lambda$ and recover $\kappa_I$, $\kappa_{II}$, where 
-$\kappa_I$ is measured at $0$. Physically, for $L>0$, we must have
-$\kappa_I=0$. Numerically we solve for some $\lambda$, $L$, find $\kappa_I >0$ 
-and extrapolate to $\kappa_I=0$.
-
+$\kappa_I$ is measured at $0$. From this, we extrapolate to $\kappa_I =0$, and
+invert the relations so that $\lambda = \lambda(\kappa_{II})$, 
+$L = L(\kappa_{II})$, to reflect the physical interpretation.
 
 %
 %
 % 
-\clearpage
 \section{Results}\label{sec:Results}
 %
 %
 %
 \subsection{Single tip}
+The single problem was solved numerically for the full range of $\lambda$ values,
+$0 \leq \lambda < 0.059$, which corresponds to the values $0 < \kappa_I \leq 1.9$.
+We have arbitrarily chosen $\kappa_I$ as the parameter determining the speed, 
+although it would have been equally valid to consider $\kappa_{II}$ as the 
+independant parameter.
+The results for $H$, $G$, and $\Pi$ are shown in figure \ref{fig:hprime-p-x-full},
+where the predicted asymptotics are shown as solid lines. These predicted 
+asymptotics are namely that near $\xi =0$, 
+$H' \sim \kappa_I\xi^{-1/2}/(3\sqrt{2 \upi} ) $,
+$G' \sim \kappa_{II}\xi^{-1/2}/(3\sqrt{2 \upi} ) $,
+$\Pi \sim 9\upi \lambda/(2 \kappa_I^2) \, \ln(\xi)$, 
+and that as $\xi \to \infty$, 
+$G' \to 1/2$, $H' \sim \xi$, $\Pi \to 0$.
 \begin{figure}
   \centerline{\includegraphics{./../../Graphs/hprime-p-x-full.pdf}}
   \caption{Numerical solutions for two typical values of $\kappa_I$. 
            Logarithmic scales are shown, with solid lines indicating the 
            predicted asymptotics; $H', G' \propto \xi^{-1/2}$, 
-           $\Pi \propto \log(\xi)$, near $\xi=0$, 
-           $H' \to \xi$, $G'\to 1/2$ as $\xi \to \infty$. 
-           Figure produced with $n=465$, $\xi_n=819$.}
+           $\Pi \propto \ln(\xi)$, near $\xi=0$, 
+           $H' \to \xi$, $G'\to 1/2$, $\Pi \to 0$ as $\xi \to \infty$. 
+           Figure produced with $n=465$, $\xi_n=819$.}\label{fig:hprime-p-x-full}
 \end{figure}
 \begin{figure}
   \centerline{\includegraphics{./../../Graphs/K-lambda-edited.pdf}}
@@ -524,7 +564,8 @@ We now move on to the $\kappa_I=0$ set of relations.
 \begin{figure}
  \centerline{
 \includegraphics{./../../Graphs/KI-0.pdf}}
-  \caption{The results of extrapolating to $\kappa_I = 0$. Figure 
+  \caption{The results of extrapolating to $\kappa_I = 0$. Hollow squares 
+           indicate a value of $\kappa_{II} <0$. Figure 
            made with $n = 995$, $\xi_n = 846$.}
 \end{figure}
 
@@ -540,42 +581,47 @@ We now move on to the $\kappa_I=0$ set of relations.
 \begin{figure}
  \centerline{
 \includegraphics{./../../Graphs/overall-fit.pdf}}
-  \caption{The formula valid for all $\kappa_I$. For the single tip 
+  \caption{The formula (solid lines) giving good approximation to the 
+           calculated values (symbols). For the single tip
            calculations, $n=815$ was used, for the double tip $n=995$. 
-           $\xi_n = 846$ in both cases.  }
+           $\xi_n = 846$ in both cases.  }\label{fig:overall-fit}
 \end{figure}
+Approximate formula in the single tip case:
+\begin{equation}
+\lambda \approx 0.059 -0.0083 \kappa_I^u + 0.00033 \kappa_I^{3u/2}
+\end{equation}
+\begin{equation}
+\lambda \approx -1.5 +2.7 \kappa_{II} -1.1 \kappa_{II}^2
+\end{equation}
+In the double tip case: 
+\begin{equation}
+\lambda \approx 0.10 - 0.022\kappa_{II}^2
+\end{equation}
+These equations provide a fairly good approximation to the data, see figure
+\ref{fig:overall-fit}.
 
-Then we could move on to talk about the decoupling between the fluid problem
-and the dry fracture problem. Relavent graphs to include would show that
-$H$ really doesn't vary much with $\lambda_0$, and that given a reference
-$H'$, one can construct $G'$ with relative ease.
+From dry fracture mechanics and conservation of energy, one expects a 
+relationship of the form $\lambda = \alpha + \beta \kappa_{II}^2$. However, 
+in this case, $\alpha$ and $\beta$ should depend on the geometry, $H$, and 
+so should be functions of $\kappa_{II}$. However, numerical evidence shows 
+them as being approximately
+constant. Part of the reason for this, is the decoupling between the fluid 
+problem and the dry tip. Suppose one solves the two tip problem, for some $L$. 
+This gives a geometry, the reference $H'$. From this, one can choose any
+$\lambda$, and find $G'$, and value of $\kappa_{II}$. The effect of this is
+shown in figure \ref{fig:fixed-fluid}, a changing $H'$ has little effect
+on the $\lambda$, $\kappa_{II}$ relationship.
+
 
 \begin{figure}
  \centerline{
 \includegraphics{./../../Graphs/fixed-fluid.pdf}}
   \caption{Reconstructing the full solution given a reference $H'$. Figure 
-           made with $n=995$, $\xi_n = 846$.}
+           made with $n=995$, $\xi_n = 846$.}\label{fig:fixed-fluid}
 \end{figure}
 \section{Discussion}
 
 \clearpage
-
-\begin{table}
-  \begin{center}
-\def~{\hphantom{0}}
-  \begin{tabular}{lccc}
-      $a/d$  & $M=4$   &   $M=8$ & Callan \etal \\[3pt]
-       0.1   & 1.56905 & ~~1.56~ & 1.56904\\
-       0.3   & 1.50484 & ~~1.504 & 1.50484\\
-       0.55  & 1.39128 & ~~1.391 & 1.39131\\
-       0.7   & 1.32281 & ~10.322 & 1.32288\\
-       0.913 & 1.34479 & 100.351 & 1.35185\\
-  \end{tabular}
-  \caption{Values of $kd$ at which trapped modes occur when $\rho(\theta)=a$}
-  \label{tab:kd}
-  \end{center}
-\end{table}
-
 \section{Citations and references}
 All papers included in the References section must be cited in the article, and vice versa. Citations should be included as, for example ``It has been shown \citep{Rogallo81} that...'' (using the {\verb}\citep} command, part of the natbib package) ``recent work by \citet{Dennis85}...'' (using {\verb}\citet}).
 The natbib package can be used to generate citation variations, as shown below.\\
@@ -593,226 +639,6 @@ The References section can either be built from individual \verb#\bibitem# comma
 Where there are up to ten authors, all authors' names should be given in the reference list. Where there are more than ten authors, only the first name should appear, followed by et al.\\
 
 Acknowledgements should be included at the end of the paper, before the References section or any appendicies, and should be a separate paragraph without a heading. Several anonymous individuals are thanked for contributions to these instructions.
-
-\appendix
-\section{}\label{appA}
-This appendix contains sample equations in the JFM style. Please refer to the {\LaTeX} source file for examples of how to display such equations in your manuscript.
-
-\begin{equation}
-  (\nabla^2+k^2)G_s=(\nabla^2+k^2)G_a=0
-  \label{Helm}
-\end{equation}
-
-\begin{equation}
-  \bnabla\bcdot\boldsymbol{v} = 0,\quad \nabla^{2}P=
-    \bnabla\bcdot(\boldsymbol{v}\times \boldsymbol{w}).
-\end{equation}
-
-\begin{equation}
-  G_s,G_a\sim 1 / (2\upi)\ln r
-  \quad \mbox{as\ }\quad r\equiv|P-Q|\rightarrow 0,
-  \label{singular}
-\end{equation}
-
-\begin{equation}
-\left. \begin{array}{ll}  
-\displaystyle\frac{\p G_s}{\p y}=0
-  \quad \mbox{on\ }\quad y=0,\\[8pt]
-\displaystyle  G_a=0
-  \quad \mbox{on\ }\quad y=0,
- \end{array}\right\}
-  \label{symbc}
-\end{equation}
-
-
-\begin{equation}
-  -\frac{1}{2\upi} \int_0^{\infty} \gamma^{-1}[\mathrm exp(-k\gamma|y-\eta|)
-   + \mathrm exp(-k\gamma(2d-y-\eta))] \cos k(x-\xi)t\:\mathrm{d} t,
-   \qquad 0<y,\quad \eta<d,
-\end{equation}
-
-\begin{equation}
-  \gamma(t) = \left\{
-    \begin{array}{ll}
-      -\mathrm{i}(1-t^2)^{1/2}, & t\le 1 \\[2pt]
-      (t^2-1)^{1/2},         & t>1.
-    \end{array} \right.
-\end{equation}
-
-\[
-  -\frac{1}{2\upi}
-   \pvi B(t)\frac{\cosh k\gamma(d-y)}{\gamma\sinh k\gamma d}
-   \cos k(x-\xi)t\:\mathrm{d} t
-\]
-
-\begin{equation}
-  G = -\frac{1}{4}\mathrm{i} (H_0(kr)+H_0(kr_1))
-    - \frac{1}{\upi} \pvi\frac{\mathrm{e}^{-\kgd}}%
-    {\gamma\sinh\kgd} \cosh k\gamma(d-y) \cosh k\gamma(d-\eta)
-\end{equation}
-
-Note that when equations are included in definitions, it may be suitable to render them in line, rather than in the equation environment: $\boldsymbol{n}_q=(-y^{\prime}(\theta),
-x^{\prime}(\theta))/w(\theta)$.
-Now $G_a=\squart Y_0(kr)+\Gat$ where
-$r=\{[x(\theta)-x(\psi)]^2 + [y(\theta)-y(\psi)]^2\}^{1/2}$ and $\Gat$ is
-regular as $kr\ttz$. However, any fractions displayed like this, other than $\thalf$ or $\squart$, must be written on the line, and not stacked (ie 1/3).
- 
-\begin{eqnarray}
-  \ndq\left(\frac{1}{4} Y_0(kr)\right) & \sim &
-    \frac{1}{4\upi w^3(\theta)}
-    [x^{\prime\prime}(\theta)y^{\prime}(\theta)-
-    y^{\prime\prime}(\theta)x^{\prime}(\theta)] \nonumber\\
-  & = & \frac{1}{4\upi w^3(\theta)}
-    [\rho^{\prime}(\theta)\rho^{\prime\prime}(\theta)
-    - \rho^2(\theta)-2\rho^{\prime 2}(\theta)]
-    \quad \mbox{as\ }\quad kr\ttz . \label{inteqpt}
-\end{eqnarray}
-
-\begin{equation}
-  \frac{1}{2}\phi_i = \frac{\upi}{M} \sumjm\phi_j K_{ij}^a w_j,
-  \qquad i=1,\,\ldots,\,M,
-\end{equation}
-where
-\begin{equation}
-  K_{ij}^a = \left\{
-    \begin{array}{ll}
-      \p G_a(\theta_i,\theta_j)/\p n_q, & i\neq j \\[2pt]
-      \p\Gat(\theta_i,\theta_i)/\p n_q
-      + [\rho_i^{\prime}\rho_i^{\prime\prime}-\rho_i^2-2\rho_i^{\prime 2}]
-      / 4\upi w_i^3, & i=j.
-  \end{array} \right.
-\end{equation}
-
-
-\refstepcounter{equation}
-$$
-  \rho_l = \lim_{\zeta \rightarrow Z^-_l(x)} \rho(x,\zeta), \quad
-  \rho_{u} = \lim_{\zeta \rightarrow Z^{+}_u(x)} \rho(x,\zeta)
-  \eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq35}
-$$
-
-\begin{equation}
-  (\rho(x,\zeta),\phi_{\zeta\zeta}(x,\zeta))=(\rho_0,N_0)
-  \quad \mbox{for}\quad Z_l(x) < \zeta < Z_u(x).
-\end{equation}
-
-
-\begin{subeqnarray}
-  \tau_{ij} & = &
-    (\overline{\overline{u}_i \overline{u}_j}
-    - \overline{u}_i\overline{u}_j)
-    + (\overline{\overline{u}_iu^{SGS}_j
-    + u^{SGS}_i\overline{u}_j})
-    + \overline{u^{SGS}_iu^{SGS}_j},\\[3pt]
-  \tau^\theta_j & = &
-    (\overline{\overline{u}_j\overline{\theta}}
-    - \overline{u}_j \overline{\theta})
-    + (\overline{\overline{u}_j\theta^{SGS}
-    + u^{SGS}_j \overline{\theta}})
-    + \overline{u^{SGS}_j\theta^{SGS}}.
-\end{subeqnarray}
-
-\begin{equation}
-\setlength{\arraycolsep}{0pt}
-\renewcommand{\arraystretch}{1.3}
-\slsQ_C = \left[
-\begin{array}{ccccc}
-  -\omega^{-2}V'_w  &  -(\alpha^t\omega)^{-1}  &  0  &  0  &  0  \\
-  \displaystyle
-  \frac{\beta}{\alpha\omega^2}V'_w  &  0  &  0  &  0  &  \mathrm{i}\omega^{-1} \\
-  \mathrm{i}\omega^{-1}  &  0  &  0  &  0  &  0  \\
-  \displaystyle
-  \mathrm{i} R^{-1}_{\delta}(\alpha^t+\omega^{-1}V''_w)  &  0
-    & -(\mathrm{i}\alpha^tR_\delta)^{-1}  &  0  &  0  \\
-  \displaystyle
-  \frac{\mathrm{i}\beta}{\alpha\omega}R^{-1}_\delta V''_w  &  0  &  0
-    &  0  & 0 \\
-  (\mathrm{i}\alpha^t)^{-1}V'_w  &  (3R^{-1}_{\delta}+c^t(\mathrm{i}\alpha^t)^{-1})
-    &  0  &  -(\alpha^t)^{-2}R^{-1}_{\delta}  &  0  \\
-\end{array}  \right] .
-\label{defQc}
-\end{equation}
-
-\begin{equation}
-\etb^t = \skew2\hat{\etb}^t \exp [\mathrm{i} (\alpha^tx^t_1-\omega t)],
-\end{equation}
-where $\skew2\hat{\etb}^t=\boldsymbol{b}\exp (\mathrm{i}\gamma x^t_3)$. 
-\begin{equation}
-\mbox{Det}[\rho\omega^2\delta_{ps}-C^t_{pqrs}k^t_qk^t_r]=0,
-\end{equation}
-
-\begin{equation}
- \langle k^t_1,k^t_2,k^t_3\rangle = \langle
-\alpha^t,0,\gamma\rangle  
-\end{equation}
-
-\begin{equation}
-\boldsymbol{f}(\theta,\psi) = (g(\psi)\cos \theta,g(\psi) \sin \theta,f(\psi)).
-\label{eq41}
-\end{equation}
-
-\begin{eqnarray}
-f(\psi_1) = \frac{3b}{\upi[2(a+b \cos \psi_1)]^{{3}/{2}}}
-  \int^{2\upi}_0 \frac{(\sin \psi_1 - \sin \psi)(a+b \cos \psi)^{1/2}}%
-  {[1 - \cos (\psi_1 - \psi)](2+\alpha)^{1/2}}\mathrm{d}x,
-\label{eq42}
-\end{eqnarray}
-\begin{eqnarray}
-g(\psi_1) & = & \frac{3}{\upi[2(a+b \cos \psi_1)]^{{3}/{2}}}
-  \int^{2\upi}_0 \left(\frac{a+b \cos \psi}{2+\alpha}\right)^{1/2}
-  \left\{ \astrut f(\psi)[(\cos \psi_1 - b \beta_1)S + \beta_1P]
-  \right. \nonumber\\
-&& \mbox{}\times \frac{\sin \psi_1 - \sin \psi}{1-\cos(\psi_1 - \psi)}
-  + g(\psi) \left[\left(2+\alpha - \frac{(\sin \psi_1 - \sin \psi)^2}
-  {1- \cos (\psi - \psi_1)} - b^2 \gamma \right) S \right.\nonumber\\
-&& \left.\left.\mbox{} + \left( b^2 \cos \psi_1\gamma -
-  \frac{a}{b}\alpha \right) F(\frac{1}{2}\upi, \delta) - (2+\alpha)
-  \cos\psi_1 E(\frac{1}{2}\upi, \delta)\right] \astrut\right\} \mathrm{d} \psi,
-\label{eq43}
-\end{eqnarray}
-\begin{equation}
-\alpha = \alpha(\psi,\psi_1) = \frac{b^2[1-\cos(\psi-\psi_1)]}%
-  {(a+b\cos\psi) (a+b\cos\psi_1)},
-  \quad
-  \beta - \beta(\psi,\psi_1) = \frac{1-\cos(\psi-\psi_1)}{a+b\cos\psi}.
-\end{equation}
-
-
-\begin{equation}
-\left. \begin{array}{l}
-\displaystyle
-H(0) = \frac{\epsilon \overline{C}_v}{\tilde{v}^{{1}/{2}}_T
-(1- \beta)},\quad H'(0) = -1+\epsilon^{{2}/{3}} \overline{C}_u
-+ \epsilon \skew5\hat{C}_u'; \\[16pt]
-\displaystyle
-H''(0) = \frac{\epsilon u^2_{\ast}}{\tilde{v}^{{1}/{2}}
-_T u^2_P},\quad H' (\infty) = 0.
-\end{array} \right\}
-\end{equation}
-
-\begin{lemma}
-Let $f(z)$ be a trial \citet[][pp.~231--232]{Batchelor59} function defined on $[0,1]$.  Let $\varLambda_1$ denote
-the ground-state eigenvalue for $-\mathrm{d}^2g/\mathrm{d} z^2=\varLambda g$,
-where $g$ must satisfy $\pm\mathrm{d} g/\mathrm{d} z+\alpha g=0$ at $z=0,1$
-for some non-negative constant~$\alpha$.  Then for any $f$ that is not
-identically zero we have
-\begin{equation}
-\frac{\displaystyle
-  \alpha(f^2(0)+f^2(1)) + \int_0^1 \left(
-  \frac{\mathrm{d} f}{\mathrm{d} z} \right)^2 \mathrm{d} z}%
-  {\displaystyle \int_0^1 f^2\mathrm{d} z}
-\ge \varLambda_1 \ge
-\left( \frac{-\alpha+(\alpha^2+8\upi^2\alpha)^{1/2}}{4\upi} \right)^2.
-\end{equation}
-\end{lemma}
-
-\begin{corollary}
-Any non-zero trial function $f$ which satisfies the boundary condition
-$f(0)=f(1)=0$ always satisfies
-\begin{equation}
-  \int_0^1 \left( \frac{\mathrm{d} f}{\mathrm{d} z} \right)^2 \mathrm{d} z.
-\end{equation}
-\end{corollary}
 
 \bibliographystyle{jfm}
 % Note the spaces between the initials

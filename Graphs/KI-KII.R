@@ -62,8 +62,7 @@ p4 <- ggplot(data=dat2, aes(x=lambda, y= KII,group=L,shape=L,color=L))  +
   geom_hline(yintercept=0,linetype="dashed") +
   coord_cartesian(ylim=c(-0.08,1.55),xlim=c(0,0.105),expand=FALSE) +
   theme_custom() +
-  theme(axis.title.y=element_blank(),axis.text.y=element_blank(),
-        axis.title = element_text(size=8,family="Palatino"), legend.position="none")
+  theme(axis.title.y=element_blank(),axis.text.y=element_blank(),legend.position="none")
  
 g1 = plot_custom(p1)
 g2 = plot_custom(p2)
@@ -79,7 +78,7 @@ p <- qplot(-20:-19,1:2) +
           panel.background=element_blank(),panel.border=element_blank(),panel.grid.major=element_blank(),
           panel.grid.minor=element_blank(),plot.background=element_blank())
 
-pdf(file = "./Documents/Summer-Project/Elastic-Fracture/Graphs/KI-KII.pdf", useDingbats = FALSE, width = 5.5, height = 4)
+pdf(file = "./Documents/Summer-Project/Elastic-Fracture/Graphs/KI-KII.pdf", useDingbats = FALSE, width = 5.5, height = 3.5)
 p + annotation_custom(grob = g1, xmin = 0   , xmax = 315, ymin = 215, ymax = 400) +
     annotation_custom(grob = g2, xmin = -9.5, xmax = 315, ymin = 0, ymax = 215) +
     annotation_custom(grob = g3, xmin = 315 , xmax = 600, ymin = 215, ymax = 400) + 

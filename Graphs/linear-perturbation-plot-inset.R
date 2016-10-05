@@ -38,7 +38,7 @@ g1 = plot_custom(p1)
 g2 = plot_custom(p2) 
     
 p <- ggplot(mtcars, aes(x = wt, y = mpg)) + geom_blank() +
-     coord_cartesian(xlim=c(0,520),ylim=c(0,250),expand=FALSE) +
+     coord_cartesian(xlim=c(0,500),ylim=c(0,220),expand=FALSE) +
      theme(axis.line=element_blank(),axis.text.x=element_blank(),
           axis.text.y=element_blank(),axis.ticks=element_blank(),
           axis.title.x=element_blank(),
@@ -46,7 +46,7 @@ p <- ggplot(mtcars, aes(x = wt, y = mpg)) + geom_blank() +
           panel.background=element_blank(),panel.border=element_blank(),panel.grid.major=element_blank(),
           panel.grid.minor=element_blank(),plot.background=element_blank())
 
-pdf(file = "./Documents/Summer-Project/Elastic-Fracture/Graphs/linear-perturbation-plot.pdf", useDingbats = FALSE, width = 5.2, height = 2.5)
-p + annotation_custom(grob = g1, xmin = 0, xmax = 520, ymin = 0, ymax = 250) +
-annotation_custom(grob = g2, xmin = 320, xmax = 495, ymin = 40, ymax = 147)
+pdf(file = "./Documents/Summer-Project/Elastic-Fracture/Graphs/linear-perturbation-plot.pdf", useDingbats = FALSE, width = 5, height = 2.2)
+p + annotation_custom(grob = g1, xmin = 0, xmax = 500, ymin = 0, ymax = 220) +
+annotation_custom(grob = g2, xmin = 310, xmax = 478, ymin = 37, ymax = 140)
  dev.off()

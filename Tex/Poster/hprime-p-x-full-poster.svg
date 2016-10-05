@@ -14,8 +14,8 @@
    height="1052.3622047"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="hprime-p-x-full-poster.pdf">
+   inkscape:version="0.91 r"
+   sodipodi:docname="hprime-p-x-full-poster.svg">
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -23,9 +23,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="401.16021"
-     inkscape:cy="978.71214"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="345.97813"
+     inkscape:cy="946.60454"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -115,7 +115,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1122,7 +1122,7 @@
        transform="matrix(1.4487951,0,0,-1.1588057,19.475329,220.65878)">
       <path
          inkscape:connector-curvature="0"
-         d="m 194.26982,111.79557 7.21351,0 0,9.01869 -7.21351,0 0,-9.01869 z"
+         d="m 195.08574,112.81566 5.58167,0 0,6.97851 -5.58167,0 0,-6.97851 z"
          style="fill:#999999;fill-opacity:1;fill-rule:nonzero;stroke:none"
          id="path3713" />
     </g>
@@ -1158,7 +1158,7 @@
        transform="matrix(1.4487951,0,0,-1.1588057,19.475329,220.65878)">
       <path
          inkscape:connector-curvature="0"
-         d="m 194.26982,95.087121 c 0,2.482213 1.63245,4.523133 3.59573,4.523133 1.98535,0 3.61778,-2.04092 3.61778,-4.523133 0,-2.454624 -1.63243,-4.495552 -3.61778,-4.495552 -1.96328,0 -3.59573,2.040928 -3.59573,4.495552"
+         d="m 195.08574,95.090241 c 0,1.920689 1.26316,3.499914 2.7823,3.499914 1.53623,0 2.79937,-1.579225 2.79937,-3.499914 0,-1.899341 -1.26314,-3.478573 -2.79937,-3.478573 -1.51914,0 -2.7823,1.579232 -2.7823,3.478573"
          style="fill:#e69f00;fill-opacity:1;fill-rule:nonzero;stroke:none"
          id="path3731" />
     </g>

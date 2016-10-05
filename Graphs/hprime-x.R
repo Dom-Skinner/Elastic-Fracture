@@ -1,4 +1,4 @@
-pdf(file = "./Documents/Summer-Project/Elastic-Fracture/Graphs/hprime-x.pdf", useDingbats = FALSE, width = 5.2, height = 2.5)
+pdf(file = "./Documents/Summer-Project/Elastic-Fracture/Graphs/hprime-x.pdf", useDingbats = FALSE, width = 4.5, height = 2)
 dat <- read.csv("./Documents/Summer-Project/Elastic-Fracture/Graphs/hprime-x.csv")
 dat$K <- factor(dat$K, levels=c("one","two","three","five","interp"),labels=c("K=0.46","K=0.39","K=0.28","K=0.21","Extrapolated"))
 #After some reflection, there doesn't appear to be any easy way to extract the K values from the data file, so I've just hard coded them in here...
@@ -18,10 +18,9 @@ p <- ggplot(data=dat, aes(x=x, y= hprime,group=K,shape=K,color=K))  +
   ylab(expression("H'"*xi^{1/3} )) + xlab(expression(xi)) +
   theme_custom()+  
   scale_x_continuous(breaks=seq(0,0.014, by=0.002))+
-  theme(plot.margin = unit(c(0.2,0.5,0,0), "cm")) + # ("top", "right", "bottom", "left")
-  guides(col=guide_legend(ncol=2))+
+  guides(col=guide_legend(ncol=3))+
   theme(axis.title = element_text(size=8,family="Palatino"),
-  legend.justification=c(1,1), legend.position=c(0.55,1), legend.text = element_text(size=8,family="Palatino")
+  legend.justification=c(1,1), legend.position=c(0.75,1.06), legend.text = element_text(size=8,family="Palatino")
   ,legend.key=element_rect(colour = NA))
    
    

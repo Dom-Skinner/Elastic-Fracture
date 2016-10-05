@@ -14,8 +14,8 @@
    height="1488.189"
    id="svg19209"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="overall-fit-poster.pdf">
+   inkscape:version="0.91 r"
+   sodipodi:docname="overall-fit-poster.svg">
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -109,7 +109,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1057,7 +1057,7 @@
           <path
              inkscape:connector-curvature="0"
              d="m 223.31,225.45 0.09,0 0.27,0 0.54,0.01 0.94,0 1.5,-0.02 2.26,-0.06 3.3,-0.17 4.65,-0.4 6.34,-0.86 8.38,-1.68 10.73,-3.05 13.22,-5.16 15.58,-8.05 17.84,-11.84 18.33,-15.1 18,-17.7 15.92,-18.05"
-             style="fill:none;stroke:#f0e442;stroke-width:1.60000002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:1;stroke-opacity:1;stroke-dasharray:none"
+             style="fill:none;stroke:#bb000b;stroke-width:1.60000002;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:1;stroke-opacity:1;stroke-dasharray:none"
              id="path19914" />
           <path
              inkscape:connector-curvature="0"

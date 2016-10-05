@@ -1,25 +1,26 @@
-pdf(file = "./Documents/Summer-Project/Elastic-Fracture/Graphs/catagory.pdf", useDingbats = FALSE, width = 4, height = 2)
+pdf(file = "./Documents/Summer-Project/Elastic-Fracture/Graphs/catagory.pdf", useDingbats = FALSE, width = 3.2, height = 2)
 
 dat <- read.csv("./Documents/Summer-Project/Elastic-Fracture/Graphs/catagory.csv")
 
 library(ggplot2)
-cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73","#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+library(scales)    
+library(grid) 
+library(gtable)
+
+arrow_data=data.frame(x=c(0.2,0.6,1,1.4,2.25,2.25), y=c(1.58,1.58,1.58,1.58,1.465,1.415), vx=c(0,0,0,0,-0.4,-0.4), vy=c(-0.12,-0.12,-0.12,-0.12,0,0))
 
 
-
-ggplot(data=dat, aes(x=KI, y= KII))  +
+p<-ggplot(data=dat, aes(x=KI, y= KII))  +
       geom_line(linetype="solid", size=0.5) +
-      geom_point(size=1.5) +
+      geom_point(size=1.5,shape=15) +
       geom_hline(aes(yintercept=dat$KII[length(dat$KII)]))+
-      #geom_vline(aes(xintercept=dat$KI[1]))+
+      annotate("segment", x=1.95, xend=3, y=1.505, yend=1.505)+
       geom_linerange(aes(x=dat$KI[1], y=NULL, ymin=dat$KII[1], ymax=4))+
-      scale_colour_manual(values=cbPalette1,name  = NULL) +
-     # scale_shape_manual(values = c(15,16,17,18), name  = NULL) +
+      geom_segment(data=arrow_data, mapping=aes(x=x, y=y, xend=x+vx, yend=y+vy), arrow=arrow(length=unit(1.2, "mm"),type = "closed"), size=0.5) +
       coord_cartesian(ylim=c(1.3,1.6),xlim=c(0,2.3),expand=FALSE) +
       ylab(expression(kappa[II]))+ xlab(expression(kappa[I]))+
-      theme_bw() +
-      theme(plot.margin = unit(c(0.2,0.5,0,0), "cm")) + # ("top", "right", "bottom", "left")
-      theme(axis.title = element_text(size=8,family="Palatino"), axis.text  = element_text(size=6))
+      theme_custom() +
+      theme(axis.title = element_text(size=8,family="Palatino"))
     
-
+grid.draw(plot_custom(p))
  dev.off()
