@@ -63,9 +63,10 @@ We define the vertical displacement to be $h(x)$, the horizontal
 displacement to be $g(x)$, and the thickness of the strip as $l$.
 %
 \begin{figure}
-  \centerline{\includegraphics{./../Fig1.pdf}}\label{fig:diagram}
-  \caption{Diagram of the geometry. \textbf{Redo this diagram}}
-           
+  \centerline{\includegraphics{diag1.pdf}}\label{fig:diagram}
+  \caption{A picture of the geometry of the problem. On the left is a close 
+           up of the crack tip, while on the right is the geometry for large
+           $x$.}
 \end{figure}
 %
 
@@ -98,11 +99,7 @@ the flux, and conservation of mass as
 q = - \frac{1}{12\mu}\frac{\mrd p}{\mrd x}h^3 \, , \qquad
 \frac{\partial q}{\partial x} + \frac{\partial h}{\partial t} = 0 \, ,
 \end{equation}
-which combined gives
-\begin{equation}
-\frac{\mrd p}{\mrd x} = 12\mu c / h^2 \, .
-\end{equation}
-Setting $p\to 0$ at $x \to \infty$, we can write this in integral form,
+from which, the pressure is found to be
 \begin{equation}
 p(x) = -\int_x^{\infty} 12\mu c / h(\tilde{x})^2 \mrd \tilde{x} \, .
 \end{equation}
@@ -155,9 +152,9 @@ g'(x) \, .
 $$
 Where equality holds in at least one of the two equations.
 
-As we go to $x \gg l$, we are looking at the problem of peeling off a thin
-strip from an elastic half space. We can then use beam theory approximations,
-which give
+Considering the region $x \gg l$, the problem becomes a question of peeling 
+off a thin strip from an elastic half space. The elasticity equations can then
+be simplified by modelling the strip using beam theory. This gives the equations
 \refstepcounter{equation}
 $$
 M(x) = \frac{El^3}{12(1-\nu^2)} \frac{\mrd^2 h}{\mrd x^2} = 
@@ -165,8 +162,8 @@ M(x) = \frac{El^3}{12(1-\nu^2)} \frac{\mrd^2 h}{\mrd x^2} =
 p = \frac{El^3}{12(1-\nu^2)} h^{(4)}(x) 
 \eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:by-at-inf}
 $$
-As $x \to \infty$, $M(x) \to M$, the applied bending moment, so this gives
-us boundary conditions on $h''$, $g'$.
+As $x \to \infty$, $M(x) \to M$, the applied bending moment, therefore these
+equations provide boundary conditions on $h''$, $g'$.
 %
 \subsection{Double tip}
 Consider the mode II fracture preceeding the fluid tip at $x=0$ by
@@ -239,15 +236,13 @@ From integration by parts, we can write
 H''(\xi) = 1 - \frac{1}{2} \int_{\xi}^{\infty} (\tilde{\xi}-\xi)^2 H^{(5)}
 (\tilde{\xi}) \mrd \tilde{\xi},
 \end{equation}
-provided $\lim_{\xi \to \infty} \xi H^{(3)}(\xi) = \lim_{\xi \to \infty} 
-\xi^2 H^{(4)}(\xi) =0$. 
-Then using equation \ref{eq:govern}a, we have that
+then using equation \ref{eq:govern}a, it is found that
 \begin{equation}
 H''(\xi) = 1 - \frac{3\lambda}{2\upi} \int_{\xi}^{\infty} 
 \frac{(\tilde{\xi}-\xi)^2}{H(\tilde{\xi})^2} \mrd \tilde{\xi}.
 \end{equation}
-Since $H(\xi) = \frac{1}{2} \xi^2 + o(\xi^2)$, as $\xi \to \infty$, 
-we can use this to get a better estimate of $H''$;
+But we know $H(\xi) = \frac{1}{2} \xi^2 + o(\xi^2)$, as $\xi \to \infty$, 
+and so we use this to get a better estimate of $H''$;
 \begin{equation}
 H''(\xi) = 1 - \frac{2 \lambda}{\upi} \frac{1}{\xi} + o(1/\xi).
 \end{equation}
@@ -475,7 +470,7 @@ The single problem was solved numerically for the full range of $\lambda$ values
 $0 \leq \lambda < 0.059$, which corresponds to the values $0 < \kappa_I \leq 1.9$.
 We have arbitrarily chosen $\kappa_I$ as the parameter determining the speed, 
 although it would have been equally valid to consider $\kappa_{II}$ as the 
-independant parameter.
+independent parameter.
 The results for $H$, $G$, and $\Pi$ are shown in figure \ref{fig:hprime-p-x-full},
 where the predicted asymptotics are shown as solid lines. These predicted 
 asymptotics are namely that near $\xi =0$, 
@@ -483,7 +478,8 @@ $H' \sim \kappa_I\xi^{-1/2}/(3\sqrt{2 \upi} ) $,
 $G' \sim \kappa_{II}\xi^{-1/2}/(3\sqrt{2 \upi} ) $,
 $\Pi \sim 9\upi \lambda/(2 \kappa_I^2) \, \ln(\xi)$, 
 and that as $\xi \to \infty$, 
-$G' \to 1/2$, $H' \sim \xi$, $\Pi \to 0$.
+$G' \to 1/2$, $H' \sim \xi$, $\Pi \to 0$. From figure \ref{fig:hprime-p-x-full},
+it is clear that the numerical solutions have the predicted asymptotics.
 \begin{figure}
   \centerline{\includegraphics{./../../Graphs/hprime-p-x-full.pdf}}
   \caption{Numerical solutions for two typical values of $\kappa_I$. 
@@ -493,10 +489,33 @@ $G' \to 1/2$, $H' \sim \xi$, $\Pi \to 0$.
            $H' \to \xi$, $G'\to 1/2$, $\Pi \to 0$ as $\xi \to \infty$. 
            Figure produced with $n=465$, $\xi_n=819$.}\label{fig:hprime-p-x-full}
 \end{figure}
+
+It is then of interest to ask how $\kappa_I$ and $\lambda$ are related in this
+model. A plot of the two variables is shown in figure \ref{fig:K-lambda-edited}. 
+A notable feature is that $\kappa_I =0$ at $\lambda = 0.059$, with apparently 
+infinite gradient there. For $\kappa_I =0$, consider the problem for 
+$\xi \ll 1$. In this region, the problem reduces to one of a 
+semi-infinite crack. In particular, the elasticity integral reduces to a much 
+simplified form,
+\begin{equation}
+\Pi(\xi) = \int_0^{\infty} \frac{h'(\tilde{\xi})}{\tilde{\xi}-\xi} 
+\mrd \tilde{\xi}.
+\end{equation}
+From these reduced equations, one can find the leading order behaviour of the
+variables,
+$$
+H_0 = A_0 \xi^{2/3} + o(\xi^{2/3}),
+\quad G_0 = B \xi^{1/2} + o(\xi^{1/2}), 
+\quad \Pi_0 = \frac{3 \lambda_0}{A_0^2\xi^{1/3}} + o(\xi^{-1/3})
+\eqno{(\theequation{\mathit{a},\mathit{b},\mathit{c}})}
+\label{eq:outer-asymp}
+$$
+ 
 \begin{figure}
   \centerline{\includegraphics{./../../Graphs/K-lambda-edited.pdf}}
   \caption{Here we vary the parameter $\lambda$ and plot the change in 
-           $\kappa_I$. Figure produced with $n=465$, $\xi_n = 819$.}
+           $\kappa_I$. Figure produced with $n=465$,
+           $\xi_n = 819$.}\label{fig:K-lambda-edited}
 \end{figure}
 \begin{figure}
   \centerline{\includegraphics{./../../Graphs/hprime-x.pdf}}\label{fig:hprime-x}
