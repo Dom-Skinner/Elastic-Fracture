@@ -249,64 +249,6 @@ H''(\xi) = 1 - \frac{2 \lambda}{\upi} \frac{1}{\xi} + o(1/\xi).
 This new expression can be used to refine the error estimate from $o(1/\xi)$, to 
 $O(\log(\xi)/\xi^2)$.
 
-\subsection{Linear perturbation problem}
-\emph{ This section is problably better placed elsewhere...}
-The equations of the linear perturbation 
-problem:
-\begin{equation}
-\Pi = \Pi_0 + \cE \Pi_1 + O(\cE), \quad
-H = H_0 + \cE H_1 + O(\cE) \quad
-\end{equation}
-%
-\refstepcounter{equation}
-$$
-\setlength{\arraycolsep}{2pt}
-\left[ \begin{array}{c} 
-\Pi_1 \\ 0
-\end{array} \right]
-= \int_0^{\infty} \mathsfbi{K}(\xi - \tilde{\xi}) 
-\left[ \begin{array}{c} 
-G_1'(\tilde{\xi}) \\ H_1'(\tilde{\xi})
-\end{array} \right]
-\mrd \tilde{\xi}, \qquad
-H_0^2\Pi_1' + 2H_0 H_1 \Pi_0 ' = \lambda_1
-\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:lin-pert}
-$$
-%
-\refstepcounter{equation}
-$$
-H_1''\to 0 \mbox{ as\ } \xi \to \infty, \qquad
-H_1 \sim \xi^{s} + \frac{\tilde{A}\lambda_1}{3\lambda_0^{2/3}} \xi^{2/3}
-+ \dots \mbox{ as } \xi \to 0
-\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:lin-pert-bc}
-$$
-But these can be made into a more convenient form, by considering instead
-$\tilde{\Pi} = \Pi_0 - 3\lambda_0/\lambda_1 \Pi_1$, and similar for 
-$\tilde{H}$, $\tilde{G}$. The equations become
-\refstepcounter{equation}
-$$
-\setlength{\arraycolsep}{2pt}
-\left[ \begin{array}{c} 
-\tilde{\Pi} \\ 0
-\end{array} \right]
-= \int_0^{\infty} \mathsfbi{K}(\xi - \tilde{\xi}) 
-\left[ \begin{array}{c} 
-\tilde{G}'(\tilde{\xi}) \\ \tilde{H}'(\tilde{\xi})
-\end{array} \right]
-\mrd \tilde{\xi}, \qquad
-H_0^2\tilde{\Pi}' + 2H_0 \tilde{H} \Pi_0 ' = 0
-\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:rescaled-lin-pert}
-$$
-%
-\refstepcounter{equation}
-$$
-\tilde{H}''\to 1 \mbox{ as\ } \xi \to \infty, \qquad
-\tilde{H} \sim -\frac{3\lambda_0}{\lambda_1} \xi^{s} 
-+ \dots \mbox{ as } \xi \to 0
-\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:rescaled-lin-pert-bc}
-$$
-%
-%
 \section{Numerical scheme}\label{sec:numerical_scheme}
 %
 %%$$
@@ -489,6 +431,12 @@ it is clear that the numerical solutions have the predicted asymptotics.
            $H' \to \xi$, $G'\to 1/2$, $\Pi \to 0$ as $\xi \to \infty$. 
            Figure produced with $n=465$, $\xi_n=819$.}\label{fig:hprime-p-x-full}
 \end{figure}
+\begin{figure}
+  \centerline{\includegraphics{./../../Graphs/K-lambda-edited.pdf}}
+  \caption{Here we vary the parameter $\lambda$ and plot the change in 
+           $\kappa_I$. Figure produced with $n=465$,
+           $\xi_n = 819$.}\label{fig:K-lambda-edited}
+\end{figure}
 
 It is then of interest to ask how $\kappa_I$ and $\lambda$ are related in this
 model. A plot of the two variables is shown in figure \ref{fig:K-lambda-edited}. 
@@ -510,20 +458,54 @@ H_0 = A_0 \xi^{2/3} + o(\xi^{2/3}),
 \eqno{(\theequation{\mathit{a},\mathit{b},\mathit{c}})}
 \label{eq:outer-asymp}
 $$
- 
+But this presents a problem; for any small $\kappa_I >0$, $H \sim \xi^{1/2}$
+near $\xi = 0$, which is incompatible with the $\kappa_I =0$ behaviour.
+This is resolved by a boundary layer, where the solution looks like the 
+$\kappa_I=0$ almost everywhere except in a thin region near the crack tip.
+
 \begin{figure}
-  \centerline{\includegraphics{./../../Graphs/K-lambda-edited.pdf}}
-  \caption{Here we vary the parameter $\lambda$ and plot the change in 
-           $\kappa_I$. Figure produced with $n=465$,
-           $\xi_n = 819$.}\label{fig:K-lambda-edited}
-\end{figure}
-\begin{figure}
-  \centerline{\includegraphics{./../../Graphs/hprime-x.pdf}}\label{fig:hprime-x}
+  \centerline{\includegraphics{./../../Graphs/hprime-x.pdf}}
   \caption{As $\kappa_I\to 0$, $H'$ moves from a $\xi^{-1/2}$ singularity
-           to a $\xi^{-1/3}$ singularity. We can not calculate $\kappa_I=0$, 
+           to a $\xi^{-1/3}$ singularity. We can not calculate $H'$ for $\kappa_I=0$, 
            but the extrapolation to it is shown. Figure produced with $n=465$,
-           $\xi_n = 819$.}
+           $\xi_n = 819$.}\label{fig:hprime-x}
 \end{figure}
+Evidence for a boundary layer is shown in figure \ref{fig:hprime-x}, as
+$\kappa_I$ decreases, the behaviour of $H'$ changes from $H' \sim \xi^{-1/2}$
+to looking more like $H' \sim \xi^{-1/3}$, except in a thin region near 
+$\xi =0$.
+
+Since this boundary layer is confined to a small region near the crack tip, and
+the appearance of some small $\kappa_I$ shouldn't effect the solution away from
+the boundary layer, it is therefore important to understand what is 
+happening right at the crack tip. To this end, it is not unreasonable to 
+consider the simpler problem of a semi-infinite crack. The problem of a 
+semi-infinite crack filled with an incompressible fluid has been studied by
+Garagash and Detournay. In particular they considered the situation in which a
+the solid had a small $\kappa_I$ value, the small toughness solution. 
+
+They find that for $\kappa_I \ll 1$, there is a boundary layer of size 
+$O(\kappa_I^6)$. Outside this layer, we expect to find corrections to the 
+zero toughness solutions of the form
+\begin{equation}
+\begin{array}{c}
+H(\xi) = H_0(\xi) + \c{E}(\kappa_I) H_1(\xi) + \dots \\
+G(\xi) = G_0(\xi) + \c{E}(\kappa_I) G_1(\xi) + \dots \\
+\Pi(\xi) = \Pi_0(\xi) + \mathcal{E}(\kappa_I) \Pi_1(\xi) + \dots \\
+\lambda = \lambda_0 + \mathcal{E}(\kappa_I) \lambda_1 + \dots, \\
+\end{array}
+\end{equation}
+where $\mathcal{E}(\kappa_I) = C \kappa_I^u\lambda_0^{2s-1}$. The numbers 
+$s \approx 0.139$, and $u = 4 -6s \approx 3.168$
+come from solving a transcendental equation, and $C$ must be determined 
+numerically. Figure \ref{fig:l0} shows remarkably good agreement with the
+prediction $\lambda \approx \lambda_0 + C\lambda_1 \kappa_I^u$, even for 
+relatively large $\kappa_I$.
+
+Garagash and Detournay calculate (after appropriate rescaling) 
+$C = 3.488 \times 10^{-5}$. In order to determine $C$, and not 
+$C\lambda_0^{2s-1}\lambda_1$, 
+we solve a linearised problem for $H_1$, and calculate $\lambda_1$ from that.
 \begin{figure}
   \centerline{\includegraphics{./../../Graphs/l0-edited.pdf}}
   \caption{The numerical values of $\kappa_I^u$ are plotted as points against
@@ -535,10 +517,12 @@ $$
            The difference between the two extrapolations to $\kappa_I=0$,  
            provides an estimate of the error in calculating $\lambda_0$, 
            (not accounting for the error due to $n$), which in this instance is 
-           $\approx 0.002\%$. This figure was made with $n=524$, $\xi_n=846$. }
+           $\approx 0.002\%$. This figure was made with $n=524$, $\xi_n=846$. 
+           }\label{fig:l0}
 \end{figure}
-\subsubsection{Calculating $H$ for $\kappa_I =0$}
-$H(\xi ; \kappa_I=0)$ will be needed for the linear pertubation problem.
+%
+\subsubsection{Calculating $H_0$ }
+$H(\xi ; \kappa_I=0) = H_0$ will be needed in order to find $H_1$ and $\lambda_1$.
 Numerically, for each $\xi_i$, $H'(\xi_i; \kappa_I = 0)$ is extrapolated
 from $H'(\xi_i, \kappa_j)$ from two $\kappa_j$ values. Figure 
 \ref{fig:hprime-x} shows that $H'(\xi; 0.21)$ 
@@ -547,13 +531,74 @@ layer near $\xi=0$. The size of the boundary layer becomes smaller as $\kappa_I$
 decreases, but to avoid using very small values of $\kappa_I$, the effects
 of the boundary layer are removed by simply extending the linear trend present
 in $0.002 < \xi < 0.003$ all the way to $\xi=0$.
+%
+%
 \subsection{Linear perturbation problem}
-We solve the linear perturbation problem. All that we really want to know
-is that we see the $\tilde{H} \sim \xi^{s}$ behaviour that we expect, and we ask what the
-intercept of $\tilde{H}$ is. It is perhaps worth mentioning the difficulties
-in measuring the intercept and perhaps a notion of the sensitivity of the 
-result on the estimate provided for $H_0$. Illustrating that is the next
-figure 
+%
+%
+Supposing one has found $H_0$ numerically, or otherwise. Substituting the
+expansion for $H,\Pi$, into the equations and keeping only terms of order
+$\mathcal{E}$, gives the relations
+%
+\refstepcounter{equation}
+$$
+\setlength{\arraycolsep}{2pt}
+\left[ \begin{array}{c} 
+\Pi_1 \\ 0
+\end{array} \right]
+= \int_0^{\infty} \mathsfbi{K}(\xi - \tilde{\xi}) 
+\left[ \begin{array}{c} 
+G_1'(\tilde{\xi}) \\ H_1'(\tilde{\xi})
+\end{array} \right]
+\mrd \tilde{\xi}, \qquad
+H_0^2\Pi_1' + 2H_0 H_1 \Pi_0 ' = \lambda_1
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:lin-pert}
+$$
+%
+\refstepcounter{equation}
+$$
+H_1''\to 0 \mbox{ as\ } \xi \to \infty, \qquad
+H_1 \sim \xi^{s} + \frac{\tilde{A}\lambda_1}{3\lambda_0^{2/3}} \xi^{2/3}
++ \dots \mbox{ as } \xi \to 0.
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:lin-pert-bc}
+$$
+But these can be made into a more convenient form, by considering instead
+$\tilde{\Pi} = \Pi_0 - 3\lambda_0/\lambda_1 \Pi_1$, and similar for 
+$\tilde{H}$, $\tilde{G}$. The equations become
+\refstepcounter{equation}
+$$
+\setlength{\arraycolsep}{2pt}
+\left[ \begin{array}{c} 
+\tilde{\Pi} \\ 0
+\end{array} \right]
+= \int_0^{\infty} \mathsfbi{K}(\xi - \tilde{\xi}) 
+\left[ \begin{array}{c} 
+\tilde{G}'(\tilde{\xi}) \\ \tilde{H}'(\tilde{\xi})
+\end{array} \right]
+\mrd \tilde{\xi}, \qquad
+H_0^2\tilde{\Pi}' + 2H_0 \tilde{H} \Pi_0 ' = 0
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:rescaled-lin-pert}
+$$
+%
+\refstepcounter{equation}
+$$
+\tilde{H}''\to 1 \mbox{ as\ } \xi \to \infty, \qquad
+\tilde{H} \sim -\frac{3\lambda_0}{\lambda_1} \xi^{s} 
++ \dots \mbox{ as } \xi \to 0
+\eqno{(\theequation{\mathit{a},\mathit{b}})}\label{eq:rescaled-lin-pert-bc}
+$$
+%
+%
+These equations were solved numerically, the results are plotted in figure 
+\ref{fig:lin-pert}. The figure shows that the $\tilde{H}$ behaves like
+$\xi^{s}$ near the origin. However, it is very difficult to get reliable 
+numerical estimates of the intercept. This is partly due to the difficulty 
+in calculating $H_0$ and removing the boundary layer present in $H(\xi;\kappa_I)$
+solutions, as well as dependance on $n, \xi_n$. Our best guess would be that
+$-3\lambda_0/\lambda_1 \approx 0.58$. Figure \ref{fig:l0} gives $\lambda_0 \approx 0.059$,
+$C\lambda_1 \lambda_0^{2s-1} \approx 8.3 \times 10^{-3}$, which in total gives
+our calculation of $C \approx 3.5\time 10^{-3}$, in agreement with the value in 
+Garagash and Detournay.
 
 \begin{figure}
  \centerline{
@@ -562,7 +607,8 @@ figure
            $\xi=0$ for a selection of resolutions, all with $\xi_n = 875$. Of 
            interest, is the value of the intercept, which as shown is dependent
            on the resolution. Also shown is the numerical divergence near the 
-           tip, due to the difficulty in calculating $H_0$ for $\xi \ll 1$.}
+           tip, due to the difficulty in calculating $H_0$ for $\xi \ll 1$.
+           }\label{fig:lin-pert}
 \end{figure}
 
 \subsection{Two tips}
