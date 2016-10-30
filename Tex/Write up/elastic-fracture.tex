@@ -70,14 +70,16 @@ displacement to be $g(x)$, and the thickness of the strip as $l$.
 \end{figure}
 %
 
-The flow is assumed to be in lubrication everywhere. The fracture
-is assumed to obey linear elastic fracture mechanics, which describes
-well the fracture of brittle solids. Since we have posed a two dimensional
-problem, only mode I and mode II fractures are of relevance. These are governed
-by two fracture toughness constants $K_I$, $K_{II}$. This paper will calculate
-the speed of travelling waves $c$ for any combination of $K_I$, $K_{II}$.
-To do that, we also consider a geometry where the mode II fracture preceeds 
-the fluid tip. 
+We consider the case of a slowly propagating crack where inertia becomes
+negligible. In addition, near the crack tip, the crack considered is 
+long and thin, and as such, the flow is assumed to be in lubrication 
+everywhere. The fracture is assumed to obey linear elastic fracture mechanics, 
+which describes well the fracture of brittle solids. Since we have posed a two 
+dimensional problem, only mode I and mode II fractures are of relevance. These 
+are governed by two fracture toughness constants $K_I$, $K_{II}$. This paper 
+will calculate the speed of travelling waves $c$ for any combination of $K_I$, 
+$K_{II}$. To do that, we also consider a geometry where the mode II fracture 
+preceeds the fluid tip. 
 
 The problem considered here is relevant to the physical problem of the 
 expansion of a magma bubble just under the surface, 
@@ -86,6 +88,12 @@ Consider just the outer edges of such an expanding bubble. Looking at just
 the crack tip, the problem becomes the one studied in this paper, where the
 motion is driven by some far off bending moment.
 
+The dry, static problem of a semi-infinite crack parallel to a half space has been
+studied by \citet{Zlatin}. A related problem of a finite length crack
+in an elastic solid has been studied by \citet{Thouless}. \citet{Dyskin}
+have considered a finite length crack below a free surface in a semi-infinite 
+solid. The problem of fluid driven fracture in a penny shaped crack, driven by
+a source inlet has been studied by \citet{Garagash}.
 
 %
 % 
@@ -409,26 +417,22 @@ $L = L(\kappa_{II})$, to reflect the physical interpretation.
 %
 \subsection{Single tip}
 The single problem was solved numerically for the full range of $\lambda$ values,
-$0 \leq \lambda < 0.059$, which corresponds to the values $0 < \kappa_I \leq 1.9$.
-We have arbitrarily chosen $\kappa_I$ as the parameter determining the speed, 
-although it would have been equally valid to consider $\kappa_{II}$ as the 
-independent parameter.
+$0 \leq \lambda < 0.059$, which corresponds to the values 
+$0 < \kappa_I \leq 1.9$. In this section, we arbitrarily chose $\kappa_I$ to be the 
+parameter determining the speed, although it would have been equally 
+valid to consider $\kappa_{II}$ as the independent parameter.
 The results for $H$, $G$, and $\Pi$ are shown in figure \ref{fig:hprime-p-x-full},
-where the predicted asymptotics are shown as solid lines. These predicted 
-asymptotics are namely that near $\xi =0$, 
-$H' \sim \kappa_I\xi^{-1/2}/(3\sqrt{2 \upi} ) $,
-$G' \sim \kappa_{II}\xi^{-1/2}/(3\sqrt{2 \upi} ) $,
-$\Pi \sim 9\upi \lambda/(2 \kappa_I^2) \, \ln(\xi)$, 
-and that as $\xi \to \infty$, 
-$G' \to 1/2$, $H' \sim \xi$, $\Pi \to 0$. From figure \ref{fig:hprime-p-x-full},
-it is clear that the numerical solutions have the predicted asymptotics.
+along with the predicted asymptotics. The numerical solutions correspond well 
+with the expected behaviour both as $\xi \to 0$ and $\xi \to \infty$.
 \begin{figure}
   \centerline{\includegraphics{./../../Graphs/hprime-p-x-full.pdf}}
   \caption{Numerical solutions for two typical values of $\kappa_I$. 
            Logarithmic scales are shown, with solid lines indicating the 
-           predicted asymptotics; $H', G' \propto \xi^{-1/2}$, 
-           $\Pi \propto \ln(\xi)$, near $\xi=0$, 
-           $H' \to \xi$, $G'\to 1/2$, $\Pi \to 0$ as $\xi \to \infty$. 
+           predicted asymptotics; $H'\sim \kappa_I \xi^{-1/2}/(3\sqrt{2\upi})$, 
+           $G'\sim \kappa_{II} \xi^{-1/2}/(3\sqrt{2\upi})$, 
+           $\Pi \sim 9\upi \lambda/(2 \kappa_I^2) \, \ln(\xi)$, 
+           as $\xi \to 0$, and 
+           $H' \sim \xi$, $G' \to 1/2$, $\Pi \to 0$ as $\xi \to \infty$. 
            Figure produced with $n=465$, $\xi_n=819$.}\label{fig:hprime-p-x-full}
 \end{figure}
 \begin{figure}
@@ -438,13 +442,25 @@ it is clear that the numerical solutions have the predicted asymptotics.
            $\xi_n = 819$.}\label{fig:K-lambda-edited}
 \end{figure}
 
-It is then of interest to ask how $\kappa_I$ and $\lambda$ are related in this
-model. A plot of the two variables is shown in figure \ref{fig:K-lambda-edited}. 
-A notable feature is that $\kappa_I =0$ at $\lambda = 0.059$, with apparently 
-infinite gradient there. For $\kappa_I =0$, consider the problem for 
-$\xi \ll 1$. In this region, the problem reduces to one of a 
-semi-infinite crack. In particular, the elasticity integral reduces to a much 
-simplified form,
+It is then of interest to ask how $\kappa_I$, $\kappa_{II}$ and $\lambda$ are 
+related in this model. When $\lambda=0$ the problem becomes a static one, that
+should not depend on the fluid. The static problem of a semi-infinite crack has
+been studied by \citet{Thouless}, who found that 
+$(\kappa_I, \kappa_{II}) = (1.934,1.503)$, which agrees with
+our numerical result to within the degree of accuracy, to which the values
+were given ($0.2\%$).
+A plot of $\kappa_I,\lambda$, is shown in figure \ref{fig:K-lambda-edited}. 
+A notable feature is how $\kappa_I \to0$ as $\lambda \to 0.059$, with 
+$\mrd \kappa_I / \mrd \lambda \to -\infty$. We will explain this behaviour
+by perturbing the $\kappa_I=0$ solution and showing that the problem reduces
+to one studied by \citet{Garagash}.
+
+\subsubsection{Small toughness solution}
+Consider the system with $\kappa_I =0$, the zero toughness
+solution. In particular, consider the region 
+$\xi \ll 1$, so zoomed in on the crack tip. Here, the problem should reduce 
+to one of a semi-infinite crack in an unbounded domain. In this geometry, the 
+elasticity integral reduces to a much simplified form,
 \begin{equation}
 \Pi(\xi) = \int_0^{\infty} \frac{h'(\tilde{\xi})}{\tilde{\xi}-\xi} 
 \mrd \tilde{\xi}.
@@ -478,10 +494,10 @@ $\xi =0$.
 Since this boundary layer is confined to a small region near the crack tip, and
 the appearance of some small $\kappa_I$ shouldn't effect the solution away from
 the boundary layer, it is therefore important to understand what is 
-happening right at the crack tip. To this end, it is not unreasonable to 
-consider the simpler problem of a semi-infinite crack. The problem of a 
-semi-infinite crack filled with an incompressible fluid has been studied by
-Garagash and Detournay. In particular they considered the situation in which a
+happening right at the crack tip, so we consider again 
+the simpler problem of a semi-infinite crack in an unbounded domain. This
+shape of crack, filled with an incompressible fluid, has been studied by
+\citet{Garagash}. In particular they considered the situation in which a
 the solid had a small $\kappa_I$ value, the small toughness solution. 
 
 They find that for $\kappa_I \ll 1$, there is a boundary layer of size 
@@ -489,10 +505,10 @@ $O(\kappa_I^6)$. Outside this layer, we expect to find corrections to the
 zero toughness solutions of the form
 \begin{equation}
 \begin{array}{c}
-H(\xi) = H_0(\xi) + \c{E}(\kappa_I) H_1(\xi) + \dots \\
-G(\xi) = G_0(\xi) + \c{E}(\kappa_I) G_1(\xi) + \dots \\
-\Pi(\xi) = \Pi_0(\xi) + \mathcal{E}(\kappa_I) \Pi_1(\xi) + \dots \\
-\lambda = \lambda_0 + \mathcal{E}(\kappa_I) \lambda_1 + \dots, \\
+H(\xi) = H_0(\xi) + \cE(\kappa_I) H_1(\xi) + \dots \\
+G(\xi) = G_0(\xi) + \cE(\kappa_I) G_1(\xi) + \dots \\
+\Pi(\xi) = \Pi_0(\xi) + \cE(\kappa_I) \Pi_1(\xi) + \dots \\
+\lambda = \lambda_0 + \cE(\kappa_I) \lambda_1 + \dots, \\
 \end{array}
 \end{equation}
 where $\mathcal{E}(\kappa_I) = C \kappa_I^u\lambda_0^{2s-1}$. The numbers 
@@ -597,7 +613,7 @@ in calculating $H_0$ and removing the boundary layer present in $H(\xi;\kappa_I)
 solutions, as well as dependance on $n, \xi_n$. Our best guess would be that
 $-3\lambda_0/\lambda_1 \approx 0.58$. Figure \ref{fig:l0} gives $\lambda_0 \approx 0.059$,
 $C\lambda_1 \lambda_0^{2s-1} \approx 8.3 \times 10^{-3}$, which in total gives
-our calculation of $C \approx 3.5\time 10^{-3}$, in agreement with the value in 
+our calculation of $C \approx 3.5\times 10^{-3}$, in agreement with the value in 
 Garagash and Detournay.
 
 \begin{figure}
@@ -685,23 +701,6 @@ on the $\lambda$, $\kappa_{II}$ relationship.
            made with $n=995$, $\xi_n = 846$.}\label{fig:fixed-fluid}
 \end{figure}
 \section{Discussion}
-
-\clearpage
-\section{Citations and references}
-All papers included in the References section must be cited in the article, and vice versa. Citations should be included as, for example ``It has been shown \citep{Rogallo81} that...'' (using the {\verb}\citep} command, part of the natbib package) ``recent work by \citet{Dennis85}...'' (using {\verb}\citet}).
-The natbib package can be used to generate citation variations, as shown below.\\
-\verb#\citet[pp. 2-4]{Hwang70}#:\\
-\citet[pp. 2-4]{Hwang70} \\
-\verb#\citep[p. 6]{Worster92}#:\\
-\citep[p. 6]{Worster92}\\
-\verb#\citep[see][]{Koch83, Lee71, Linton92}#:\\
-\citep[see][]{Koch83, Lee71, Linton92}\\
-\verb#\citep[see][p. 18]{Martin80}#:\\
-\citep[see][p. 18]{Martin80}\\
-\verb#\citep{Brownell04,Brownell07,Ursell50,Wijngaarden68,Miller91}#:\\
-\citep{Brownell04,Brownell07,Ursell50,Wijngaarden68,Miller91}\\
-The References section can either be built from individual \verb#\bibitem# commands, or can be built using BibTex. The BibTex files used to generate the references in this document can be found in the zip file at http://journals.cambridge.org/\linebreak[3]data/\linebreak[3]relatedlink/\linebreak[3]jfm-ifc.zip.\\
-Where there are up to ten authors, all authors' names should be given in the reference list. Where there are more than ten authors, only the first name should appear, followed by et al.\\
 
 Acknowledgements should be included at the end of the paper, before the References section or any appendicies, and should be a separate paragraph without a heading. Several anonymous individuals are thanked for contributions to these instructions.
 

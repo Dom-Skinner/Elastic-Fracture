@@ -22,15 +22,6 @@
 	year = "1987"
 }
 
-@article{Garagash,
-	author = "Thouless, M. D., Evans, A. G., Ashby, M. F., and Hutchinson, J. W.",
-	journal = "Acta metall.",
-	pages = "1333-1341",
-	title = "{The edge cracking and spalling of brittle plates.}",
-	volume = "35",
-	year = "1987"
-}
-
 @article{Brownell04,
 	author = "Brownell, C. J. and Su, L. K.",
 	journal = "AIAA Paper 2004-2335",
