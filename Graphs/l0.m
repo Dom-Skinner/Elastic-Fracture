@@ -52,7 +52,7 @@ text(0.27,0.0579,['$x_{end}=', xstr, '$'],'Interpreter','latex','fontsize',20)
 
 legend({'Linear fit','Quadratic fit','$\lambda$'},'Interpreter','Latex'...
     ,'fontsize',20)
-
+return
 fid = fopen('l0.csv','w');
 fprintf(fid,'type,   lambda,    K \n');
 for j = 1:numel(K)

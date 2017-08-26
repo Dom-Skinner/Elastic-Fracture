@@ -1,8 +1,8 @@
 %sets easy geometric parameters
-%%{
-n = 350;
-t = 170;
-r = 50;
+%{
+n = 815;
+t = 350;
+r = 80;
 xmax = 50;
 
 x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;

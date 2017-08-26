@@ -64,6 +64,12 @@ while xmax < upper_lim
         xmax = x(n);
     
     else
+          scaled_K_of_c_march
+    K = 3*sqrt(2*pi)*KI;
+    p1 = polyfit(K(end-1:end).^u,lambda(end-1:end),1);
+    l0(end+1) = p1(2);
+    D(end+1) = p1(1);
+    x_val(end+1) = xmax;
         break
     end
 end

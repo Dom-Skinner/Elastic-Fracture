@@ -19,8 +19,8 @@ p <- ggplot(data=dat, aes(x=x, y= hprime,group=K,shape=K,color=K))  +
   theme_custom()+  
   scale_x_continuous(breaks=seq(0,0.014, by=0.002))+
   guides(col=guide_legend(ncol=3))+
-  theme(axis.title = element_text(size=8,family="Palatino"),
-  legend.justification=c(1,1), legend.position=c(0.75,1.06), legend.text = element_text(size=8,family="Palatino")
+  theme(axis.title = element_text(size=8),
+  legend.justification=c(1,1), legend.position=c(0.75,1.06), legend.text = element_text(size=8)
   ,legend.key=element_rect(colour = NA))
    
    

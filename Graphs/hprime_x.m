@@ -43,7 +43,7 @@ legend({s1,s2,s3,s4,'Interpolated'}...
 
 
 num = [{'one'}, {'two'}, {'three'}, {'four'}, {'five'}];
-%%{
+%{
 fid = fopen('hprime-x.csv','w');
 fprintf(fid,'K,  x,   hprime,  \n');
 for l = [1,2,3,5]

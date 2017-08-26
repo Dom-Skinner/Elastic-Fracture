@@ -19,6 +19,8 @@ set(get(ax,'YLabel'),'Rotation',0)
 set(get(ax,'YLabel'),'Rotation',0, 'Position', [-0.006, 1])
 
 plot(ax,lambda,K, 'ko-')
+
+return
 fid = fopen('K-lambda.csv','w');
 fprintf(fid,'K,    lambda \n');
 for j = 1:numel(K)
