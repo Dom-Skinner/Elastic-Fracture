@@ -1,11 +1,11 @@
 clear
-l_val = [2,4,6,8,95];
+v_val = ['02';'04';'06';'08';'10'];
 
 fid1 = fopen('KI-KII-1.csv','w');
-fprintf(fid1,'lambda,  L,     KI,   KII,\n');
+fprintf(fid1,'v,  L,     KI,   KII,\n');
 
-for k = 1:numel(l_val)
-    file = strcat('n995x846l00', num2str(l_val(k)));
+for k = 1:(numel(v_val)/2)
+    file = strcat('n995x846v', v_val(k,1),v_val(k,2));
     
     load(file)
     subplot(2,2,1)
@@ -22,7 +22,7 @@ for k = 1:numel(l_val)
     
     for j = 1:numel(L)
         fprintf(fid1, '%.5e,    %.5e,    %.5e,     %.5e \n',...
-            lambda, L(j), 3*sqrt(2*pi)*KI(j), 3*sqrt(2*pi)*KII(j));
+            12*(3/pi)*lambda, L(j), 3*sqrt(2*pi)*KI(j), 3*sqrt(2*pi)*KII(j));
     end
 
 end

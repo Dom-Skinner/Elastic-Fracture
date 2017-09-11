@@ -17,16 +17,16 @@ L22    <- dat$L22
 KII    <- dat$KII0
 
 df <- data.frame(lambda, L08,L10,L22,KII)
-q <- ggplot(df, aes(x=lambda, y = value, color = variable)) + 
+q <- ggplot(df, aes(x=12*(3/pi)*lambda, y = value, color = variable)) + 
     geom_line(aes(y = KII, col = "Calculated values"), size=0.5) + 
     geom_point(aes(y = L08, col = "L=0.8"), size=0.8) +
     geom_point(aes(y = L10, col = "L=1.0"), size=0.8, shape=17) +
     geom_point(aes(y = L22, col = "L=2.2"), size=0.8, shape = 15) +
     scale_colour_manual(values=cbPalette,name  = NULL) +
-    scale_x_continuous(breaks = seq(0.09,0.1, by=0.002))+
-    coord_cartesian(ylim=c(0,0.8),xlim=c(0.09,0.101),expand=FALSE) +
+    scale_x_continuous(breaks = seq(1.02,1.16, by=0.02))+
+    coord_cartesian(ylim=c(0,0.8),xlim=c(1.03,1.16),expand=FALSE) +
     theme_custom() + 
-    ylab(expression(K[II]))+xlab(expression(lambda))+
+    ylab(expression(K[II]))+xlab(expression(V))+
     theme(plot.margin = unit(c(0.1,0.2,0,0), "cm")) + # ("top", "right", "bottom", "left")
     guides(col=guide_legend(ncol=2))+
     theme(axis.title = element_text(size=8,family="Palatino"),

@@ -9,12 +9,12 @@ library(grid)
 library(gtable)
 cbPalette <- c("#e41a1c","#377eb8","#4daf4a","#984ea3","#000000")
 
-p <- ggplot(data=dat, aes(x=x, y= hprime,group=K,shape=K,color=K))  +
+p <- ggplot(data=dat, aes(x=x, y= 12*hprime,group=K,shape=K,color=K))  +
   geom_line(linetype="solid", size=0.2) +
   geom_point(size=1) +
   scale_colour_manual(values=cbPalette,name  = NULL) +
   scale_shape_manual(values = c(15,16,17,18,4), name  = NULL) +
-  coord_cartesian(ylim=c(0.352,0.375),xlim=c(0,0.015),expand=FALSE) +
+  coord_cartesian(ylim=c(4.2,4.5),xlim=c(0,0.015),expand=FALSE) +
   ylab(expression("H'"*xi^{1/3} )) + xlab(expression(xi)) +
   theme_custom()+  
   scale_x_continuous(breaks=seq(0,0.014, by=0.002))+

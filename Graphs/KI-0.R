@@ -8,12 +8,12 @@ library(gtable)
 
 cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73","#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
-p1 <- ggplot(data=dat, aes(x=l0, y= KII2))  +
+p1 <- ggplot(data=dat, aes(x=12*(3/pi)*l0, y= KII2))  +
       geom_line(linetype="solid", size=0.3) +
       geom_point(size=1,shape =ifelse(dat$KII0 > 0,15,0)) +
       scale_colour_manual(values=cbPalette1,name  = NULL) +
-      coord_cartesian(ylim=c(0,2),xlim=c(0.055,0.105),expand=FALSE) +
-      ylab(expression(K[II]^2))+ xlab(expression(lambda[0]))+
+      coord_cartesian(ylim=c(0,2),xlim=c(0.6,1.201),expand=FALSE) +
+      ylab(expression(k[II]^2))+ xlab(expression(V[0]))+
       theme_custom() +
       #theme(plot.margin = unit(c(0.2,0.5,0,0), "cm")) + # ("top", "right", "bottom", "left")
       theme(axis.title = element_text(size=8,family="Palatino"))
@@ -26,17 +26,17 @@ p2 <- ggplot(data=dat, aes(x=L, y= KII0,group=bool,shape=bool))  +
       # Apologies for the lazyness...
       scale_colour_manual(values=cbPalette1,name  = NULL) +
       coord_cartesian(ylim=c(-0.25,1.5),xlim=c(0,4),expand=FALSE) +
-     ylab(expression(K[II]))+
+     ylab(expression(k[II]))+
       theme_custom() +
       theme(axis.title = element_text(size=8,family="Palatino"))
       
       
-p3 <- ggplot(data=dat, aes(x=L, y= l0,group=bool,shape=bool))  +
+p3 <- ggplot(data=dat, aes(x=L, y= 12*(3/pi)*l0,group=bool,shape=bool))  +
  geom_line( size=c(.0,.0,.0,0.0,0.3,0.3,0.3,0.3,0.3,.3,.3,.3,.3,.3,0.3,0.3,0.3,0.3,0.3)) +
       geom_point(size=1,shape = c(15,15,15,15,15,15,15,15,15,15,15,15,15,15,0,0,0,0,0)) +
       scale_colour_manual(values=cbPalette1,name  = NULL) +
-      coord_cartesian(ylim=c(0.055,0.105),xlim=c(0,4),expand=FALSE) +
-      ylab(expression(lambda[0]))+ 
+      coord_cartesian(ylim=c(12*(3/pi)*0.055,12*(3/pi)*0.105),xlim=c(0,4),expand=FALSE) +
+      ylab(expression(V[0]))+ 
       theme_custom()+
       #theme(plot.margin = unit(c(0.2,0.5,0,0), "cm")) + # ("top", "right", "bottom", "left")
       theme(axis.title = element_text(size=8,family="Palatino"))

@@ -8,24 +8,24 @@ library(gtable)
 
 cbPalette <- c("#e41a1c","#377eb8")
 
-p1 <- ggplot(data=dat, aes(x=x, y= hprime,group=K,shape=K,color=K))  +
+p1 <- ggplot(data=dat, aes(x=x, y= 12*hprime,group=K,shape=K,color=K))  +
   geom_line(linetype="solid", size=0.3) +
   geom_point(size=1.2) +
   scale_colour_manual(values=cbPalette,name  = NULL) +
   scale_shape_manual(values = c(15,16), name  = NULL) +
-  coord_cartesian(xlim=c(-0.005,2.005),ylim=c(0.796,2.5),expand=FALSE) +
+  coord_cartesian(xlim=c(-0.005,2.005),ylim=c(10,12*2.5),expand=FALSE) +
   ylab(expression("H'" )) + xlab(expression(xi)) +
   theme_custom() +
   theme(plot.margin = unit(c(0.2,0.5,0,0), "cm")) + # ("top", "right", "bottom", "left")
   theme(legend.position="none")
   
   
-p2 <- ggplot(data=dat, aes(x=x, y= gprime,group=K,shape=K,color=K))  +
+p2 <- ggplot(data=dat, aes(x=x, y= 12*gprime,group=K,shape=K,color=K))  +
   geom_line(linetype="solid", size=0.3) +
   geom_point(size=1.2) +
   scale_colour_manual(values=cbPalette,name  = NULL) +
   scale_shape_manual(values = c(15,16), name  = NULL) +
-  coord_cartesian(xlim=c(-0.005,2.005),ylim=c(0.398,1.3),expand=FALSE) +
+  coord_cartesian(xlim=c(-0.005,2.005),ylim=c(5,12*1.3),expand=FALSE) +
   ylab(expression("G'" )) + xlab(expression(xi)) +
   theme_custom() +
   theme(plot.margin = unit(c(0.2,0.49,0,0), "cm")) + # ("top", "right", "bottom", "left")
@@ -38,13 +38,13 @@ dat2 <- read.csv("./Documents/Summer-Project/Elastic-Fracture/Graphs/hprime-p-x-
 dat2$K <- factor(dat2$K, labels=c("K=0.74","K=1.82"))  
 
 
-p3 <- ggplot(data=dat2, aes(x=z, y= pressure,group=K,shape=K,color=K))  +
+p3 <- ggplot(data=dat2, aes(x=z, y= (3/pi)*pressure,group=K,shape=K,color=K))  +
   geom_line(linetype="solid", size=0.3) +
   geom_point(size=1.2) +
   scale_colour_manual(values=cbPalette,name  = NULL) +
   scale_shape_manual(values = c(15,16), name  = NULL) +
-  coord_cartesian(xlim=c(-0.005,2.005),ylim=c(-1.0025,0.0025),expand=FALSE) +
-  ylab(expression(Pi )) + xlab(expression(xi)) +
+  coord_cartesian(xlim=c(-0.005,2.005),ylim=c(-(3/pi),(3/pi)*0.0025),expand=FALSE) +
+  ylab(expression(P )) + xlab(expression(xi)) +
   theme_custom()+
   theme(plot.margin = unit(c(0.2,0.44,0,0), "cm")) + # ("top", "right", "bottom", "left")
   theme(legend.position="none")
@@ -53,7 +53,7 @@ p3 <- ggplot(data=dat2, aes(x=z, y= pressure,group=K,shape=K,color=K))  +
 
 
   
-p4 <- ggplot(data=dat, aes(x=x, y= hprime,group=K,shape=K,color=K))  +
+p4 <- ggplot(data=dat, aes(x=x, y= 12*hprime,group=K,shape=K,color=K))  +
   geom_line(linetype="solid", size=0.3) +
   geom_point(size=1.2) +
   scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -63,10 +63,10 @@ p4 <- ggplot(data=dat, aes(x=x, y= hprime,group=K,shape=K,color=K))  +
   annotation_logticks(sides="trlb",size=0.2,short = unit(0.035, "cm"), mid = unit(0.06, "cm"), long = unit(0.1, "cm")) +
   scale_colour_manual(values=cbPalette,name  = NULL) +
   scale_shape_manual(values = c(15,16), name  = NULL) +
-  coord_cartesian(xlim=c(0.00000096,40.4),ylim=c(0.8,100),expand=FALSE) +
-  annotate("segment", x=10^-6, xend=10^-3, y=10^(3-0.617), yend=10^(1.5-0.617))+
-  annotate("segment", x=10^-6, xend=10^-4, y=10^(3-1.004), yend=10^(2-1.004))+
-  annotate("segment", x=1, xend=40, y=1, yend=40)+
+  coord_cartesian(xlim=c(0.00000096,40.4),ylim=c(12*0.8,12*100),expand=FALSE) +
+  annotate("segment", x=10^-6, xend=10^-3, y=12*10^(3-0.617), yend=12*10^(1.5-0.617))+
+  annotate("segment", x=10^-6, xend=10^-4, y=12*10^(3-1.004), yend=12*10^(2-1.004))+
+  annotate("segment", x=1, xend=40, y=12, yend=12*40)+
   ylab(expression("H'" )) + xlab(expression(xi)) +
   theme_custom() + theme(axis.ticks=element_blank()) +
   theme(plot.margin = unit(c(0.11,0.41,0,0), "cm")) + # ("top", "right", "bottom", "left")
@@ -74,7 +74,7 @@ p4 <- ggplot(data=dat, aes(x=x, y= hprime,group=K,shape=K,color=K))  +
 
 
 
-p5 <- ggplot(data=dat, aes(x=x, y= gprime,group=K,shape=K,color=K))  +
+p5 <- ggplot(data=dat, aes(x=x, y= 12*gprime,group=K,shape=K,color=K))  +
   geom_line(linetype="solid", size=0.3) +
   geom_point(size=1.2) +
   scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -84,18 +84,18 @@ p5 <- ggplot(data=dat, aes(x=x, y= gprime,group=K,shape=K,color=K))  +
   annotation_logticks(sides="trlb",size=0.2,short = unit(0.035, "cm"), mid = unit(0.06, "cm"), long = unit(0.1, "cm")) +
   scale_colour_manual(values=cbPalette,name  = NULL) +
   scale_shape_manual(values = c(15,16,17,18,4), name  = NULL) +
-  coord_cartesian(xlim=c(0.002,10.3),ylim=c(0.45,4),expand=FALSE) +
+  coord_cartesian(xlim=c(0.002,10.3),ylim=c(12*0.45,12*4),expand=FALSE) +
   ylab(expression("G'" )) + xlab(expression(xi)) +
   theme_custom() + theme(axis.ticks=element_blank()) +
-  annotate("segment", x=10^-3, xend=10^-2, y=10^(1.5-0.7034), yend=10^(1-0.7034))+
-  annotate("segment", x=10^-3, xend=10^-2, y=10^(1.5-0.7317), yend=10^(1-0.7317))+
-  annotate("segment", x=0.1, xend=40, y=0.5, yend=0.5)+
+  annotate("segment", x=10^-3, xend=10^-2, y=12*10^(1.5-0.7034), yend=12*10^(1-0.7034))+
+  annotate("segment", x=10^-3, xend=10^-2, y=12*10^(1.5-0.7317), yend=12*10^(1-0.7317))+
+  annotate("segment", x=0.1, xend=40, y=12*0.5, yend=12*0.5)+
   theme(plot.margin = unit(c(0.11,0.4,0,0), "cm")) + # ("top", "right", "bottom", "left")
   theme(legend.position="none")
 
     
     
-p6 <- ggplot(data=dat2, aes(x=z, y= pressure,group=K,shape=K,color=K))  +
+p6 <- ggplot(data=dat2, aes(x=z, y= (3/pi)*pressure,group=K,shape=K,color=K))  +
   geom_line(linetype="solid", size=0.3) +
   geom_point(size=1.2) +
   scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -103,11 +103,11 @@ p6 <- ggplot(data=dat2, aes(x=z, y= pressure,group=K,shape=K,color=K))  +
   annotation_logticks(sides="tb",size=0.2,short = unit(0.035, "cm"), mid = unit(0.06, "cm"), long = unit(0.1, "cm")) +
   scale_colour_manual(values=cbPalette,name  = NULL) +
   scale_shape_manual(values = c(15,16,17,18,4), name  = NULL) +
-  coord_cartesian(xlim=c(0.0000003,10.1),ylim=c(-14,0.035),expand=FALSE) +
-  ylab(expression(Pi )) + xlab(expression(xi)) +
+  coord_cartesian(xlim=c(0.0000003,10.1),ylim=c(-(3/pi)*14,(3/pi)*0.035),expand=FALSE) +
+  ylab(expression(P )) + xlab(expression(xi)) +
   theme_custom() + theme(axis.ticks.x=element_blank()) +
-  annotate("segment", x=10^-8, xend=10^-2, y=-0.75, yend=-0.75 + 6*0.0987)+
-  annotate("segment", x=10^-8, xend=10^-4, y=-19, yend=-19 + 4*3.289)+
+  annotate("segment", x=10^-8, xend=10^-2, y=-(3/pi)*0.75, yend=(3/pi)*(-0.75 + 6*0.0987))+
+  annotate("segment", x=10^-8, xend=10^-4, y=-(3/pi)*19, yend=(3/pi)*(-19 + 4*3.289))+
   theme(plot.margin = unit(c(0.11,0.43,0,0), "cm")) + # ("top", "right", "bottom", "left")
   theme(legend.position="none")
   

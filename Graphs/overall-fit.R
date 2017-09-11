@@ -20,23 +20,23 @@ estimated2 <- dat1$estimated2
 
 df <- data.frame(KI, lambda, estimated)
 p1 <- ggplot(df, aes(x=KI, y = value, color = variable)) + 
-    geom_line(aes(y = estimated, col = "Best fit"), size=0.3) + 
-    geom_point(aes(y = lambda, col = "lambda"), size=1.3,shape=15) +
+    geom_line(aes(y = 12*(3/pi)*estimated, col = "Best fit"), size=0.3) + 
+    geom_point(aes(y = 12*(3/pi)*lambda, col = "lambda"), size=1.3,shape=15) +
     scale_colour_manual(values=cbPalette1,name  = NULL) +
-    coord_cartesian(ylim=c(0,0.061),xlim=c(0.3,2),expand=FALSE) +
+    coord_cartesian(ylim=c(0,0.7),xlim=c(0.3,2),expand=FALSE) +	
     theme_custom() + 
-    ylab(expression(lambda))+xlab(expression(kappa[I]))+
+    ylab(expression(V))+xlab(expression(k[I]))+
     theme(plot.margin = unit(c(0.1,0.2,0,0), "cm")) + # ("top", "right", "bottom", "left")
    theme(axis.title = element_text(size=8,family="Palatino"), legend.position="none")
    
 df2 <- data.frame(KII, lambda, estimated2)
 p2 <- ggplot(df2, aes(x=KII, y = value, color = variable)) + 
-    geom_line(aes(y = estimated2, col = "Best fit"), size=0.3) + 
-    geom_point(aes(y = lambda, col = "lambda"), size=1.3,shape=15) +
+    geom_line(aes(y = 12*(3/pi)*estimated2, col = "Best fit"), size=0.3) + 
+    geom_point(aes(y = 12*(3/pi)*lambda, col = "lambda"), size=1.3,shape=15) +
     scale_colour_manual(values=cbPalette2,name  = NULL) +
-    coord_cartesian(ylim=c(0,0.061),xlim=c(1.38,1.51),expand=FALSE) +
+    coord_cartesian(ylim=c(0,0.7),xlim=c(1.38,1.51),expand=FALSE) +
     theme_custom() + 
-    ylab(expression(lambda))+xlab(expression(kappa[II]))+
+    ylab(expression(V))+xlab(expression(k[II]))+
     theme(plot.margin = unit(c(0.1,0.2,0,0), "cm")) + # ("top", "right", "bottom", "left")
    theme(axis.title = element_text(size=8,family="Palatino"), legend.position="none")
    
@@ -52,12 +52,12 @@ LEst      <- dat2$LEst
 
 df <- data.frame(KII, lam, lambdaEst)
 p3 <- ggplot(df, aes(x=KII, y = value, color = variable)) + 
-    geom_line(aes(y = lambdaEst, col = "Best fit"), size=0.3) + 
-    geom_point(aes(y = lam, col = "lambda"), size=1.3,shape = c(15)) +
+    geom_line(aes(y = 12*(3/pi)*lambdaEst, col = "Best fit"), size=0.3) + 
+    geom_point(aes(y = 12*(3/pi)*lam, col = "lambda"), size=1.3,shape = c(15)) +
     scale_colour_manual(values=cbPalette3,name  = NULL) +
-    coord_cartesian(ylim=c(0.058,0.105),xlim=c(0,1.6),expand=FALSE) +
+    coord_cartesian(ylim=c(0.6,1.201),xlim=c(0,1.6),expand=FALSE) +
     theme_custom() + 
-    ylab(expression(lambda))+xlab(expression(kappa[II]))+
+    ylab(expression(V))+xlab(expression(k[II]))+
     theme(plot.margin = unit(c(0.1,0.2,0,0), "cm")) + # ("top", "right", "bottom", "left")
    theme(axis.title = element_text(size=8,family="Palatino"), legend.position="none")
    

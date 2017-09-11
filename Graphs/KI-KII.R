@@ -1,7 +1,7 @@
 
 dat1 <- read.csv("./Documents/Summer-Project/Elastic-Fracture/Graphs/KI-KII-1.csv")
-dat1$lambda <- factor(dat1$lambda, levels=c("0.02","0.04","0.06","0.08","0.095"),
-  labels=c("lambda=0.02","lambda=0.04","lambda=0.06","lambda=0.08","lambda=0.095"))
+dat1$v <- factor(dat1$v, levels=c("0.2","0.4","0.6","0.8","1"),
+  labels=c("v=0.2","v=0.4","v=0.6","v=0.8","v=1.0"))
 
 
 library(ggplot2)
@@ -12,7 +12,7 @@ library(gtable)
 cbPalette1 <- c("#e41a1c","#377eb8","#4daf4a","#984ea3","#ff7f00")
 
 
-p1 <- ggplot(data=dat1, aes(x=L, y= KI,group=lambda,shape=lambda,color=lambda))  +
+p1 <- ggplot(data=dat1, aes(x=L, y= KI,group=v,shape=v,color=v))  +
   geom_line(linetype="solid", size=0.2) +
   geom_point(size=1.5) +
   scale_colour_manual(values=cbPalette1,name  = NULL) +
@@ -23,7 +23,7 @@ p1 <- ggplot(data=dat1, aes(x=L, y= KI,group=lambda,shape=lambda,color=lambda)) 
         axis.text.x=element_blank(),axis.title = element_text(size=8,family="Palatino"), legend.position="none")
 
 
-p2 <- ggplot(data=dat1, aes(x=L, y= KII,group=lambda,shape=lambda,color=lambda))  +
+p2 <- ggplot(data=dat1, aes(x=L, y= KII,group=v,shape=v,color=v))  +
   geom_line(linetype="solid", size=0.2) +
   geom_point(size=1.5) +
   scale_colour_manual(values=cbPalette1,name  = NULL) +
@@ -39,12 +39,12 @@ p2 <- ggplot(data=dat1, aes(x=L, y= KII,group=lambda,shape=lambda,color=lambda))
 dat2 <- read.csv("./Documents/Summer-Project/Elastic-Fracture/Graphs/KI-KII-2.csv")
 dat2$L <- factor(dat2$L, levels=c("0.01","0.4","0.8","1.6","3.2"),labels=c("L=0.01","L = 0.4","L = 0.8","L = 1.6","L = 3.2"))
 
-p3 <- ggplot(data=dat2, aes(x=lambda, y= KI,group=L,shape=L,color=L))  +
+p3 <- ggplot(data=dat2, aes(x=12*(3/pi)*lambda, y= KI,group=L,shape=L,color=L))  +
   geom_line(linetype="solid", size=0.2) +
   geom_point(size=1) +
   scale_colour_manual(values=cbPalette1,name  = NULL) +
   scale_shape_manual(values = c(24,22,23,21,25), name  = NULL) +
-  coord_cartesian(ylim=c(0,3),xlim=c(0,0.105),expand=FALSE) +
+  coord_cartesian(ylim=c(0,3),xlim=c(0,12*(3/pi)*0.105),expand=FALSE) +
   
   theme_custom() +
   guides(col=guide_legend(ncol=2))+
@@ -53,14 +53,14 @@ p3 <- ggplot(data=dat2, aes(x=lambda, y= KI,group=L,shape=L,color=L))  +
         legend.justification=c(1,1), legend.position=c(1.1,1.1),legend.key = element_rect(color=NA),
         legend.text = element_text(size=8,family="Palatino"))
  
-p4 <- ggplot(data=dat2, aes(x=lambda, y= KII,group=L,shape=L,color=L))  +
+p4 <- ggplot(data=dat2, aes(x=12*(3/pi)*lambda, y= KII,group=L,shape=L,color=L))  +
   geom_line(linetype="solid", size=0.2) +
   geom_point(size=1) +
   scale_colour_manual(values=cbPalette1,name  = NULL) +
   scale_shape_manual(values = c(24,22,23,21,25), name  = NULL) +
-  xlab(expression(lambda))+
+  xlab(expression(v))+
   geom_hline(yintercept=0,linetype="dashed") +
-  coord_cartesian(ylim=c(-0.08,1.55),xlim=c(0,0.105),expand=FALSE) +
+  coord_cartesian(ylim=c(-0.08,1.55),xlim=c(0,12*(3/pi)*0.105),expand=FALSE) +
   theme_custom() +
   theme(axis.title.y=element_blank(),axis.text.y=element_blank(),legend.position="none")
  
