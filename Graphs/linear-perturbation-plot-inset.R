@@ -8,14 +8,14 @@ library(gtable)
 
 cbPalette <- c("#e41a1c","#377eb8","#4daf4a")
 
-p1 <- ggplot(data=dat, aes(x=x, y= Htilde,group=n,shape=n,color=n))  +
+p1 <- ggplot(data=dat, aes(x=x, y= 12*Htilde,group=n,shape=n,color=n))  +
   geom_line(linetype="solid", size=0.3) +
   geom_point(size=1) +
   scale_colour_manual(values=cbPalette,name  = NULL) +
   scale_shape_manual(values = c(15,16,17,18,4), name  = NULL) +
-  coord_cartesian(ylim=c(0.575,0.59),xlim=c(0,0.015),expand=FALSE) +
+  coord_cartesian(ylim=c(6.9,7.051),xlim=c(0,0.015),expand=FALSE) +
   scale_x_continuous(breaks=seq(0,0.015, by=0.003))+
-  scale_y_continuous(breaks=seq(0.575,0.59, by=0.005))+
+  #scale_y_continuous(breaks=seq(12*0.575,12*0.59, by=0.05))+
   ylab(expression(tilde(H)*xi^-s )) + xlab(expression(xi)) +
   theme_custom() +
   theme(plot.margin = unit(c(0.2,0.5,0,0), "cm")) + # ("top", "right", "bottom", "left")
@@ -24,12 +24,12 @@ p1 <- ggplot(data=dat, aes(x=x, y= Htilde,group=n,shape=n,color=n))  +
   ,legend.key=element_rect(colour = NA))
 
   
-p2 <-ggplot(data=dat, aes(x=x, y= Htilde,group=n,shape=n,color=n))  +
+p2 <-ggplot(data=dat, aes(x=x, y= 12*Htilde,group=n,shape=n,color=n))  +
     geom_line(linetype="solid", size=0.3) +
   geom_point(size=1) +
   scale_colour_manual(values=cbPalette,name  = NULL) +
   scale_shape_manual(values = c(15,16,17,18,4), name  = NULL) +
-  coord_cartesian(ylim=c(0.5755,0.5777),xlim=c(0,0.00014),expand=FALSE) +
+  coord_cartesian(ylim=c(6.908,6.931),xlim=c(0,0.00014),expand=FALSE) +
   theme_custom() +
   theme(axis.text  = element_text(size=6),legend.position="none",
   axis.title.x=element_blank(),axis.title.y=element_blank())

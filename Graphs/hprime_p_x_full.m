@@ -2,7 +2,7 @@ figure('units','normalized','outerposition',[0 0 1 1])
 
 clear
 
-load K_lambda
+load K_lambda_rescaled
 s = 0.138673;
 u = 4 - 6*s;
 
@@ -49,7 +49,7 @@ axis( [0, 2, 0.8,2.5]);
 axis square
 xlabel(ax,'$ \xi $','Interpreter','latex','fontsize',25);
 ylabel(ax,'$ H'' $','Interpreter','latex','fontsize',25);
-legend([p1,p2],['\kappa_I =', num2str(K(1),3)],...
+legend([p1,p2],['\kappa_I =', num2str(K(2),3)],...
     ['\kappa_I =',num2str(K(10),2)],'Location','SouthEast')
 
 set(ax,'TickLabelInterpreter', 'latex');
@@ -73,7 +73,7 @@ axis( [-15.5, 6, -0.4,6.5]);
 axis square
 xlabel(ax,'$ \log(\xi) $','Interpreter','latex','fontsize',25);
 ylabel(ax,'$ \log(H'') $','Interpreter','latex','fontsize',25);
-legend([p1,p2],['\kappa_I =', num2str(K(1),3)], ['\kappa_I =',num2str(K(10),2)])
+legend([p1,p2],['\kappa_I =', num2str(K(2),3)], ['\kappa_I =',num2str(K(10),2)])
 
 set(ax,'TickLabelInterpreter', 'latex');
 set(ax,'fontsize',20')

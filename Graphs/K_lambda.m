@@ -18,13 +18,13 @@ set(ax,'fontsize',20')
 set(get(ax,'YLabel'),'Rotation',0)
 set(get(ax,'YLabel'),'Rotation',0, 'Position', [-0.006, 1])
 
-plot(ax,lambda,K, 'ko-')
+plot(ax,lambda,K, 'ko-',lambda,K_II,'+-')
 
 return
 fid = fopen('K-lambda.csv','w');
-fprintf(fid,'K,    lambda \n');
+fprintf(fid,'KI, KII,    lambda \n');
 for j = 1:numel(K)
-    fprintf(fid, '%.5e,   %.5e \n',K(j), lambda(j));
+    fprintf(fid, '%.5e,   %.5e,   %.5e \n',K(j), K_II(j), lambda(j));
 end
 fclose(fid);
 %export_fig ('K-lambda', '-pdf', '-transparent')

@@ -20,7 +20,7 @@ p1 <- ggplot(data=dat1, aes(x=L, y= KI,group=v,shape=v,color=v))  +
   coord_cartesian(ylim=c(0,3),xlim=c(0,3.4),expand=FALSE) +
   theme_custom() +
   theme(axis.title.x=element_blank(),
-        axis.text.x=element_blank(),axis.title = element_text(size=8,family="Palatino"), legend.position="none")
+        axis.text.x=element_blank(),axis.title = element_text(size=8), legend.position="none")
 
 
 p2 <- ggplot(data=dat1, aes(x=L, y= KII,group=v,shape=v,color=v))  +
@@ -31,9 +31,9 @@ p2 <- ggplot(data=dat1, aes(x=L, y= KII,group=v,shape=v,color=v))  +
   coord_cartesian(ylim=c(-0.08,1.55),xlim=c(0,3.4),expand=FALSE) +
   geom_hline(yintercept=0,linetype="dashed") +
   theme_custom() +
-  theme(axis.title = element_text(size=8,family="Palatino"),
+  theme(axis.title = element_text(size=8),
   legend.justification=c(1,1), legend.position=c(1,1),legend.key=element_rect(colour = NA),
-  legend.text = element_text(size=8,family="Palatino"))
+  legend.text = element_text(size=8))
  
  
 dat2 <- read.csv("./Documents/Summer-Project/Elastic-Fracture/Graphs/KI-KII-2.csv")
@@ -51,14 +51,14 @@ p3 <- ggplot(data=dat2, aes(x=12*(3/pi)*lambda, y= KI,group=L,shape=L,color=L)) 
   theme(axis.title.x=element_blank(),axis.text.x=element_blank(),
         axis.title.y=element_blank(),axis.text.y=element_blank(),
         legend.justification=c(1,1), legend.position=c(1.1,1.1),legend.key = element_rect(color=NA),
-        legend.text = element_text(size=8,family="Palatino"))
+        legend.text = element_text(size=8))
  
 p4 <- ggplot(data=dat2, aes(x=12*(3/pi)*lambda, y= KII,group=L,shape=L,color=L))  +
   geom_line(linetype="solid", size=0.2) +
   geom_point(size=1) +
   scale_colour_manual(values=cbPalette1,name  = NULL) +
   scale_shape_manual(values = c(24,22,23,21,25), name  = NULL) +
-  xlab(expression(v))+
+  xlab(expression(V))+
   geom_hline(yintercept=0,linetype="dashed") +
   coord_cartesian(ylim=c(-0.08,1.55),xlim=c(0,12*(3/pi)*0.105),expand=FALSE) +
   theme_custom() +

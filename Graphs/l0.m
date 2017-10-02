@@ -52,17 +52,17 @@ text(0.27,0.0579,['$x_{end}=', xstr, '$'],'Interpreter','latex','fontsize',20)
 
 legend({'Linear fit','Quadratic fit','$\lambda$'},'Interpreter','Latex'...
     ,'fontsize',20)
-return
+%return
 fid = fopen('l0.csv','w');
 fprintf(fid,'type,   lambda,    K \n');
 for j = 1:numel(K)
     fprintf(fid, 'Kval,    %.5e,   %.5e \n',lambda(j), K(j).^u);
 end
 for j = 1:numel(lx)
-    fprintf(fid, 'linear,    %.5e,   %.5e \n',p1(2)+p1(1).*lx(j),lx(j));
+    fprintf(fid, 'linear,    %.5e,   %.5e \n',(p1(2)+p1(1).*lx(j)),lx(j));
 end
 for j = 1:numel(lx)
-    fprintf(fid, 'quadratic,    %.5e,   %.5e \n',p2(3)+p2(2).*lx(j)+p2(1).*lx(j).^2,lx(j));
+    fprintf(fid, 'quadratic,    %.5e,   %.5e \n',(p2(3)+p2(2).*lx(j)+p2(1).*lx(j).^2),lx(j));
 end
 
 fclose(fid);

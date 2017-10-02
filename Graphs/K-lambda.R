@@ -9,9 +9,11 @@ insert_minor <- function(major_labs, n_minor) {labs <-
                               c( sapply( major_labs, function(x) c(x, rep("", n_minor) ) ) )
                               labs[1:(length(labs)-n_minor)]}
 
-p <- ggplot(data=dat, aes(x=12*(3/pi)*lambda, y=K)) + 
-  geom_line(colour="#000000", linetype="solid", size=0.25) + 
-  geom_point(colour="#000000", size=1.2, shape=15, fill="#000000") +
+p <- ggplot(data=dat ) + 
+  geom_line(aes(x=12*(3/pi)*lambda, y=KI),colour="#000000", linetype="solid", size=0.25) + 
+  geom_point(aes(x=12*(3/pi)*lambda, y=KI),colour="#000000", size=1.2, shape=15, fill="#000000") +
+  geom_line(aes(x=12*(3/pi)*lambda, y=KII),colour="#000000", linetype="dashed", size=0.25) + 
+  geom_point(aes(x=12*(3/pi)*lambda, y=KII),colour="#000000", size=1.2, shape=15, fill="#000000") +
   coord_cartesian(ylim=c(0,2),xlim=c(0,0.7),expand=FALSE) +
   ylab(expression(k)) + xlab(expression(V)) +
   scale_y_continuous(breaks= seq(0,2,by=0.5), 
