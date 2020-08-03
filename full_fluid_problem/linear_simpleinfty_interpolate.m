@@ -48,9 +48,9 @@ for i = t:n-1
     interpolate_matrix(3*n+i,n+i+1) = -x(i)/(x(i+1)-x(i));
 end
 
-adjust_pen = 1-2*lambda/(pi*x(n-1));% - 4*lambda^2 *log(x(n-1)) / x(n-1)^2;
-adjust_end = 1-2*lambda/(pi*x(n  ));% - 4*lambda^2 *log(x(n  )) / x(n  )^2;
-adjust_der = lambda/pi/x(n)^2;% + 4*lambda^2 *log(x(n))/x(n)^3;
+adjust_pen = 1-2*lambda/(pi*x(n-1));
+adjust_end = 1-2*lambda/(pi*x(n  ));
+adjust_der = lambda/pi/x(n)^2;
 %linear term of g'
 interpolate_matrix(n,n) = 2*adjust_der/adjust_end ;
 %constant term of g'

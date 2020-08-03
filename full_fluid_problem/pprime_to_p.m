@@ -22,26 +22,7 @@ ret = (-1).*(b.^2+(-4).*a.*c).^(-1).*((b+2.*a.*x).* ...
   atan(((-1).*b.^2+4.*a.*c).^(-1/2).*(b+2.*a.*x)));
 end
 %does the h function
-%{
-function ret = presum_sqrt_int(x,a,b,c,xi) 
-    ret = ((4.*b.^2.* ...
-  log(x.^(1/2)+(-1).*xi)+9.*a.*c.*log(x.^(1/2)+(-1).*xi).* ...
-  xi).*(b+3.*a.*xi.^2).^(-1));
-end
 
-%roots_sqrt_int = @(a,b,c) cubic_root_custom(a,b,c);
-
-function ret = h_sqrt_int(x,a,b,c) 
-    root = cubic_root_custom(a,b,c);
-    s1 = presum_sqrt_int(x,a,b,c,root(1,:));
-    s2 = presum_sqrt_int(x,a,b,c,root(2,:));
-    s3 = presum_sqrt_int(x,a,b,c,root(3,:));
-    %
-    ret = 2.*(4.*b.^3+27.*a.*c.^2).^(-1).*(c+x.^(1/2).* ...
-    (b+a.*x)).^(-1).*(6.*b.*c+2.*b.^2.*x.^(1/2)+9.*a.*c.*x+(c+ ...
-    x.^(1/2).*(b+a.*x)).*(s1+s2+s3));
-end
-%}
 %now we actually calculate the pressure at z(j)
 h_sqrt_int_store_x  = h_sqrt_int(x(2:t),a(1:t-1)', b(1:t-1)',c(1:t-1)');
 h_sqrt_int_store_z  = h_sqrt_int(z(1:t-1),a(1:t-1)', b(1:t-1)',c(1:t-1)');

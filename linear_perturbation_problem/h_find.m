@@ -1,7 +1,7 @@
 % This script finds h0 given hprime_data.
 % Saves the fancy, interpolated + LEFM + 2/3 integration estimate.
 clear
-file = 'n1022x773';
+file = 'n700x875';
 load(file)
 s = 0.138673;
 u = 4 - 6*s;
@@ -30,4 +30,4 @@ h0_LEFM_23_z = h_integrate(h0_prime_LEFM_23,z,n-1,t, ...
 
 plot(x,h0_LEFM,'*-',x,h0,'+-',x,h0_LEFM_23,'o-');
 
-save(file,'-append','h0_LEFM_23','h0_LEFM_23_z')
+%save(file,'-append','h0_LEFM_23','h0_LEFM_23_z')

@@ -1,5 +1,13 @@
-%sets easy geometric parameters
-%{
+% For given parameter lambda and spacing x,z, iterate until static 
+% solution is found. This is the basis for all of the other analysis.
+
+
+clear
+
+% The values for x, z, determine somewhat the reliability/convergence
+% properties of the whole solution. We saved the best values, created by
+% xend_test, but here we just create our own.
+
 n = 1000;
 t = 500;
 xmax = 50;
@@ -7,11 +15,7 @@ xmax = 50;
 x = tan((0:n-1)*atan(sqrt(xmax))/(n-1)).^2;
 z = tan((0.5:1:n-1.5)*atan(sqrt(xmax))/(n-1)).^2;
 %some values of lambda to try
-lambda =0;
-%lambda =0:0.012:0.0588;
-%}
-
-%lambda = 0.0584:0.0004:0.0588;
+lambda = 0:0.012:0.0588;
 
 hprime_data = zeros(2*n,length(lambda));
 
@@ -23,6 +27,7 @@ KI = zeros(1,length(lambda));
 hprime_start = zeros(2*n,1);
 hprime_start(1:n) = ones(n,1);
 hprime_start(n+1:2*n) = x' + 1;
+% Iterate through all lambda values, with updated hprime_start
 for i=1:length(lambda)
     if i == 2
         hprime_start = hprime_data(:,1);
@@ -38,3 +43,8 @@ for i=1:length(lambda)
 end
 
 i = length(lambda); 
+
+% plot the results for quick check:
+plot(KI,lambda,'o-')
+xlabel('\lambda_0')
+ylabel('K_{I}')

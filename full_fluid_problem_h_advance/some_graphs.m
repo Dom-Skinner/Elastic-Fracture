@@ -1,43 +1,25 @@
+% This file recreates some plots from saved data .mat files
 clf
 
-
-%{
+%% plot how the toughness constants vary with the length of the dry crack
 load n350x50-lambda
-
 for j = 1:3
-subplot(1,2,1)
-plot(L, KI(j,:),'+-');
-xlabel('L');
-ylabel('K_I');
-hold on
-subplot(1,2,2)
-plot(L, KII(j,:),'o-');
-xlabel('L');
-ylabel('K_{II}');
-hold on
+    subplot(1,2,1)
+    plot(L, KI(j,:),'+-');
+    xlabel('L');
+    ylabel('K_I');
+    hold on
+    subplot(1,2,2)
+    plot(L, KII(j,:),'o-');
+    xlabel('L');
+    ylabel('K_{II}');
+    hold on
 end
 legend({['L=',num2str(lambda(1))],['L=',num2str(lambda(2))],['L=',num2str(lambda(3))]})
-%}
+
 %subplot(1,3,1)
 
-%{
-load n350x50-lambda
-for j = 1:numel(lambda)
-
-subplot(1,2,1)
-f1=KI(j,:).*(0.09982-0.0000651*(3.075-L).^6-lambda(j)).^(-1/u);
-plot(L,f1,L,0.67-0.0001*(3.1-L).^6,'o-')
-hold on
-xlabel('L')
-ylabel('K_{I}')
-subplot(1,2,2)
-plot(L,KII(j,:),'o-')
-hold on
-xlabel('L')
-ylabel('K_{II}')
-end
-%}
-
+%% crack profile near tip for different lambda values
 load n465_data
 nv = numel(v);
 
@@ -52,7 +34,7 @@ legend({['\lambda = ', num2str(lambda(1))], ...
 
 
 
-%{
+%% understand the (lambda,L) <-> (K_I, K_II) relationship
 load n350x50-lambda
 
 subplot(1,3,1)
@@ -67,10 +49,3 @@ subplot(1,3,3)
 plot(L,KII0,'o-')
 xlabel('L')
 ylabel('K_{II}')
-%}
-%{
-for j = 3:numel(L)
-plot(log(0.09982-lambda),log(KI(:,j)),log(0.09982-lambda),-0.39+0.32*log(0.09982-lambda),'o-')
-hold on
-end
-%}

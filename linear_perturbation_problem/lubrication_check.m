@@ -6,7 +6,7 @@
 
 
 clear
-load n400x30-extended
+load n350x875
 K = 3*sqrt(2*pi)*KI;
 s = 0.138673;
 u = 4 - 6*s;

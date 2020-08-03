@@ -1,3 +1,7 @@
+% This script has been used to make x, z values to subsequently use when
+% running the full script. In theory, any suitably refined x,z should work,
+% but you get better numerical convergence properties if they are chosen
+% intelligently, hence this (somewhat experimental) script. 
 %%{
 l0_est=[];
 D_est=[];

@@ -50,28 +50,6 @@ for j = t:n
           h_coeff_mat(3*j,n+i) = x(i+1) - x(i);
       end
 end
-%{
-%gets the c coefficients.
-for j=2:n
-    for i = 1:j-1
-        if i <= t-1
-            h_coeff_mat(3*j,i) = (1/(s+1))*(x(i+1)^(s+1) - x(i)^(s+1));
-            h_coeff_mat(3*j,n+i) = (1/s)*(x(i+1)^(s) - x(i)^(s));
-        else
-            h_coeff_mat(3*j,i) = (1/2)*(x(i+1)^2 - x(i)^2);
-            h_coeff_mat(3*j,n+i) = x(i+1) - x(i);
-        end
-    end
-
-    if j <= t-1
-        h_coeff_mat(3*j,j) = -(1/(s+1))*x(j)^(s+1);
-        h_coeff_mat(3*j,n+j) = -(1/s)*x(j)^(s);
-    else
-        h_coeff_mat(3*j,j) = -(1/2)*x(j)^2;
-        h_coeff_mat(3*j,n+j) = -x(j);
-    end
-end
-%}
 %
 % The following lines are equivalent to:
 %h_co_mat = h_coeff_mat*interpolate_matrix;

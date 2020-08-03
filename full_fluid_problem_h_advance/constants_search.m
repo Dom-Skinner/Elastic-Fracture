@@ -1,3 +1,5 @@
+% This script looks for polynomial relationships between K,L and lambda
+
 %sets easy geometric parameters
 %{
 n = 815;

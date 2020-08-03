@@ -1,19 +1,18 @@
-%n = 350;
-%t = 170;
+% For given parameters (lambda, L) and spacing x,z, iterate until static 
+% solution is found. This is the basis for all of the other analysis.
+
+% The values for x, z, determine somewhat the reliability/convergence
+% properties of the whole solution. So they were created/experimented with
+% in xend_test, and now we just load them.
+clear
+load n995x846-late
 r = 180;
-xmax = x(n);
-
-
-
+% These are the values of lambda and L used
 %L = 0.8:0.2:3.6;
 % 0.01;        early
 % 0.2:0.2:0.6; mid
 % 0.8:0.2:3.4; late
 % 1:0.6:3.4 fixed
-
-
-
-%some values of lambda to try
 %lambda = 0:0.005:0.085;
 % 0:0.008:0.058;    early
 % 0.04:0.005:0.065; mid
@@ -21,18 +20,12 @@ xmax = x(n);
 % 0.07:0.005:0.09;    fixedd
 
 
-
 hprime_data = zeros(2*n+r,length(lambda),length(L));
-
-%error tolerance
-tol = 10^(-8);
-
+tol = 10^(-8); %error tolerance
 KI = zeros(length(lambda),length(L));
 KII = zeros(length(lambda),length(L));
-l0 = zeros(1,length(L));
-KII0 = zeros(1,length(L));
-hprime_l0 = zeros(t-1,length(L));
 
+% Solve for each L, lambda combination
 for j = 1:length(L)
 
 [v,w] = spacing(x,z,L(j),r);
@@ -50,7 +43,7 @@ for i=1:length(lambda)
             hprime_data(:,i-1))/(lambda(i-1)-lambda(i-2));
     end
     [KI(i,j),KII(i,j),hprime_new,~] = ...
-        scaled_fixed_lambda_M_iteration(x,z,v,w,t,xmax,lambda(i),tol,hprime_start);
+        scaled_fixed_lambda_M_iteration(x,z,v,w,t,x(end),lambda(i),tol,hprime_start);
     hprime_data(:,i,j) = hprime_new;
 end
 
@@ -69,27 +62,20 @@ KII0(j) = p2(1)*l0(j)*l0(j)+p2(2)*l0(j)+p2(3);
 % line above if you want some idea of the extrapolation error.
 
 end
+
+% plot the results for quick check:
 subplot(1,3,1)
 hold on
-plot(l0,KII0.^2,'o-')
+plot(L,KII.^2,'o-')
 xlabel('\lambda_0')
 ylabel('K_{II}')
 subplot(1,3,2)
 hold on
-plot(L,l0,'o-')
+plot(lambda,KI,'o-')
 xlabel('L')
 ylabel('\lambda_0')
 subplot(1,3,3)
 hold on
-plot(L,KII0,'o-')
+plot(L,KII,'o-')
 xlabel('L')
 ylabel('K_{II}')
-
-%{
-for k = 1:t+r-1;
-p3 = polyfit(KI(end-2:end,j).^2,hprime_data(k,end-2:end,j)',1);
-hprime_l0(k,j) = p3(2);
-end
-hold on
-plot(v(1:r+t-1)-L(j),v(1:r+t-1).^(-0.5)'.*hprime_l0(:,j));
-%}
