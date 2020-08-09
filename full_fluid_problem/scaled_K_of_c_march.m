@@ -1,13 +1,14 @@
 % For given parameter lambda and spacing x,z, iterate until static 
 % solution is found. This is the basis for all of the other analysis.
-
+% The result is the toughness constant KI, as well as the profile hprime,
+% which can be used to find, e.g. the pressure using functions found in 
+% other files.
 
 clear
 
 % The values for x, z, determine somewhat the reliability/convergence
 % properties of the whole solution. We saved the best values, created by
 % xend_test, but here we just create our own.
-
 n = 1000;
 t = 500;
 xmax = 50;
@@ -32,6 +33,9 @@ for i=1:length(lambda)
     if i == 2
         hprime_start = hprime_data(:,1);
     elseif i > 2
+        % To start the iteration, do an extrapolation of the previous
+        % values. Not strictly necessary but will reduce the number of
+        % iterations needed.
         hprime_start = (hprime_data(:,i-1)-hprime_data(:,i-2))/...
             (lambda(i-1)-lambda(i-2))*lambda(i) ...
             + (lambda(i-1)*hprime_data(:,i-2)-lambda(i-2)*...
@@ -42,7 +46,7 @@ for i=1:length(lambda)
     hprime_data(:,i) = hprime_new;
 end
 
-i = length(lambda); 
+
 
 % plot the results for quick check:
 plot(KI,lambda,'o-')

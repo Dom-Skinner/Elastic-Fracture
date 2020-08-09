@@ -1,4 +1,6 @@
 function pprime_data = find_pprime(lambda,x,hprime_data,n,t)
+% Finds the derivative of the pressure by first integrating hprime, and
+% then using the lubrication formula.
 h_coefficient_matrix = hprime_to_h_s(x,0.5,t);
 
 h_data = zeros(n,numel(lambda));

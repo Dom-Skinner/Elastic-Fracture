@@ -1,11 +1,9 @@
 function [KI, hprime_new,p] = scaled_fixed_lambda_M_iteration(x,z,n,t,xmax, lambda, tol, hprime_start)
 % Function that iterates, finding K for some given value of lambda,
-% up to some tolerance, tol. ~Dom
+% up to some tolerance, tol. 
 
 % Some typical values previously used
 %lambda = 0.02, n = 100, tol = 10^(-8), xmax = 10;
-
-%the data points
 
 
 %finds the appropriate elasticity kernel

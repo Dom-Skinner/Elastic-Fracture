@@ -1,7 +1,7 @@
 function deriv_pressure = pressure_map_derivative(x,z,h_coeffs,h_coefficient_matrix,t)
 % WARNING: as a side effect of the optmized/vectorized nature of this code, 
-% together with the fact that many of the mathematical formulas were found by
-% mathematica, this code is extremely unreadable. It has been thoroughly
+% together with the fact that many of the mathematical formulas were found 
+% symbolically, this code is extremely unreadable. It has been thoroughly
 % tested though.
 
 %returns the (n-1)xn matrix for the derivative of the map that sounds h' to
